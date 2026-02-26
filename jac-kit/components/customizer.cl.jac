@@ -1,7 +1,7 @@
 """Customizer panel — pickers for style, color, font, radius + random/reset."""
 cl import from ..lib.utils { cn }
 cl import from "..lib.design-system-provider" { useDesignSystem }
-cl import from "..lib.config" { getStylesData, getDefaultConfig, getFontsData, getRadiiData, getMenuAccentsData, getMenuColorsData, getBaseColors, getThemesForBaseColor, getTheme }
+cl import from "..lib.config" { getStylesData, getDefaultConfig, getFontsData, getRadiiData, getMenuAccentsData, getMenuColorsData, getBaseColors, getThemesForBaseColor, getTheme, buildRegistryTheme }
 cl import from .ui.button { Button, buttonVariants }
 cl import from .ui.badge { Badge }
 cl import from .ui.separator { Separator }
@@ -357,6 +357,99 @@ cl {
         </Button>;
     }
 
+    def:pub DownloadButton() -> JsxElement {
+        ds = useDesignSystem();
+        has isDownloading: bool = False;
+
+        handleDownload = lambda -> None {
+            config = ds["config"];
+            registryTheme = buildRegistryTheme({
+                "baseColor": config["baseColor"] or "neutral",
+                "theme": config["theme"] or "neutral",
+                "menuAccent": config["menuAccent"] or "subtle",
+                "radius": config["radius"] or "default"
+            });
+
+            if not registryTheme {
+                return;
+            }
+
+            isDownloading = True;
+
+            body = JSON.stringify({
+                "style": config["style"] or "nova",
+                "baseColor": config["baseColor"] or "neutral",
+                "theme": config["theme"] or "neutral",
+                "font": config["font"] or "figtree",
+                "radius": config["radius"] or "default",
+                "menuAccent": config["menuAccent"] or "subtle",
+                "menuColor": config["menuColor"] or "default",
+                "cssVars": registryTheme["cssVars"]
+            });
+
+            fetch("/walker/export_theme", {
+                "method": "POST",
+                "headers": {"Content-Type": "application/json"},
+                "body": body
+            })
+            .then(lambda(res: Any) -> Any { return res.json(); })
+            .then(lambda(data: Any) -> None {
+                jacpack = data;
+                if data["reports"] {
+                    jacpack = data["reports"][0];
+                } elif data["data"] and data["data"]["reports"] {
+                    jacpack = data["data"]["reports"][0];
+                }
+
+                blob = Reflect.construct(Blob, [[JSON.stringify(jacpack, None, 2)], {"type": "application/json"}]);
+                url = URL.createObjectURL(blob);
+                a = document.createElement("a");
+                a.href = url;
+                a.download = "themed-project.jacpack";
+                a.click();
+                URL.revokeObjectURL(url);
+                isDownloading = False;
+            })
+            .catch(lambda(err: Any) -> None {
+                console.error("Export failed:", err);
+                isDownloading = False;
+            });
+        };
+
+        return <Button size="sm" className="w-full" onClick={handleDownload} disabled={isDownloading}>
+            {isDownloading and "Exporting..." or "Download Project"}
+        </Button>;
+    }
+
+    def:pub CopyURLButton() -> JsxElement {
+        ds = useDesignSystem();
+        has copied: bool = False;
+
+        handleCopy = lambda -> None {
+            config = ds["config"];
+            params = Reflect.construct(URLSearchParams, [{}]);
+            params.set("style", config["style"] or "nova");
+            params.set("baseColor", config["baseColor"] or "neutral");
+            params.set("theme", config["theme"] or "neutral");
+            params.set("font", config["font"] or "figtree");
+            params.set("radius", config["radius"] or "default");
+            params.set("menuAccent", config["menuAccent"] or "subtle");
+            params.set("menuColor", config["menuColor"] or "default");
+
+            url = "https://kit.jaseci.org/jacpack?" + params.toString();
+            cmd = "jac create  --use \"" + url + "\"" + " myapp";
+
+            navigator.clipboard.writeText(cmd).then(lambda -> None {
+                copied = True;
+                setTimeout(lambda -> None { copied = False; }, 2000);
+            });
+        };
+
+        return <Button variant="outline" size="sm" className="w-full" onClick={handleCopy}>
+            {copied and "Copied!" or "Copy CLI Command"}
+        </Button>;
+    }
+
     def:pub Customizer() -> JsxElement {
         return <aside className="w-56 shrink-0 border-r border-border/50 overflow-y-auto h-screen sticky top-0">
             <div className="flex flex-col gap-3 p-4">
@@ -373,6 +466,9 @@ cl {
                     <RandomButton />
                     <ResetButton />
                 </div>
+                <Separator className="my-1" />
+                <DownloadButton />
+                <CopyURLButton />
             </div>
         </aside>;
     }
