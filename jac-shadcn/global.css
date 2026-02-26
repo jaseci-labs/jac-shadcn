@@ -22,6 +22,14 @@
 
 @custom-variant dark (&:is(.dark *));
 
+@utility no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    &::-webkit-scrollbar {
+        display: none;
+    }
+}
+
 :root {
     --background: oklch(1 0 0);
     --foreground: oklch(0.147 0.004 49.25);
@@ -143,4 +151,29 @@
     html {
         @apply font-sans;
     }
+}
+
+[data-slot="app-sidebar"] {
+    --background: oklch(0.985 0 0);
+    --foreground: oklch(0.145 0.014 0);
+    --muted: oklch(0.97 0 0);
+    --muted-foreground: oklch(0.556 0.014 0);
+    --border: oklch(0.922 0 0);
+    --accent: oklch(0.97 0 0);
+    --accent-foreground: oklch(0.145 0.014 0);
+    --primary: oklch(0.205 0.014 0);
+    --primary-foreground: oklch(0.985 0 0);
+    --ring: oklch(0.708 0.014 0);
+    --radius: 0.625rem;
+    font-family: 'Geist Variable', 'Figtree Variable', ui-sans-serif, system-ui, sans-serif;
+    background-color: oklch(0.985 0 0);
+    color: oklch(0.145 0.014 0);
+}
+
+[data-slot="app-sidebar"] [data-slot="badge"] {
+    --primary: oklch(0.205 0.014 0);
+    --primary-foreground: oklch(0.985 0 0);
+    --secondary: oklch(0.97 0 0);
+    --secondary-foreground: oklch(0.205 0.014 0);
+    --destructive: oklch(0.577 0.245 27.325);
 }

@@ -96,6 +96,17 @@
       ],
       "peerComponents": []
     },
+    "dialog": {
+      "file": "dialog.cl.jac",
+      "npmDeps": [
+        "@hugeicons/core-free-icons",
+        "@hugeicons/react",
+        "radix-ui"
+      ],
+      "peerComponents": [
+        "button"
+      ]
+    },
     "alert-dialog": {
       "file": "alert-dialog.cl.jac",
       "npmDeps": [
@@ -104,6 +115,58 @@
       "peerComponents": [
         "button"
       ]
+    },
+    "checkbox": {
+      "file": "checkbox.cl.jac",
+      "npmDeps": [
+        "@hugeicons/core-free-icons",
+        "@hugeicons/react",
+        "radix-ui"
+      ],
+      "peerComponents": []
+    },
+    "tabs": {
+      "file": "tabs.cl.jac",
+      "npmDeps": [
+        "class-variance-authority",
+        "radix-ui"
+      ],
+      "peerComponents": []
+    },
+    "switch": {
+      "file": "switch.cl.jac",
+      "npmDeps": [
+        "radix-ui"
+      ],
+      "peerComponents": []
+    },
+    "tooltip": {
+      "file": "tooltip.cl.jac",
+      "npmDeps": [
+        "radix-ui"
+      ],
+      "peerComponents": []
+    },
+    "radio-group": {
+      "file": "radio-group.cl.jac",
+      "npmDeps": [
+        "radix-ui"
+      ],
+      "peerComponents": []
+    },
+    "avatar": {
+      "file": "avatar.cl.jac",
+      "npmDeps": [
+        "radix-ui"
+      ],
+      "peerComponents": []
+    },
+    "progress": {
+      "file": "progress.cl.jac",
+      "npmDeps": [
+        "radix-ui"
+      ],
+      "peerComponents": []
     }
   },
   "sharedDeps": {

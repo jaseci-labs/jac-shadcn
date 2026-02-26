@@ -1,21 +1,30 @@
-"""Main entry point for jac-way."""
+"""Main entry point for jac-kit."""
 
 import from lib.export_service { build_jacpack, build_jacpack_from_config, load_registry, resolve_single_component }
 import from http { HTTPMethod }
 
-cl import from ".components.component-example" { ComponentExample }
+cl import from ".components.item-explorer" { ItemExplorer }
+cl import from ".components.preview-panel" { PreviewPanel }
 cl import from ".components.customizer" { Customizer }
 cl import from ".lib.design-system-provider" { DesignSystemProvider }
 cl import ".global.css";
 
 cl {
     def:pub app() -> JsxElement {
+        has selectedItem: str = "home";
+
+        handleSelectItem = lambda(name: Any) -> None {
+            selectedItem = name;
+        };
+
         return <DesignSystemProvider>
             <div className="flex min-h-screen">
+                <ItemExplorer
+                    selectedItem={selectedItem}
+                    onSelectItem={handleSelectItem}
+                />
+                <PreviewPanel selectedItem={selectedItem} />
                 <Customizer />
-                <div className="flex-1 min-w-0">
-                    <ComponentExample />
-                </div>
             </div>
         </DesignSystemProvider>;
     }
@@ -47,7 +56,7 @@ walker:pub export_theme {
 }
 
 """GET /jacpack — returns themed jacpack JSON from query params.
-Used for: jac create myapp --use "https://kit.jaseci.org/jacpack?style=nova&theme=rose&font=inter"
+Used for: jac create --use 'https://kit.jaseci.org/jacpack?style=nova&theme=rose&font=inter' myapp
 Note: jac-scale wraps in TransportResponse — extract .data.result for raw jacpack."""
 @restspec(method=HTTPMethod.GET, path="/jacpack")
 def:pub get_jacpack(
