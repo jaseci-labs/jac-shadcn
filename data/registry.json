@@ -167,6 +167,181 @@
         "radix-ui"
       ],
       "peerComponents": []
+    },
+    "accordion": {
+      "file": "accordion.cl.jac",
+      "npmDeps": [
+        "radix-ui",
+        "@hugeicons/react",
+        "@hugeicons/core-free-icons"
+      ],
+      "peerComponents": []
+    },
+    "alert": {
+      "file": "alert.cl.jac",
+      "npmDeps": [
+        "class-variance-authority"
+      ],
+      "peerComponents": []
+    },
+    "skeleton": {
+      "file": "skeleton.cl.jac",
+      "npmDeps": [],
+      "peerComponents": []
+    },
+    "spinner": {
+      "file": "spinner.cl.jac",
+      "npmDeps": [
+        "@hugeicons/react",
+        "@hugeicons/core-free-icons"
+      ],
+      "peerComponents": []
+    },
+    "breadcrumb": {
+      "file": "breadcrumb.cl.jac",
+      "npmDeps": [
+        "radix-ui",
+        "@hugeicons/react",
+        "@hugeicons/core-free-icons"
+      ],
+      "peerComponents": []
+    },
+    "collapsible": {
+      "file": "collapsible.cl.jac",
+      "npmDeps": [
+        "radix-ui"
+      ],
+      "peerComponents": []
+    },
+    "hover-card": {
+      "file": "hover-card.cl.jac",
+      "npmDeps": [
+        "radix-ui"
+      ],
+      "peerComponents": []
+    },
+    "popover": {
+      "file": "popover.cl.jac",
+      "npmDeps": [
+        "radix-ui"
+      ],
+      "peerComponents": []
+    },
+    "scroll-area": {
+      "file": "scroll-area.cl.jac",
+      "npmDeps": [
+        "radix-ui"
+      ],
+      "peerComponents": []
+    },
+    "table": {
+      "file": "table.cl.jac",
+      "npmDeps": [],
+      "peerComponents": []
+    },
+    "toggle": {
+      "file": "toggle.cl.jac",
+      "npmDeps": [
+        "class-variance-authority",
+        "radix-ui"
+      ],
+      "peerComponents": []
+    },
+    "toggle-group": {
+      "file": "toggle-group.cl.jac",
+      "npmDeps": [
+        "class-variance-authority",
+        "radix-ui"
+      ],
+      "peerComponents": [
+        "toggle"
+      ]
+    },
+    "sheet": {
+      "file": "sheet.cl.jac",
+      "npmDeps": [
+        "radix-ui",
+        "@hugeicons/react",
+        "@hugeicons/core-free-icons"
+      ],
+      "peerComponents": [
+        "button"
+      ]
+    },
+    "drawer": {
+      "file": "drawer.cl.jac",
+      "npmDeps": [
+        "vaul"
+      ],
+      "peerComponents": []
+    },
+    "slider": {
+      "file": "slider.cl.jac",
+      "npmDeps": [
+        "radix-ui"
+      ],
+      "peerComponents": []
+    },
+    "sonner": {
+      "file": "sonner.cl.jac",
+      "npmDeps": [
+        "sonner",
+        "@hugeicons/react",
+        "@hugeicons/core-free-icons"
+      ],
+      "peerComponents": []
+    },
+    "pagination": {
+      "file": "pagination.cl.jac",
+      "npmDeps": [
+        "@hugeicons/react",
+        "@hugeicons/core-free-icons"
+      ],
+      "peerComponents": [
+        "button"
+      ]
+    },
+    "navigation-menu": {
+      "file": "navigation-menu.cl.jac",
+      "npmDeps": [
+        "class-variance-authority",
+        "radix-ui",
+        "@hugeicons/react",
+        "@hugeicons/core-free-icons"
+      ],
+      "peerComponents": []
+    },
+    "menubar": {
+      "file": "menubar.cl.jac",
+      "npmDeps": [
+        "radix-ui",
+        "@hugeicons/react",
+        "@hugeicons/core-free-icons"
+      ],
+      "peerComponents": []
+    },
+    "context-menu": {
+      "file": "context-menu.cl.jac",
+      "npmDeps": [
+        "radix-ui",
+        "@hugeicons/react",
+        "@hugeicons/core-free-icons"
+      ],
+      "peerComponents": []
+    },
+    "resizable": {
+      "file": "resizable.cl.jac",
+      "npmDeps": [
+        "react-resizable-panels"
+      ],
+      "peerComponents": []
+    },
+    "aspect-ratio": {
+      "file": "aspect-ratio.cl.jac",
+      "npmDeps": [
+        "radix-ui"
+      ],
+      "peerComponents": []
     }
   },
   "sharedDeps": {

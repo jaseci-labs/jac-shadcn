@@ -4,7 +4,7 @@ cl import from ...lib.utils { cn }
 cl import from .button { Button }
 cl import from ".input-group" { InputGroup, InputGroupAddon, InputGroupButton, InputGroupInput }
 cl import from "@hugeicons/react" { HugeiconsIcon }
-cl import from "@hugeicons/core-free-icons" { ArrowDown01Icon, Cancel01Icon, Tick02Icon }
+cl import from "@hugeicons/core-free-icons" { ArrowDownIcon, Cancel01Icon, Tick02Icon }
 
 glob _comboboxInputExclude: list = ["className", "children", "disabled", "showTrigger", "showClear"];
 
@@ -24,7 +24,7 @@ cl {
             className={cn("[&_svg:not([class*='size-'])]:size-4", props.className)}
         >
             {props.children}
-            <HugeiconsIcon icon={ArrowDown01Icon} strokeWidth={2} className="text-muted-foreground size-4 pointer-events-none" />
+            <HugeiconsIcon icon={ArrowDownIcon} strokeWidth={2} className="text-muted-foreground size-4 pointer-events-none" />
         </ComboboxPrimitive.Trigger>;
     }
 

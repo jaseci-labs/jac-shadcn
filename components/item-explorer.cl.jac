@@ -23,7 +23,29 @@ glob EXPLORER_ITEMS: list = [
     {"name": "switch", "title": "Switch", "group": "Components"},
     {"name": "tabs", "title": "Tabs", "group": "Components"},
     {"name": "textarea", "title": "Textarea", "group": "Components"},
-    {"name": "tooltip", "title": "Tooltip", "group": "Components"}
+    {"name": "tooltip", "title": "Tooltip", "group": "Components"},
+    {"name": "accordion", "title": "Accordion", "group": "Components"},
+    {"name": "alert", "title": "Alert", "group": "Components"},
+    {"name": "aspect-ratio", "title": "Aspect Ratio", "group": "Components"},
+    {"name": "breadcrumb", "title": "Breadcrumb", "group": "Components"},
+    {"name": "collapsible", "title": "Collapsible", "group": "Components"},
+    {"name": "context-menu", "title": "Context Menu", "group": "Components"},
+    {"name": "drawer", "title": "Drawer", "group": "Components"},
+    {"name": "hover-card", "title": "Hover Card", "group": "Components"},
+    {"name": "menubar", "title": "Menubar", "group": "Components"},
+    {"name": "navigation-menu", "title": "Navigation Menu", "group": "Components"},
+    {"name": "pagination", "title": "Pagination", "group": "Components"},
+    {"name": "popover", "title": "Popover", "group": "Components"},
+    {"name": "resizable", "title": "Resizable", "group": "Components"},
+    {"name": "scroll-area", "title": "Scroll Area", "group": "Components"},
+    {"name": "sheet", "title": "Sheet", "group": "Components"},
+    {"name": "skeleton", "title": "Skeleton", "group": "Components"},
+    {"name": "slider", "title": "Slider", "group": "Components"},
+    {"name": "sonner", "title": "Sonner", "group": "Components"},
+    {"name": "spinner", "title": "Spinner", "group": "Components"},
+    {"name": "table", "title": "Table", "group": "Components"},
+    {"name": "toggle", "title": "Toggle", "group": "Components"},
+    {"name": "toggle-group", "title": "Toggle Group", "group": "Components"}
 ];
 
 glob _groups: list = ["Blocks", "Components"];

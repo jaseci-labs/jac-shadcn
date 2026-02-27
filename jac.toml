@@ -2,19 +2,19 @@
 name = "jac-shadcn"
 version = "1.0.0"
 description = "Shadcn-style UI component library and theme customizer for Jac — 21 components, 5 styles, 21 themes, 12 fonts"
-authors = [{name = "Jason Mars", email = "jason@mars.ninja"}]
+authors = ["{'name': 'Jason Mars', 'email': 'jason@mars.ninja'}"]
 license = "MIT"
 entry-point = "main.jac"
 repository = "https://github.com/Jaseci-Labs/jaseci"
 homepage = "https://jac-shadcn.jaseci.org"
 
 [dependencies.npm]
-jac-client-node = "1.0.4"
-"class-variance-authority" = "^0.7.1"
+jac-client-node = "latest"
+class-variance-authority = "^0.7.1"
 clsx = "^2.1.1"
-"tailwind-merge" = "^3.5.0"
-"tw-animate-css" = "^1.4.0"
-"radix-ui" = "^1.4.3"
+tailwind-merge = "^3.5.0"
+tw-animate-css = "^1.4.0"
+radix-ui = "^1.4.3"
 "@fontsource-variable/figtree" = "^5.2.10"
 "@fontsource-variable/geist" = "*"
 "@fontsource-variable/inter" = "*"
@@ -31,6 +31,9 @@ clsx = "^2.1.1"
 "@hugeicons/react" = "^1.1.5"
 "@base-ui/react" = "^1.2.0"
 shadcn = "^3.8.5"
+vaul = "*"
+sonner = "^2.0.0"
+react-resizable-panels = "^2.1.7"
 
 [dependencies.npm.dev]
 "@jac-client/dev-deps" = "1.0.0"
@@ -61,7 +64,5 @@ meta_application_name = "jac-shadcn"
 plugins = ["tailwindcss()"]
 lib_imports = ["import tailwindcss from '@tailwindcss/vite'"]
 
-
 [plugins.client.configs.tailwind]
-# Generates tailwind.config.js
 content = ["./src/**/*.{jac,tsx,jsx}"]

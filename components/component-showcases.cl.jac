@@ -21,8 +21,31 @@ cl import from ".ui.radio-group" { RadioGroup, RadioGroupItem }
 cl import from .ui.avatar { Avatar, AvatarImage, AvatarFallback, AvatarBadge, AvatarGroup, AvatarGroupCount }
 cl import from .ui.progress { Progress }
 cl import from "@hugeicons/react" { HugeiconsIcon }
-cl import from "@hugeicons/core-free-icons" { ArrowRight01Icon, PlusSignIcon, DownloadIcon, MailIcon, SearchIcon, SettingsIcon, UserIcon, Copy01Icon, Tick01Icon }
+cl import from "@hugeicons/core-free-icons" { ArrowRight01Icon, ArrowDownIcon, ArrowUpIcon, PlusSignIcon, DownloadIcon, MailIcon, SearchIcon, SettingsIcon, UserIcon, Copy01Icon, Tick01Icon, TextAlignLeftIcon, TextAlignCenterIcon, TextAlignRightIcon, TextBoldIcon, TextItalicIcon, TextUnderlineIcon }
 cl import from react { useState, useEffect }
+cl import from .ui.accordion { Accordion, AccordionItem, AccordionTrigger, AccordionContent }
+cl import from .ui.alert { Alert, AlertTitle, AlertDescription, AlertAction }
+cl import from ".ui.aspect-ratio" { AspectRatio }
+cl import from .ui.breadcrumb { Breadcrumb, BreadcrumbList, BreadcrumbItem, BreadcrumbLink, BreadcrumbPage, BreadcrumbSeparator, BreadcrumbEllipsis }
+cl import from .ui.collapsible { Collapsible, CollapsibleTrigger, CollapsibleContent }
+cl import from ".ui.context-menu" { ContextMenu, ContextMenuTrigger, ContextMenuContent, ContextMenuItem, ContextMenuSeparator, ContextMenuLabel, ContextMenuShortcut, ContextMenuCheckboxItem, ContextMenuRadioGroup, ContextMenuRadioItem }
+cl import from .ui.drawer { Drawer, DrawerTrigger, DrawerContent, DrawerHeader, DrawerTitle, DrawerDescription, DrawerFooter, DrawerClose }
+cl import from ".ui.hover-card" { HoverCard, HoverCardTrigger, HoverCardContent }
+cl import from .ui.menubar { Menubar, MenubarMenu, MenubarTrigger, MenubarContent, MenubarItem, MenubarSeparator, MenubarShortcut, MenubarCheckboxItem, MenubarRadioGroup, MenubarRadioItem, MenubarLabel }
+cl import from ".ui.navigation-menu" { NavigationMenu, NavigationMenuList, NavigationMenuItem, NavigationMenuTrigger, NavigationMenuContent, NavigationMenuLink, NavigationMenuViewport, navigationMenuTriggerStyle }
+cl import from .ui.pagination { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious, PaginationEllipsis }
+cl import from .ui.popover { Popover, PopoverTrigger, PopoverContent }
+cl import from .ui.resizable { ResizablePanelGroup, ResizablePanel, ResizableHandle }
+cl import from ".ui.scroll-area" { ScrollArea, ScrollBar }
+cl import from .ui.sheet { Sheet, SheetTrigger, SheetContent, SheetHeader, SheetTitle, SheetDescription, SheetFooter, SheetClose }
+cl import from .ui.skeleton { Skeleton }
+cl import from .ui.slider { Slider }
+cl import from .ui.spinner { Spinner }
+cl import from .ui.table { Table, TableHeader, TableBody, TableFooter, TableRow, TableHead, TableCell, TableCaption }
+cl import from .ui.toggle { Toggle }
+cl import from ".ui.toggle-group" { ToggleGroup, ToggleGroupItem }
+cl import from .ui.sonner { Toaster }
+cl import from sonner { toast }
 
 glob _frameworks: list = ["Next.js", "SvelteKit", "Nuxt.js", "Remix", "Astro"];
 
@@ -978,6 +1001,681 @@ cl {
         </div>;
     }
 
+    def:pub AccordionShowcase() -> JsxElement {
+        return <div className="space-y-8">
+            <ShowcaseHeader title="Accordion" description="A vertically stacked set of interactive headings." name="accordion" />
+            <ShowcaseSection title="Single">
+                <Accordion type="single" collapsible={True} className="w-full max-w-md">
+                    <AccordionItem value="item-1">
+                        <AccordionTrigger>Is it accessible?</AccordionTrigger>
+                        <AccordionContent>Yes. It adheres to the WAI-ARIA design pattern.</AccordionContent>
+                    </AccordionItem>
+                    <AccordionItem value="item-2">
+                        <AccordionTrigger>Is it styled?</AccordionTrigger>
+                        <AccordionContent>Yes. It comes with default styles that match the other components.</AccordionContent>
+                    </AccordionItem>
+                    <AccordionItem value="item-3">
+                        <AccordionTrigger>Is it animated?</AccordionTrigger>
+                        <AccordionContent>Yes. It is animated by default, but you can disable it if you prefer.</AccordionContent>
+                    </AccordionItem>
+                </Accordion>
+            </ShowcaseSection>
+            <Separator />
+            <ShowcaseSection title="Multiple">
+                <Accordion type="multiple" className="w-full max-w-md">
+                    <AccordionItem value="item-1">
+                        <AccordionTrigger>Can I open multiple?</AccordionTrigger>
+                        <AccordionContent>Yes. Use type="multiple" to allow multiple items open at once.</AccordionContent>
+                    </AccordionItem>
+                    <AccordionItem value="item-2">
+                        <AccordionTrigger>What about single mode?</AccordionTrigger>
+                        <AccordionContent>Use type="single" to allow only one item open at a time.</AccordionContent>
+                    </AccordionItem>
+                </Accordion>
+            </ShowcaseSection>
+        </div>;
+    }
+
+    def:pub AlertShowcase() -> JsxElement {
+        return <div className="space-y-8">
+            <ShowcaseHeader title="Alert" description="Displays a callout for user attention." name="alert" />
+            <ShowcaseSection title="Default" className="flex-col gap-4">
+                <Alert className="max-w-md">
+                    <AlertTitle>Heads up!</AlertTitle>
+                    <AlertDescription>You can add components to your app using the cli.</AlertDescription>
+                </Alert>
+            </ShowcaseSection>
+            <Separator />
+            <ShowcaseSection title="Destructive" className="flex-col gap-4">
+                <Alert variant="destructive" className="max-w-md">
+                    <AlertTitle>Error</AlertTitle>
+                    <AlertDescription>Your session has expired. Please log in again.</AlertDescription>
+                </Alert>
+            </ShowcaseSection>
+        </div>;
+    }
+
+    def:pub AspectRatioShowcase() -> JsxElement {
+        return <div className="space-y-8">
+            <ShowcaseHeader title="Aspect Ratio" description="Displays content within a desired ratio." name="aspect-ratio" />
+            <ShowcaseSection title="16 / 9">
+                <div className="w-full max-w-sm overflow-hidden rounded-md">
+                    <AspectRatio ratio={16 / 9}>
+                        <div className="flex h-full w-full items-center justify-center bg-muted text-muted-foreground rounded-md">
+                            16 : 9
+                        </div>
+                    </AspectRatio>
+                </div>
+            </ShowcaseSection>
+            <Separator />
+            <ShowcaseSection title="4 / 3">
+                <div className="w-full max-w-xs overflow-hidden rounded-md">
+                    <AspectRatio ratio={4 / 3}>
+                        <div className="flex h-full w-full items-center justify-center bg-muted text-muted-foreground rounded-md">
+                            4 : 3
+                        </div>
+                    </AspectRatio>
+                </div>
+            </ShowcaseSection>
+        </div>;
+    }
+
+    def:pub BreadcrumbShowcase() -> JsxElement {
+        return <div className="space-y-8">
+            <ShowcaseHeader title="Breadcrumb" description="Displays the path to the current resource using a hierarchy of links." name="breadcrumb" />
+            <ShowcaseSection title="Default">
+                <Breadcrumb>
+                    <BreadcrumbList>
+                        <BreadcrumbItem>
+                            <BreadcrumbLink href="#">Home</BreadcrumbLink>
+                        </BreadcrumbItem>
+                        <BreadcrumbSeparator />
+                        <BreadcrumbItem>
+                            <BreadcrumbLink href="#">Components</BreadcrumbLink>
+                        </BreadcrumbItem>
+                        <BreadcrumbSeparator />
+                        <BreadcrumbItem>
+                            <BreadcrumbPage>Breadcrumb</BreadcrumbPage>
+                        </BreadcrumbItem>
+                    </BreadcrumbList>
+                </Breadcrumb>
+            </ShowcaseSection>
+            <Separator />
+            <ShowcaseSection title="With Ellipsis">
+                <Breadcrumb>
+                    <BreadcrumbList>
+                        <BreadcrumbItem>
+                            <BreadcrumbLink href="#">Home</BreadcrumbLink>
+                        </BreadcrumbItem>
+                        <BreadcrumbSeparator />
+                        <BreadcrumbItem>
+                            <BreadcrumbEllipsis />
+                        </BreadcrumbItem>
+                        <BreadcrumbSeparator />
+                        <BreadcrumbItem>
+                            <BreadcrumbPage>Breadcrumb</BreadcrumbPage>
+                        </BreadcrumbItem>
+                    </BreadcrumbList>
+                </Breadcrumb>
+            </ShowcaseSection>
+        </div>;
+    }
+
+    def:pub CollapsibleShowcase() -> JsxElement {
+        has open: bool = False;
+
+        return <div className="space-y-8">
+            <ShowcaseHeader title="Collapsible" description="An interactive component which expands/collapses a panel." name="collapsible" />
+            <ShowcaseSection title="Default">
+                <Collapsible open={open} onOpenChange={lambda val: bool -> None { open = val; }} className="w-full max-w-sm space-y-2">
+                    <div className="flex items-center justify-between space-x-4 px-4">
+                        <h4 className="text-sm font-semibold">@peduarte starred 3 repositories</h4>
+                        <CollapsibleTrigger asChild={True}>
+                            <Button variant="ghost" size="sm">
+                                <HugeiconsIcon icon={ArrowUpIcon if open else ArrowDownIcon} size={16} />
+                            </Button>
+                        </CollapsibleTrigger>
+                    </div>
+                    <div className="rounded-md border px-4 py-3 font-mono text-sm">@radix-ui/primitives</div>
+                    <CollapsibleContent className="space-y-2">
+                        <div className="rounded-md border px-4 py-3 font-mono text-sm">@radix-ui/colors</div>
+                        <div className="rounded-md border px-4 py-3 font-mono text-sm">@stitches/react</div>
+                    </CollapsibleContent>
+                </Collapsible>
+            </ShowcaseSection>
+        </div>;
+    }
+
+    def:pub ContextMenuShowcase() -> JsxElement {
+        return <div className="space-y-8">
+            <ShowcaseHeader title="Context Menu" description="Displays a menu on right-click." name="context-menu" />
+            <ShowcaseSection title="Default">
+                <ContextMenu>
+                    <ContextMenuTrigger className="flex h-32 w-64 items-center justify-center rounded-md border border-dashed text-sm">
+                        Right click here
+                    </ContextMenuTrigger>
+                    <ContextMenuContent className="w-48">
+                        <ContextMenuItem>Profile</ContextMenuItem>
+                        <ContextMenuItem>Settings</ContextMenuItem>
+                        <ContextMenuSeparator />
+                        <ContextMenuCheckboxItem checked={True}>Show Toolbar</ContextMenuCheckboxItem>
+                        <ContextMenuSeparator />
+                        <ContextMenuRadioGroup value="dark">
+                            <ContextMenuLabel>Theme</ContextMenuLabel>
+                            <ContextMenuRadioItem value="light">Light</ContextMenuRadioItem>
+                            <ContextMenuRadioItem value="dark">Dark</ContextMenuRadioItem>
+                        </ContextMenuRadioGroup>
+                        <ContextMenuSeparator />
+                        <ContextMenuItem>Log out</ContextMenuItem>
+                    </ContextMenuContent>
+                </ContextMenu>
+            </ShowcaseSection>
+        </div>;
+    }
+
+    def:pub DrawerShowcase() -> JsxElement {
+        return <div className="space-y-8">
+            <ShowcaseHeader title="Drawer" description="A drawer component for mobile-friendly dialogs." name="drawer" />
+            <ShowcaseSection title="Bottom Drawer">
+                <Drawer>
+                    <DrawerTrigger asChild={True}>
+                        <Button variant="outline">Open Drawer</Button>
+                    </DrawerTrigger>
+                    <DrawerContent>
+                        <DrawerHeader>
+                            <DrawerTitle>Are you absolutely sure?</DrawerTitle>
+                            <DrawerDescription>This action cannot be undone.</DrawerDescription>
+                        </DrawerHeader>
+                        <DrawerFooter>
+                            <Button>Submit</Button>
+                            <DrawerClose asChild={True}>
+                                <Button variant="outline">Cancel</Button>
+                            </DrawerClose>
+                        </DrawerFooter>
+                    </DrawerContent>
+                </Drawer>
+            </ShowcaseSection>
+        </div>;
+    }
+
+    def:pub HoverCardShowcase() -> JsxElement {
+        return <div className="space-y-8">
+            <ShowcaseHeader title="Hover Card" description="For sighted users to preview content available behind a link." name="hover-card" />
+            <ShowcaseSection title="Default">
+                <HoverCard>
+                    <HoverCardTrigger asChild={True}>
+                        <Button variant="link">@nextjs</Button>
+                    </HoverCardTrigger>
+                    <HoverCardContent className="w-80">
+                        <div className="flex justify-between space-x-4">
+                            <div className="space-y-1">
+                                <h4 className="text-sm font-semibold">@nextjs</h4>
+                                <p className="text-sm">The React Framework - created and maintained by @vercel.</p>
+                                <div className="flex items-center pt-2">
+                                    <span className="text-xs text-muted-foreground">Joined December 2021</span>
+                                </div>
+                            </div>
+                        </div>
+                    </HoverCardContent>
+                </HoverCard>
+            </ShowcaseSection>
+        </div>;
+    }
+
+    def:pub MenubarShowcase() -> JsxElement {
+        return <div className="space-y-8">
+            <ShowcaseHeader title="Menubar" description="A visually persistent menu common in desktop applications." name="menubar" />
+            <ShowcaseSection title="Default">
+                <Menubar>
+                    <MenubarMenu>
+                        <MenubarTrigger>File</MenubarTrigger>
+                        <MenubarContent>
+                            <MenubarItem>New Tab</MenubarItem>
+                            <MenubarItem>New Window</MenubarItem>
+                            <MenubarSeparator />
+                            <MenubarItem>Share</MenubarItem>
+                            <MenubarSeparator />
+                            <MenubarItem>Print</MenubarItem>
+                        </MenubarContent>
+                    </MenubarMenu>
+                    <MenubarMenu>
+                        <MenubarTrigger>Edit</MenubarTrigger>
+                        <MenubarContent>
+                            <MenubarItem>Undo</MenubarItem>
+                            <MenubarItem>Redo</MenubarItem>
+                            <MenubarSeparator />
+                            <MenubarItem>Cut</MenubarItem>
+                            <MenubarItem>Copy</MenubarItem>
+                            <MenubarItem>Paste</MenubarItem>
+                        </MenubarContent>
+                    </MenubarMenu>
+                    <MenubarMenu>
+                        <MenubarTrigger>View</MenubarTrigger>
+                        <MenubarContent>
+                            <MenubarCheckboxItem checked={True}>Show Toolbar</MenubarCheckboxItem>
+                            <MenubarSeparator />
+                            <MenubarRadioGroup value="dark">
+                                <MenubarLabel>Appearance</MenubarLabel>
+                                <MenubarRadioItem value="light">Light</MenubarRadioItem>
+                                <MenubarRadioItem value="dark">Dark</MenubarRadioItem>
+                            </MenubarRadioGroup>
+                        </MenubarContent>
+                    </MenubarMenu>
+                </Menubar>
+            </ShowcaseSection>
+        </div>;
+    }
+
+    def:pub NavigationMenuShowcase() -> JsxElement {
+        return <div className="space-y-8">
+            <ShowcaseHeader title="Navigation Menu" description="A collection of links for navigating websites." name="navigation-menu" />
+            <ShowcaseSection title="Default">
+                <NavigationMenu>
+                    <NavigationMenuList>
+                        <NavigationMenuItem>
+                            <NavigationMenuTrigger>Getting started</NavigationMenuTrigger>
+                            <NavigationMenuContent>
+                                <ul className="grid gap-3 p-4 w-48">
+                                    <li>
+                                        <NavigationMenuLink href="#">Introduction</NavigationMenuLink>
+                                    </li>
+                                    <li>
+                                        <NavigationMenuLink href="#">Installation</NavigationMenuLink>
+                                    </li>
+                                    <li>
+                                        <NavigationMenuLink href="#">Typography</NavigationMenuLink>
+                                    </li>
+                                </ul>
+                            </NavigationMenuContent>
+                        </NavigationMenuItem>
+                        <NavigationMenuItem>
+                            <NavigationMenuLink className={navigationMenuTriggerStyle()} href="#">Documentation</NavigationMenuLink>
+                        </NavigationMenuItem>
+                    </NavigationMenuList>
+                </NavigationMenu>
+            </ShowcaseSection>
+        </div>;
+    }
+
+    def:pub PaginationShowcase() -> JsxElement {
+        return <div className="space-y-8">
+            <ShowcaseHeader title="Pagination" description="Pagination with page navigation, next and previous links." name="pagination" />
+            <ShowcaseSection title="Default">
+                <Pagination>
+                    <PaginationContent>
+                        <PaginationItem>
+                            <PaginationPrevious href="#" />
+                        </PaginationItem>
+                        <PaginationItem>
+                            <PaginationLink href="#">1</PaginationLink>
+                        </PaginationItem>
+                        <PaginationItem>
+                            <PaginationLink href="#" isActive={True}>2</PaginationLink>
+                        </PaginationItem>
+                        <PaginationItem>
+                            <PaginationLink href="#">3</PaginationLink>
+                        </PaginationItem>
+                        <PaginationItem>
+                            <PaginationEllipsis />
+                        </PaginationItem>
+                        <PaginationItem>
+                            <PaginationNext href="#" />
+                        </PaginationItem>
+                    </PaginationContent>
+                </Pagination>
+            </ShowcaseSection>
+        </div>;
+    }
+
+    def:pub PopoverShowcase() -> JsxElement {
+        return <div className="space-y-8">
+            <ShowcaseHeader title="Popover" description="Displays rich content in a portal, triggered by a button." name="popover" />
+            <ShowcaseSection title="Default">
+                <Popover>
+                    <PopoverTrigger asChild={True}>
+                        <Button variant="outline">Open popover</Button>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-80">
+                        <div className="grid gap-4">
+                            <div className="space-y-2">
+                                <h4 className="font-medium leading-none">Dimensions</h4>
+                                <p className="text-sm text-muted-foreground">Set the dimensions for the layer.</p>
+                            </div>
+                            <div className="grid gap-2">
+                                <div className="grid grid-cols-3 items-center gap-4">
+                                    <Label>Width</Label>
+                                    <Input defaultValue="100%" className="col-span-2 h-8" />
+                                </div>
+                                <div className="grid grid-cols-3 items-center gap-4">
+                                    <Label>Height</Label>
+                                    <Input defaultValue="25px" className="col-span-2 h-8" />
+                                </div>
+                            </div>
+                        </div>
+                    </PopoverContent>
+                </Popover>
+            </ShowcaseSection>
+        </div>;
+    }
+
+    def:pub ResizableShowcase() -> JsxElement {
+        return <div className="space-y-8">
+            <ShowcaseHeader title="Resizable" description="Accessible resizable panel groups and layouts." name="resizable" />
+            <ShowcaseSection title="Horizontal">
+                <ResizablePanelGroup direction="horizontal" className="max-w-md rounded-lg border">
+                    <ResizablePanel defaultSize={50}>
+                        <div className="flex h-32 items-center justify-center p-6">Sidebar</div>
+                    </ResizablePanel>
+                    <ResizableHandle withHandle={True} />
+                    <ResizablePanel defaultSize={50}>
+                        <div className="flex h-32 items-center justify-center p-6">Content</div>
+                    </ResizablePanel>
+                </ResizablePanelGroup>
+            </ShowcaseSection>
+            <Separator />
+            <ShowcaseSection title="Vertical">
+                <ResizablePanelGroup direction="vertical" className="max-w-md rounded-lg border" style={{"height": "200px"}}>
+                    <ResizablePanel defaultSize={50}>
+                        <div className="flex h-full items-center justify-center p-4">Top</div>
+                    </ResizablePanel>
+                    <ResizableHandle withHandle={True} />
+                    <ResizablePanel defaultSize={50}>
+                        <div className="flex h-full items-center justify-center p-4">Bottom</div>
+                    </ResizablePanel>
+                </ResizablePanelGroup>
+            </ShowcaseSection>
+        </div>;
+    }
+
+    def:pub ScrollAreaShowcase() -> JsxElement {
+        tags = ["v1.2.0 - Beta", "v1.1.0 - Stable", "v1.0.0 - Release", "v0.9.0 - RC", "v0.8.0 - Alpha", "v0.7.0 - Dev", "v0.6.0 - Pre-alpha", "v0.5.0 - Early", "v0.4.0 - Internal", "v0.3.0 - Draft"];
+        return <div className="space-y-8">
+            <ShowcaseHeader title="Scroll Area" description="Augments native scroll functionality for custom, cross-browser styling." name="scroll-area" />
+            <ShowcaseSection title="Vertical">
+                <ScrollArea className="h-48 w-64 rounded-md border">
+                    <div className="p-4">
+                        <h4 className="mb-4 text-sm font-medium leading-none">Tags</h4>
+                        {tags.map(lambda tag: str -> Any {
+                            return <div key={tag} className="text-sm py-1 border-b last:border-0">{tag}</div>;
+                        })}
+                    </div>
+                </ScrollArea>
+            </ShowcaseSection>
+            <Separator />
+            <ShowcaseSection title="With ScrollBar">
+                <ScrollArea className="h-48 w-64 rounded-md border">
+                    <div className="flex w-max space-x-4 p-4">
+                        {tags.map(lambda tag: str -> Any {
+                            return <div key={tag} className="shrink-0 w-24 rounded-md bg-muted p-2 text-xs">{tag}</div>;
+                        })}
+                    </div>
+                    <ScrollBar orientation="horizontal" />
+                </ScrollArea>
+            </ShowcaseSection>
+        </div>;
+    }
+
+    def:pub SheetShowcase() -> JsxElement {
+        return <div className="space-y-8">
+            <ShowcaseHeader title="Sheet" description="Extends the Dialog component to display content that complements the main content." name="sheet" />
+            <ShowcaseSection title="Sides" className="flex-wrap gap-3">
+                <Sheet>
+                    <SheetTrigger asChild={True}>
+                        <Button variant="outline">Right</Button>
+                    </SheetTrigger>
+                    <SheetContent side="right">
+                        <SheetHeader>
+                            <SheetTitle>Edit profile</SheetTitle>
+                            <SheetDescription>Make changes to your profile here.</SheetDescription>
+                        </SheetHeader>
+                        <div className="grid gap-4 py-4">
+                            <div className="grid grid-cols-4 items-center gap-4">
+                                <Label className="text-right">Name</Label>
+                                <Input defaultValue="Pedro Duarte" className="col-span-3" />
+                            </div>
+                        </div>
+                        <SheetFooter>
+                            <SheetClose asChild={True}>
+                                <Button type="submit">Save changes</Button>
+                            </SheetClose>
+                        </SheetFooter>
+                    </SheetContent>
+                </Sheet>
+                <Sheet>
+                    <SheetTrigger asChild={True}>
+                        <Button variant="outline">Left</Button>
+                    </SheetTrigger>
+                    <SheetContent side="left">
+                        <SheetHeader>
+                            <SheetTitle>Navigation</SheetTitle>
+                            <SheetDescription>Browse pages from here.</SheetDescription>
+                        </SheetHeader>
+                    </SheetContent>
+                </Sheet>
+                <Sheet>
+                    <SheetTrigger asChild={True}>
+                        <Button variant="outline">Top</Button>
+                    </SheetTrigger>
+                    <SheetContent side="top">
+                        <SheetHeader>
+                            <SheetTitle>Top Sheet</SheetTitle>
+                            <SheetDescription>A sheet that slides down from the top.</SheetDescription>
+                        </SheetHeader>
+                    </SheetContent>
+                </Sheet>
+                <Sheet>
+                    <SheetTrigger asChild={True}>
+                        <Button variant="outline">Bottom</Button>
+                    </SheetTrigger>
+                    <SheetContent side="bottom">
+                        <SheetHeader>
+                            <SheetTitle>Bottom Sheet</SheetTitle>
+                            <SheetDescription>A sheet that slides up from the bottom.</SheetDescription>
+                        </SheetHeader>
+                    </SheetContent>
+                </Sheet>
+            </ShowcaseSection>
+        </div>;
+    }
+
+    def:pub SkeletonShowcase() -> JsxElement {
+        return <div className="space-y-8">
+            <ShowcaseHeader title="Skeleton" description="Use to show a placeholder while content is loading." name="skeleton" />
+            <ShowcaseSection title="Card Skeleton" className="flex-col gap-4">
+                <div className="flex items-center space-x-4">
+                    <Skeleton className="h-12 w-12 rounded-full" />
+                    <div className="space-y-2">
+                        <Skeleton className="h-4 w-48" />
+                        <Skeleton className="h-4 w-36" />
+                    </div>
+                </div>
+                <Skeleton className="h-32 w-full max-w-sm rounded-xl" />
+            </ShowcaseSection>
+            <Separator />
+            <ShowcaseSection title="Table Skeleton" className="flex-col gap-2">
+                <Skeleton className="h-8 w-full max-w-sm" />
+                <Skeleton className="h-6 w-full max-w-sm" />
+                <Skeleton className="h-6 w-full max-w-sm" />
+                <Skeleton className="h-6 w-3/4 max-w-sm" />
+            </ShowcaseSection>
+        </div>;
+    }
+
+    def:pub SliderShowcase() -> JsxElement {
+        has sliderValue: list = [50];
+
+        return <div className="space-y-8">
+            <ShowcaseHeader title="Slider" description="An input where the user selects a value from within a given range." name="slider" />
+            <ShowcaseSection title="Default">
+                <div className="w-full max-w-sm space-y-4">
+                    <Slider
+                        defaultValue={[50]}
+                        max={100}
+                        step={1}
+                        className="w-full"
+                        onValueChange={lambda val: list -> None { sliderValue = val; }}
+                    />
+                    <p className="text-sm text-muted-foreground text-center">Value: {String(sliderValue[0])}</p>
+                </div>
+            </ShowcaseSection>
+            <Separator />
+            <ShowcaseSection title="Range">
+                <Slider defaultValue={[20, 80]} max={100} step={1} className="w-full max-w-sm" />
+            </ShowcaseSection>
+            <Separator />
+            <ShowcaseSection title="Disabled">
+                <Slider defaultValue={[40]} max={100} step={1} disabled={True} className="w-full max-w-sm" />
+            </ShowcaseSection>
+        </div>;
+    }
+
+    def:pub SonnerShowcase() -> JsxElement {
+        return <div className="space-y-8">
+            <ShowcaseHeader title="Sonner" description="An opinionated toast component for React." name="sonner" />
+            <ShowcaseSection title="Toast Variants" className="flex-wrap gap-3">
+                <Button variant="outline" onClick={lambda -> None { toast("Event has been created."); }}>Default</Button>
+                <Button variant="outline" onClick={lambda -> None { toast.success("Profile updated."); }}>Success</Button>
+                <Button variant="outline" onClick={lambda -> None { toast.error("Something went wrong."); }}>Error</Button>
+                <Button variant="outline" onClick={lambda -> None { toast.warning("You are running low."); }}>Warning</Button>
+                <Button variant="outline" onClick={lambda -> None { toast.info("New version available."); }}>Info</Button>
+                <Button variant="outline" onClick={lambda -> None { toast.loading("Processing..."); }}>Loading</Button>
+            </ShowcaseSection>
+            <Toaster />
+        </div>;
+    }
+
+    def:pub SpinnerShowcase() -> JsxElement {
+        return <div className="space-y-8">
+            <ShowcaseHeader title="Spinner" description="An animated loading indicator." name="spinner" />
+            <ShowcaseSection title="Sizes" className="flex-wrap gap-6 items-center">
+                <Spinner size={16} />
+                <Spinner size={24} />
+                <Spinner size={32} />
+                <Spinner size={48} />
+            </ShowcaseSection>
+            <Separator />
+            <ShowcaseSection title="With Text" className="gap-3 items-center">
+                <Spinner size={20} />
+                <span className="text-sm text-muted-foreground">Loading...</span>
+            </ShowcaseSection>
+        </div>;
+    }
+
+    def:pub TableShowcase() -> JsxElement {
+        invoices = [
+            {"invoice": "INV001", "status": "Paid", "method": "Credit Card", "amount": "$250.00"},
+            {"invoice": "INV002", "status": "Pending", "method": "PayPal", "amount": "$150.00"},
+            {"invoice": "INV003", "status": "Unpaid", "method": "Bank Transfer", "amount": "$350.00"},
+            {"invoice": "INV004", "status": "Paid", "method": "Credit Card", "amount": "$450.00"},
+            {"invoice": "INV005", "status": "Paid", "method": "PayPal", "amount": "$550.00"}
+        ];
+        return <div className="space-y-8">
+            <ShowcaseHeader title="Table" description="A responsive table component." name="table" />
+            <ShowcaseSection title="Default">
+                <Table className="max-w-2xl">
+                    <TableCaption>A list of your recent invoices.</TableCaption>
+                    <TableHeader>
+                        <TableRow>
+                            <TableHead className="w-28">Invoice</TableHead>
+                            <TableHead>Status</TableHead>
+                            <TableHead>Method</TableHead>
+                            <TableHead className="text-right">Amount</TableHead>
+                        </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                        {invoices.map(lambda inv: dict -> Any {
+                            return <TableRow key={inv["invoice"]}>
+                                <TableCell className="font-medium">{inv["invoice"]}</TableCell>
+                                <TableCell>{inv["status"]}</TableCell>
+                                <TableCell>{inv["method"]}</TableCell>
+                                <TableCell className="text-right">{inv["amount"]}</TableCell>
+                            </TableRow>;
+                        })}
+                    </TableBody>
+                    <TableFooter>
+                        <TableRow>
+                            <TableCell colSpan={3}>Total</TableCell>
+                            <TableCell className="text-right">$1,750.00</TableCell>
+                        </TableRow>
+                    </TableFooter>
+                </Table>
+            </ShowcaseSection>
+        </div>;
+    }
+
+    def:pub ToggleShowcase() -> JsxElement {
+        return <div className="space-y-8">
+            <ShowcaseHeader title="Toggle" description="A two-state button that can be either on or off." name="toggle" />
+            <ShowcaseSection title="Variants" className="flex-wrap gap-3">
+                <Toggle aria-label="Bold">
+                    <HugeiconsIcon icon={TextBoldIcon} size={16} />
+                </Toggle>
+                <Toggle variant="outline" aria-label="Italic">
+                    <HugeiconsIcon icon={TextItalicIcon} size={16} />
+                </Toggle>
+            </ShowcaseSection>
+            <Separator />
+            <ShowcaseSection title="Sizes" className="flex-wrap gap-3">
+                <Toggle size="sm" aria-label="Small">Sm</Toggle>
+                <Toggle size="default" aria-label="Default">Default</Toggle>
+                <Toggle size="lg" aria-label="Large">Lg</Toggle>
+            </ShowcaseSection>
+            <Separator />
+            <ShowcaseSection title="Disabled">
+                <Toggle disabled={True} aria-label="Disabled">
+                    <HugeiconsIcon icon={TextUnderlineIcon} size={16} />
+                </Toggle>
+            </ShowcaseSection>
+        </div>;
+    }
+
+    def:pub ToggleGroupShowcase() -> JsxElement {
+        return <div className="space-y-8">
+            <ShowcaseHeader title="Toggle Group" description="A set of two-state buttons that can be toggled on or off." name="toggle-group" />
+            <ShowcaseSection title="Single">
+                <ToggleGroup type="single" defaultValue="center">
+                    <ToggleGroupItem value="left" aria-label="Align left">
+                        <HugeiconsIcon icon={TextAlignLeftIcon} size={16} />
+                    </ToggleGroupItem>
+                    <ToggleGroupItem value="center" aria-label="Align center">
+                        <HugeiconsIcon icon={TextAlignCenterIcon} size={16} />
+                    </ToggleGroupItem>
+                    <ToggleGroupItem value="right" aria-label="Align right">
+                        <HugeiconsIcon icon={TextAlignRightIcon} size={16} />
+                    </ToggleGroupItem>
+                </ToggleGroup>
+            </ShowcaseSection>
+            <Separator />
+            <ShowcaseSection title="Multiple">
+                <ToggleGroup type="multiple" defaultValue={["bold", "italic"]}>
+                    <ToggleGroupItem value="bold" aria-label="Bold">
+                        <HugeiconsIcon icon={TextBoldIcon} size={16} />
+                    </ToggleGroupItem>
+                    <ToggleGroupItem value="italic" aria-label="Italic">
+                        <HugeiconsIcon icon={TextItalicIcon} size={16} />
+                    </ToggleGroupItem>
+                    <ToggleGroupItem value="underline" aria-label="Underline">
+                        <HugeiconsIcon icon={TextUnderlineIcon} size={16} />
+                    </ToggleGroupItem>
+                </ToggleGroup>
+            </ShowcaseSection>
+            <Separator />
+            <ShowcaseSection title="Outline Variant">
+                <ToggleGroup type="single" variant="outline" defaultValue="center">
+                    <ToggleGroupItem value="left" aria-label="Align left">
+                        <HugeiconsIcon icon={TextAlignLeftIcon} size={16} />
+                    </ToggleGroupItem>
+                    <ToggleGroupItem value="center" aria-label="Align center">
+                        <HugeiconsIcon icon={TextAlignCenterIcon} size={16} />
+                    </ToggleGroupItem>
+                    <ToggleGroupItem value="right" aria-label="Align right">
+                        <HugeiconsIcon icon={TextAlignRightIcon} size={16} />
+                    </ToggleGroupItem>
+                </ToggleGroup>
+            </ShowcaseSection>
+        </div>;
+    }
+
     def:pub ComponentShowcase(props: Any) -> JsxElement {
         name = props.name;
         if name == "button" { return <ButtonShowcase />; }
@@ -1001,6 +1699,28 @@ cl {
         if name == "radio-group" { return <RadioGroupShowcase />; }
         if name == "avatar" { return <AvatarShowcase />; }
         if name == "progress" { return <ProgressShowcase />; }
+        if name == "accordion" { return <AccordionShowcase />; }
+        if name == "alert" { return <AlertShowcase />; }
+        if name == "aspect-ratio" { return <AspectRatioShowcase />; }
+        if name == "breadcrumb" { return <BreadcrumbShowcase />; }
+        if name == "collapsible" { return <CollapsibleShowcase />; }
+        if name == "context-menu" { return <ContextMenuShowcase />; }
+        if name == "drawer" { return <DrawerShowcase />; }
+        if name == "hover-card" { return <HoverCardShowcase />; }
+        if name == "menubar" { return <MenubarShowcase />; }
+        if name == "navigation-menu" { return <NavigationMenuShowcase />; }
+        if name == "pagination" { return <PaginationShowcase />; }
+        if name == "popover" { return <PopoverShowcase />; }
+        if name == "resizable" { return <ResizableShowcase />; }
+        if name == "scroll-area" { return <ScrollAreaShowcase />; }
+        if name == "sheet" { return <SheetShowcase />; }
+        if name == "skeleton" { return <SkeletonShowcase />; }
+        if name == "slider" { return <SliderShowcase />; }
+        if name == "sonner" { return <SonnerShowcase />; }
+        if name == "spinner" { return <SpinnerShowcase />; }
+        if name == "table" { return <TableShowcase />; }
+        if name == "toggle" { return <ToggleShowcase />; }
+        if name == "toggle-group" { return <ToggleGroupShowcase />; }
         return <div className="text-muted-foreground text-sm">Component not found.</div>;
     }
 }

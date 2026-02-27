@@ -1,7 +1,7 @@
 cl import from "radix-ui" { Select as SelectPrimitive }
 cl import from ...lib.utils { cn }
 cl import from "@hugeicons/react" { HugeiconsIcon }
-cl import from "@hugeicons/core-free-icons" { UnfoldMoreIcon, Tick02Icon, ArrowUp01Icon, ArrowDown01Icon }
+cl import from "@hugeicons/core-free-icons" { UnfoldMoreIcon, Tick02Icon, ArrowUpIcon, ArrowDownIcon }
 
 cl {
     def:pub Select(props: Any) -> JsxElement {
@@ -100,7 +100,7 @@ cl {
             data-slot="select-scroll-up-button"
             className={cn("bg-popover z-10 flex cursor-default items-center justify-center py-1 [&_svg:not([class*='size-'])]:size-4", props.className)}
         >
-            <HugeiconsIcon icon={ArrowUp01Icon} strokeWidth={2} />
+            <HugeiconsIcon icon={ArrowUpIcon} strokeWidth={2} />
         </SelectPrimitive.ScrollUpButton>;
     }
 
@@ -110,7 +110,7 @@ cl {
             data-slot="select-scroll-down-button"
             className={cn("bg-popover z-10 flex cursor-default items-center justify-center py-1 [&_svg:not([class*='size-'])]:size-4", props.className)}
         >
-            <HugeiconsIcon icon={ArrowDown01Icon} strokeWidth={2} />
+            <HugeiconsIcon icon={ArrowDownIcon} strokeWidth={2} />
         </SelectPrimitive.ScrollDownButton>;
     }
 }
