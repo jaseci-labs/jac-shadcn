@@ -44,8 +44,18 @@ cl import from .ui.spinner { Spinner }
 cl import from .ui.table { Table, TableHeader, TableBody, TableFooter, TableRow, TableHead, TableCell, TableCaption }
 cl import from .ui.toggle { Toggle }
 cl import from ".ui.toggle-group" { ToggleGroup, ToggleGroupItem }
-cl import from .ui.sonner { Toaster }
-cl import from sonner { toast }
+cl import from ".ui.button-group" { ButtonGroup, ButtonGroupText, ButtonGroupSeparator }
+cl import from .ui.empty { Empty, EmptyHeader, EmptyMedia, EmptyTitle, EmptyDescription, EmptyContent }
+cl import from .ui.kbd { Kbd, KbdGroup }
+cl import from ".ui.native-select" { NativeSelect, NativeSelectOption }
+cl import from .ui.item { Item, ItemGroup, ItemMedia, ItemContent, ItemTitle, ItemDescription, ItemActions, ItemSeparator }
+cl import from .ui.calendar { Calendar }
+cl import from .ui.carousel { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext }
+cl import from .ui.chart { ChartContainer, ChartTooltip, ChartTooltipContent, ChartLegend, ChartLegendContent }
+cl import from .ui.command { Command, CommandDialog, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList, CommandSeparator, CommandShortcut }
+cl import from ".ui.otp-input" { InputOTP, InputOTPGroup, InputOTPSlot, InputOTPSeparator }
+cl import from .ui.sidebar { Sidebar, SidebarContent, SidebarFooter, SidebarGroup, SidebarGroupContent, SidebarGroupLabel, SidebarHeader, SidebarInset, SidebarMenu, SidebarMenuButton, SidebarMenuItem, SidebarProvider, SidebarTrigger }
+cl import from "recharts" { Bar, BarChart, CartesianGrid, XAxis, YAxis, Line, LineChart, Area, AreaChart, Pie, PieChart, RadialBar, RadialBarChart }
 
 glob _frameworks: list = ["Next.js", "SvelteKit", "Nuxt.js", "Remix", "Astro"];
 
@@ -1529,21 +1539,6 @@ cl {
         </div>;
     }
 
-    def:pub SonnerShowcase() -> JsxElement {
-        return <div className="space-y-8">
-            <ShowcaseHeader title="Sonner" description="An opinionated toast component for React." name="sonner" />
-            <ShowcaseSection title="Toast Variants" className="flex-wrap gap-3">
-                <Button variant="outline" onClick={lambda -> None { toast("Event has been created."); }}>Default</Button>
-                <Button variant="outline" onClick={lambda -> None { toast.success("Profile updated."); }}>Success</Button>
-                <Button variant="outline" onClick={lambda -> None { toast.error("Something went wrong."); }}>Error</Button>
-                <Button variant="outline" onClick={lambda -> None { toast.warning("You are running low."); }}>Warning</Button>
-                <Button variant="outline" onClick={lambda -> None { toast.info("New version available."); }}>Info</Button>
-                <Button variant="outline" onClick={lambda -> None { toast.loading("Processing..."); }}>Loading</Button>
-            </ShowcaseSection>
-            <Toaster />
-        </div>;
-    }
-
     def:pub SpinnerShowcase() -> JsxElement {
         return <div className="space-y-8">
             <ShowcaseHeader title="Spinner" description="An animated loading indicator." name="spinner" />
@@ -1676,6 +1671,434 @@ cl {
         </div>;
     }
 
+    def:pub ButtonGroupShowcase() -> JsxElement {
+        return <div className="space-y-8">
+            <ShowcaseHeader title="Button Group" description="A group of buttons that are visually connected." name="button-group" />
+            <ShowcaseSection title="Default">
+                <ButtonGroup>
+                    <Button variant="outline">Left</Button>
+                    <Button variant="outline">Center</Button>
+                    <Button variant="outline">Right</Button>
+                </ButtonGroup>
+            </ShowcaseSection>
+            <Separator />
+            <ShowcaseSection title="With Text Addon">
+                <ButtonGroup>
+                    <ButtonGroupText>https://</ButtonGroupText>
+                    <Input placeholder="yoursite.com" className="w-48" />
+                    <Button>Go</Button>
+                </ButtonGroup>
+            </ShowcaseSection>
+            <Separator />
+            <ShowcaseSection title="Vertical">
+                <ButtonGroup orientation="vertical">
+                    <Button variant="outline">Top</Button>
+                    <Button variant="outline">Middle</Button>
+                    <Button variant="outline">Bottom</Button>
+                </ButtonGroup>
+            </ShowcaseSection>
+        </div>;
+    }
+
+    def:pub EmptyShowcase() -> JsxElement {
+        return <div className="space-y-8">
+            <ShowcaseHeader title="Empty" description="A component to display empty state with optional media, title, and description." name="empty" />
+            <ShowcaseSection title="Default">
+                <div className="w-full max-w-sm border rounded-lg p-8">
+                    <Empty>
+                        <EmptyHeader>
+                            <EmptyMedia>
+                                <HugeiconsIcon icon={SearchIcon} size={32} className="text-muted-foreground" />
+                            </EmptyMedia>
+                            <EmptyTitle className="mt-3 text-base font-semibold">No results found</EmptyTitle>
+                            <EmptyDescription className="mt-1 text-sm">Try adjusting your search or filters.</EmptyDescription>
+                        </EmptyHeader>
+                        <EmptyContent className="mt-4">
+                            <Button size="sm">Clear filters</Button>
+                        </EmptyContent>
+                    </Empty>
+                </div>
+            </ShowcaseSection>
+        </div>;
+    }
+
+    def:pub KbdShowcase() -> JsxElement {
+        return <div className="space-y-8">
+            <ShowcaseHeader title="Kbd" description="Keyboard shortcut display component." name="kbd" />
+            <ShowcaseSection title="Single Keys" className="flex-wrap gap-3 items-center">
+                <Kbd>⌘</Kbd>
+                <Kbd>K</Kbd>
+                <Kbd>Enter</Kbd>
+                <Kbd>Esc</Kbd>
+                <Kbd>Tab</Kbd>
+            </ShowcaseSection>
+            <Separator />
+            <ShowcaseSection title="Combinations" className="flex-wrap gap-4 items-center">
+                <KbdGroup>
+                    <Kbd>⌘</Kbd>
+                    <Kbd>K</Kbd>
+                </KbdGroup>
+                <KbdGroup>
+                    <Kbd>Ctrl</Kbd>
+                    <Kbd>Shift</Kbd>
+                    <Kbd>P</Kbd>
+                </KbdGroup>
+                <KbdGroup>
+                    <Kbd>⌥</Kbd>
+                    <Kbd>Enter</Kbd>
+                </KbdGroup>
+            </ShowcaseSection>
+        </div>;
+    }
+
+    def:pub NativeSelectShowcase() -> JsxElement {
+        return <div className="space-y-8">
+            <ShowcaseHeader title="Native Select" description="A styled native HTML select element." name="native-select" />
+            <ShowcaseSection title="Default">
+                <NativeSelect>
+                    <NativeSelectOption value="">Select a fruit...</NativeSelectOption>
+                    <NativeSelectOption value="apple">Apple</NativeSelectOption>
+                    <NativeSelectOption value="banana">Banana</NativeSelectOption>
+                    <NativeSelectOption value="cherry">Cherry</NativeSelectOption>
+                    <NativeSelectOption value="date">Date</NativeSelectOption>
+                </NativeSelect>
+            </ShowcaseSection>
+            <Separator />
+            <ShowcaseSection title="Small">
+                <NativeSelect size="sm">
+                    <NativeSelectOption value="">Small select...</NativeSelectOption>
+                    <NativeSelectOption value="a">Option A</NativeSelectOption>
+                    <NativeSelectOption value="b">Option B</NativeSelectOption>
+                </NativeSelect>
+            </ShowcaseSection>
+            <Separator />
+            <ShowcaseSection title="Disabled">
+                <NativeSelect disabled={True}>
+                    <NativeSelectOption value="">Disabled select</NativeSelectOption>
+                </NativeSelect>
+            </ShowcaseSection>
+        </div>;
+    }
+
+    def:pub ItemShowcase() -> JsxElement {
+        users = [
+            {"name": "Alice Johnson", "email": "alice@example.com", "role": "Admin"},
+            {"name": "Bob Smith", "email": "bob@example.com", "role": "Editor"},
+            {"name": "Carol White", "email": "carol@example.com", "role": "Viewer"}
+        ];
+        return <div className="space-y-8">
+            <ShowcaseHeader title="Item" description="A flexible list item component with media, content, and actions." name="item" />
+            <ShowcaseSection title="Default" className="flex-col w-full max-w-sm">
+                <ItemGroup>
+                    {users.map(lambda u: dict -> Any {
+                        return <Item key={u["email"]}>
+                            <ItemContent>
+                                <ItemTitle>{u["name"]}</ItemTitle>
+                                <ItemDescription>{u["email"]}</ItemDescription>
+                            </ItemContent>
+                            <ItemActions>
+                                <Badge variant="secondary">{u["role"]}</Badge>
+                            </ItemActions>
+                        </Item>;
+                    })}
+                </ItemGroup>
+            </ShowcaseSection>
+            <Separator />
+            <ShowcaseSection title="Variants" className="flex-col gap-2 w-full max-w-sm">
+                <Item variant="default"><ItemContent><ItemTitle>Default item</ItemTitle></ItemContent></Item>
+                <Item variant="muted"><ItemContent><ItemTitle>Muted item</ItemTitle></ItemContent></Item>
+                <Item variant="outline"><ItemContent><ItemTitle>Outline item</ItemTitle></ItemContent></Item>
+            </ShowcaseSection>
+        </div>;
+    }
+
+    def:pub CalendarShowcase() -> JsxElement {
+        return <div className="space-y-8">
+            <ShowcaseHeader title="Calendar" description="A date picker calendar component built on react-day-picker." name="calendar" />
+            <ShowcaseSection title="Default" className="flex-col items-start">
+                <Calendar mode="single" className="rounded-md border" />
+            </ShowcaseSection>
+        </div>;
+    }
+
+    def:pub CarouselShowcase() -> JsxElement {
+        slides = [1, 2, 3, 4, 5];
+        return <div className="space-y-8">
+            <ShowcaseHeader title="Carousel" description="A carousel component with Embla Carousel." name="carousel" />
+            <ShowcaseSection title="Default">
+                <Carousel className="w-full max-w-xs">
+                    <CarouselContent>
+                        {slides.map(lambda(i: Any) -> Any {
+                            return <CarouselItem key={i}>
+                                <div className="p-1">
+                                    <Card>
+                                        <CardContent className="flex aspect-square items-center justify-center p-6">
+                                            <span className="text-4xl font-semibold">{i}</span>
+                                        </CardContent>
+                                    </Card>
+                                </div>
+                            </CarouselItem>;
+                        })}
+                    </CarouselContent>
+                    <CarouselPrevious />
+                    <CarouselNext />
+                </Carousel>
+            </ShowcaseSection>
+        </div>;
+    }
+
+    def:pub ChartShowcase() -> JsxElement {
+        monthData = [
+            {month: "January", desktop: 186, mobile: 80},
+            {month: "February", desktop: 305, mobile: 200},
+            {month: "March", desktop: 237, mobile: 120},
+            {month: "April", desktop: 73, mobile: 190},
+            {month: "May", desktop: 209, mobile: 130},
+            {month: "June", desktop: 214, mobile: 140}
+        ];
+        desktopConfig = {desktop: {label: "Desktop", color: "var(--chart-1)"}};
+        multiConfig = {
+            desktop: {label: "Desktop", color: "var(--chart-1)"},
+            mobile: {label: "Mobile", color: "var(--chart-2)"}
+        };
+        browserData = [
+            {browser: "chrome", visitors: 275, fill: "var(--color-chrome)"},
+            {browser: "safari", visitors: 200, fill: "var(--color-safari)"},
+            {browser: "firefox", visitors: 287, fill: "var(--color-firefox)"},
+            {browser: "edge", visitors: 173, fill: "var(--color-edge)"},
+            {browser: "other", visitors: 190, fill: "var(--color-other)"}
+        ];
+        browserConfig = {
+            visitors: {label: "Visitors"},
+            chrome: {label: "Chrome", color: "var(--chart-1)"},
+            safari: {label: "Safari", color: "var(--chart-2)"},
+            firefox: {label: "Firefox", color: "var(--chart-3)"},
+            edge: {label: "Edge", color: "var(--chart-4)"},
+            other: {label: "Other", color: "var(--chart-5)"}
+        };
+        shortMonth = lambda(v: Any) -> Any { return v.slice(0, 3); };
+        return <div className="space-y-8">
+            <ShowcaseHeader title="Chart" description="Beautiful charts built with Recharts." name="chart" />
+
+            <ShowcaseSection title="Bar Chart" className="flex-col w-full">
+                <Card className="w-full">
+                    <CardHeader>
+                        <CardTitle>Bar Chart - Grouped</CardTitle>
+                        <CardDescription>Desktop vs Mobile — January - June 2024</CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                        <ChartContainer config={multiConfig} className="min-h-[200px] w-full">
+                            <BarChart accessibilityLayer={true} data={monthData} margin={{left: 12, right: 12}}>
+                                <CartesianGrid vertical={false} />
+                                <XAxis dataKey="month" tickLine={false} axisLine={false} tickMargin={8} tickFormatter={shortMonth} />
+                                <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
+                                <ChartLegend content={<ChartLegendContent />} />
+                                <Bar dataKey="desktop" fill="var(--color-desktop)" radius={4} />
+                                <Bar dataKey="mobile" fill="var(--color-mobile)" radius={4} />
+                            </BarChart>
+                        </ChartContainer>
+                    </CardContent>
+                </Card>
+            </ShowcaseSection>
+
+            <Separator />
+
+            <ShowcaseSection title="Stacked Bar Chart" className="flex-col w-full">
+                <Card className="w-full">
+                    <CardHeader>
+                        <CardTitle>Bar Chart - Stacked + Legend</CardTitle>
+                        <CardDescription>January - June 2024</CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                        <ChartContainer config={multiConfig} className="min-h-[200px] w-full">
+                            <BarChart accessibilityLayer={true} data={monthData}>
+                                <CartesianGrid vertical={false} />
+                                <XAxis dataKey="month" tickLine={false} tickMargin={10} axisLine={false} tickFormatter={shortMonth} />
+                                <ChartTooltip content={<ChartTooltipContent hideLabel={true} />} />
+                                <ChartLegend content={<ChartLegendContent />} />
+                                <Bar dataKey="desktop" stackId="a" fill="var(--color-desktop)" radius={[0, 0, 4, 4]} />
+                                <Bar dataKey="mobile" stackId="a" fill="var(--color-mobile)" radius={[4, 4, 0, 0]} />
+                            </BarChart>
+                        </ChartContainer>
+                    </CardContent>
+                </Card>
+            </ShowcaseSection>
+
+            <Separator />
+
+            <ShowcaseSection title="Line Chart" className="flex-col w-full">
+                <Card className="w-full">
+                    <CardHeader>
+                        <CardTitle>Line Chart</CardTitle>
+                        <CardDescription>January - June 2024</CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                        <ChartContainer config={multiConfig} className="min-h-[200px] w-full">
+                            <LineChart accessibilityLayer={true} data={monthData} margin={{left: 12, right: 12}}>
+                                <CartesianGrid vertical={false} />
+                                <XAxis dataKey="month" tickLine={false} axisLine={false} tickMargin={8} tickFormatter={shortMonth} />
+                                <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
+                                <ChartLegend content={<ChartLegendContent />} />
+                                <Line dataKey="desktop" type={"monotone"} stroke="var(--color-desktop)" strokeWidth={2} dot={{r: 4}} activeDot={{r: 6}} />
+                                <Line dataKey="mobile" type={"monotone"} stroke="var(--color-mobile)" strokeWidth={2} dot={{r: 4}} activeDot={{r: 6}} />
+                            </LineChart>
+                        </ChartContainer>
+                    </CardContent>
+                </Card>
+            </ShowcaseSection>
+
+            <Separator />
+
+            <ShowcaseSection title="Area Chart" className="flex-col w-full">
+                <Card className="w-full">
+                    <CardHeader>
+                        <CardTitle>Area Chart - Gradient</CardTitle>
+                        <CardDescription>January - June 2024</CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                        <ChartContainer config={multiConfig} className="min-h-[200px] w-full">
+                            <AreaChart accessibilityLayer={true} data={monthData} margin={{left: 12, right: 12}}>
+                                <CartesianGrid vertical={false} />
+                                <XAxis dataKey="month" tickLine={false} axisLine={false} tickMargin={8} tickFormatter={shortMonth} />
+                                <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
+                                <defs>
+                                    <linearGradient id="fillDesktop" x1="0" y1="0" x2="0" y2="1">
+                                        <stop offset="5%" stopColor="var(--color-desktop)" stopOpacity={0.8} />
+                                        <stop offset="95%" stopColor="var(--color-desktop)" stopOpacity={0.1} />
+                                    </linearGradient>
+                                    <linearGradient id="fillMobile" x1="0" y1="0" x2="0" y2="1">
+                                        <stop offset="5%" stopColor="var(--color-mobile)" stopOpacity={0.8} />
+                                        <stop offset="95%" stopColor="var(--color-mobile)" stopOpacity={0.1} />
+                                    </linearGradient>
+                                </defs>
+                                <Area dataKey="mobile" type="natural" fill="url(#fillMobile)" fillOpacity={0.4} stroke="var(--color-mobile)" stackId="a" />
+                                <Area dataKey="desktop" type="natural" fill="url(#fillDesktop)" fillOpacity={0.4} stroke="var(--color-desktop)" stackId="a" />
+                            </AreaChart>
+                        </ChartContainer>
+                    </CardContent>
+                </Card>
+            </ShowcaseSection>
+
+            <Separator />
+
+            <ShowcaseSection title="Pie Chart" className="flex-col w-full">
+                <Card className="w-full">
+                    <CardHeader className="items-center pb-0">
+                        <CardTitle>Pie Chart - Donut</CardTitle>
+                        <CardDescription>Browser market share 2024</CardDescription>
+                    </CardHeader>
+                    <CardContent className="flex-1 pb-0">
+                        <ChartContainer config={browserConfig} className="mx-auto aspect-square max-h-[250px]">
+                            <PieChart>
+                                <ChartTooltip cursor={false} content={<ChartTooltipContent hideLabel={true} />} />
+                                <Pie data={browserData} dataKey="visitors" nameKey="browser" innerRadius={60} strokeWidth={5} />
+                            </PieChart>
+                        </ChartContainer>
+                    </CardContent>
+                </Card>
+            </ShowcaseSection>
+
+            <Separator />
+
+            <ShowcaseSection title="Radial Chart" className="flex-col w-full">
+                <Card className="w-full">
+                    <CardHeader className="items-center pb-0">
+                        <CardTitle>Radial Bar Chart</CardTitle>
+                        <CardDescription>Browser market share 2024</CardDescription>
+                    </CardHeader>
+                    <CardContent className="flex-1 pb-0">
+                        <ChartContainer config={browserConfig} className="mx-auto aspect-square max-h-[250px]">
+                            <RadialBarChart data={browserData} innerRadius={30} outerRadius={110}>
+                                <ChartTooltip cursor={false} content={<ChartTooltipContent hideLabel={true} nameKey="browser" />} />
+                                <RadialBar dataKey="visitors" background={true} />
+                            </RadialBarChart>
+                        </ChartContainer>
+                    </CardContent>
+                </Card>
+            </ShowcaseSection>
+        </div>;
+    }
+
+    def:pub CommandShowcase() -> JsxElement {
+        return <div className="space-y-8">
+            <ShowcaseHeader title="Command" description="Fast, composable command palette built on cmdk." name="command" />
+            <ShowcaseSection title="Default" className="flex-col">
+                <Command className="rounded-lg border shadow-md md:min-w-[450px]">
+                    <CommandInput placeholder="Type a command or search..." />
+                    <CommandList>
+                        <CommandEmpty>No results found.</CommandEmpty>
+                        <CommandGroup heading="Suggestions">
+                            <CommandItem>Calendar</CommandItem>
+                            <CommandItem>Search</CommandItem>
+                            <CommandItem>Settings</CommandItem>
+                        </CommandGroup>
+                        <CommandSeparator />
+                        <CommandGroup heading="Settings">
+                            <CommandItem>Profile <CommandShortcut>⌘P</CommandShortcut></CommandItem>
+                            <CommandItem>Billing <CommandShortcut>⌘B</CommandShortcut></CommandItem>
+                        </CommandGroup>
+                    </CommandList>
+                </Command>
+            </ShowcaseSection>
+        </div>;
+    }
+
+    def:pub InputOTPShowcase() -> JsxElement {
+        return <div className="space-y-8">
+            <ShowcaseHeader title="Input OTP" description="Accessible one-time password component." name="input-otp" />
+            <ShowcaseSection title="Default">
+                <InputOTP maxLength={6}>
+                    <InputOTPGroup>
+                        <InputOTPSlot index={0} />
+                        <InputOTPSlot index={1} />
+                        <InputOTPSlot index={2} />
+                    </InputOTPGroup>
+                    <InputOTPSeparator />
+                    <InputOTPGroup>
+                        <InputOTPSlot index={3} />
+                        <InputOTPSlot index={4} />
+                        <InputOTPSlot index={5} />
+                    </InputOTPGroup>
+                </InputOTP>
+            </ShowcaseSection>
+        </div>;
+    }
+
+    def:pub SidebarShowcase() -> JsxElement {
+        navItems = [
+            {"title": "Home", "url": "#"},
+            {"title": "Dashboard", "url": "#"},
+            {"title": "Settings", "url": "#"}
+        ];
+        return <div className="space-y-8">
+            <ShowcaseHeader title="Sidebar" description="A composable, themeable sidebar component." name="sidebar" />
+            <ShowcaseSection title="Default" className="flex-col w-full">
+                <SidebarProvider style={{"--sidebar-width": "200px"}}>
+                    <Sidebar collapsible="none" className="border">
+                        <SidebarHeader className="p-2 font-semibold text-sm">My App</SidebarHeader>
+                        <SidebarContent>
+                            <SidebarGroup>
+                                <SidebarGroupLabel>Navigation</SidebarGroupLabel>
+                                <SidebarGroupContent>
+                                    <SidebarMenu>
+                                        {navItems.map(lambda(item: Any) -> Any {
+                                            return <SidebarMenuItem key={item["title"]}>
+                                                <SidebarMenuButton asChild={true}>
+                                                    <a href={item["url"]}>{item["title"]}</a>
+                                                </SidebarMenuButton>
+                                            </SidebarMenuItem>;
+                                        })}
+                                    </SidebarMenu>
+                                </SidebarGroupContent>
+                            </SidebarGroup>
+                        </SidebarContent>
+                    </Sidebar>
+                    <SidebarInset className="p-4 text-sm text-muted-foreground">Main content area</SidebarInset>
+                </SidebarProvider>
+            </ShowcaseSection>
+        </div>;
+    }
+
     def:pub ComponentShowcase(props: Any) -> JsxElement {
         name = props.name;
         if name == "button" { return <ButtonShowcase />; }
@@ -1716,11 +2139,21 @@ cl {
         if name == "sheet" { return <SheetShowcase />; }
         if name == "skeleton" { return <SkeletonShowcase />; }
         if name == "slider" { return <SliderShowcase />; }
-        if name == "sonner" { return <SonnerShowcase />; }
         if name == "spinner" { return <SpinnerShowcase />; }
         if name == "table" { return <TableShowcase />; }
         if name == "toggle" { return <ToggleShowcase />; }
         if name == "toggle-group" { return <ToggleGroupShowcase />; }
+        if name == "button-group" { return <ButtonGroupShowcase />; }
+        if name == "empty" { return <EmptyShowcase />; }
+        if name == "kbd" { return <KbdShowcase />; }
+        if name == "native-select" { return <NativeSelectShowcase />; }
+        if name == "item" { return <ItemShowcase />; }
+        if name == "calendar" { return <CalendarShowcase />; }
+        if name == "carousel" { return <CarouselShowcase />; }
+        if name == "chart" { return <ChartShowcase />; }
+        if name == "command" { return <CommandShowcase />; }
+        if name == "input-otp" { return <InputOTPShowcase />; }
+        if name == "sidebar" { return <SidebarShowcase />; }
         return <div className="text-muted-foreground text-sm">Component not found.</div>;
     }
 }

@@ -282,15 +282,6 @@
       ],
       "peerComponents": []
     },
-    "sonner": {
-      "file": "sonner.cl.jac",
-      "npmDeps": [
-        "sonner",
-        "@hugeicons/react",
-        "@hugeicons/core-free-icons"
-      ],
-      "peerComponents": []
-    },
     "pagination": {
       "file": "pagination.cl.jac",
       "npmDeps": [
@@ -342,6 +333,93 @@
         "radix-ui"
       ],
       "peerComponents": []
+    },
+    "button-group": {
+      "file": "button-group.cl.jac",
+      "npmDeps": [
+        "class-variance-authority",
+        "radix-ui"
+      ],
+      "peerComponents": ["separator"]
+    },
+    "empty": {
+      "file": "empty.cl.jac",
+      "npmDeps": [
+        "class-variance-authority"
+      ],
+      "peerComponents": []
+    },
+    "kbd": {
+      "file": "kbd.cl.jac",
+      "npmDeps": [],
+      "peerComponents": []
+    },
+    "native-select": {
+      "file": "native-select.cl.jac",
+      "npmDeps": [
+        "@hugeicons/react",
+        "@hugeicons/core-free-icons"
+      ],
+      "peerComponents": []
+    },
+    "item": {
+      "file": "item.cl.jac",
+      "npmDeps": [
+        "class-variance-authority",
+        "radix-ui"
+      ],
+      "peerComponents": ["separator"]
+    },
+    "calendar": {
+      "file": "calendar.cl.jac",
+      "npmDeps": [
+        "react-day-picker",
+        "@hugeicons/react",
+        "@hugeicons/core-free-icons"
+      ],
+      "peerComponents": ["button"]
+    },
+    "carousel": {
+      "file": "carousel.cl.jac",
+      "npmDeps": [
+        "embla-carousel-react",
+        "@hugeicons/react",
+        "@hugeicons/core-free-icons"
+      ],
+      "peerComponents": []
+    },
+    "chart": {
+      "file": "chart.cl.jac",
+      "npmDeps": [
+        "recharts"
+      ],
+      "peerComponents": []
+    },
+    "command": {
+      "file": "command.cl.jac",
+      "npmDeps": [
+        "cmdk",
+        "@hugeicons/react",
+        "@hugeicons/core-free-icons"
+      ],
+      "peerComponents": ["dialog"]
+    },
+    "input-otp": {
+      "file": "otp-input.cl.jac",
+      "npmDeps": [
+        "input-otp"
+      ],
+      "peerComponents": []
+    },
+    "sidebar": {
+      "file": "sidebar.cl.jac",
+      "npmDeps": [
+        "class-variance-authority",
+        "@radix-ui/react-slot",
+        "@hugeicons/react",
+        "@hugeicons/core-free-icons"
+      ],
+      "peerComponents": ["button", "input", "separator", "sheet", "skeleton", "tooltip"]
     }
   },
   "sharedDeps": {
