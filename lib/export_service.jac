@@ -349,8 +349,6 @@ def build_jac_toml_config(font_npm: str, shadcn_config: dict) -> dict {
         "tw-animate-css": "^1.4.0",
         "radix-ui": "^1.4.3",
         "@base-ui/react": "^1.2.0",
-        "@hugeicons/core-free-icons": "^3.1.1",
-        "@hugeicons/react": "^1.1.5",
         "shadcn": "^3.8.5"
     };
     npm_deps[font_npm] = "*";
