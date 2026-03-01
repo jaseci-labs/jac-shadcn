@@ -470,7 +470,7 @@ cl {
 
         return <aside
             data-slot="app-sidebar"
-            className="sticky top-0 z-30 hidden pl-2 h-screen w-52 shrink-0 flex-col border-l border-border/50 xl:flex"
+            className="sticky top-0 z-30 hidden pl-2 h-[calc(100vh-3.5rem)] w-52 shrink-0 flex-col border-l border-border/50 xl:flex"
         >
             <div className="flex flex-1 flex-col overflow-y-auto no-scrollbar gap-y-6">
                 <div className="p-3 pb-1">

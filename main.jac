@@ -6,6 +6,8 @@ import from http { HTTPMethod }
 cl import from ".components.item-explorer" { ItemExplorer }
 cl import from ".components.preview-panel" { PreviewPanel }
 cl import from ".components.customizer" { Customizer }
+cl import from ".components.site-header" { SiteHeader }
+cl import from ".components.site-footer" { SiteFooter }
 cl import from ".lib.design-system-provider" { DesignSystemProvider }
 cl import ".global.css";
 
@@ -18,13 +20,23 @@ cl {
         };
 
         return <DesignSystemProvider>
-            <div className="flex min-h-screen">
-                <ItemExplorer
+            <div className="flex min-h-screen flex-col">
+                <SiteHeader
                     selectedItem={selectedItem}
                     onSelectItem={handleSelectItem}
                 />
-                <PreviewPanel selectedItem={selectedItem} />
-                <Customizer />
+                <div className="flex flex-1">
+                    <ItemExplorer
+                        selectedItem={selectedItem}
+                        onSelectItem={handleSelectItem}
+                    />
+                    <PreviewPanel
+                        selectedItem={selectedItem}
+                        onSelectItem={handleSelectItem}
+                    />
+                    <Customizer />
+                </div>
+                <SiteFooter />
             </div>
         </DesignSystemProvider>;
     }
