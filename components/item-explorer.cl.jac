@@ -1,5 +1,5 @@
 cl import from ..lib.utils { cn }
-cl import from react { useState }
+cl import from react { useState, useMemo }
 
 glob EXPLORER_ITEMS: list = [
     {"name": "home", "title": "Home", "group": "Blocks"},
@@ -64,32 +64,79 @@ cl {
     def:pub ItemExplorer(props: Any) -> JsxElement {
         selectedItem = props.selectedItem or "home";
         onSelect = props.onSelectItem;
+        isMobile = props.mobile or False;
+        has searchQuery: str = "";
+
+        filteredItems = useMemo(lambda -> Any {
+            if not searchQuery or searchQuery.trim() == "" {
+                return EXPLORER_ITEMS;
+            }
+            q = searchQuery.toLowerCase();
+            result = [];
+            for item in EXPLORER_ITEMS {
+                if item["title"].toLowerCase().indexOf(q) >= 0 or item["name"].toLowerCase().indexOf(q) >= 0 {
+                    result.push(item);
+                }
+            }
+            return result;
+        }, [searchQuery]);
+
+        wrapperClass = isMobile
+            and "flex flex-col h-full"
+            or "sticky top-0 z-30 hidden h-[calc(100vh-3.5rem)] w-48 shrink-0 flex-col border-r border-border/50 xl:flex";
 
         return <aside
             data-slot="app-sidebar"
-            className="sticky top-0 z-30 hidden h-screen w-44 shrink-0 flex-col overflow-y-auto border-r border-border/50 p-4 pt-5 xl:flex"
+            className={wrapperClass}
         >
-            {_groups.map(lambda(group: Any) -> Any {
-                groupItems = [];
-                for item in EXPLORER_ITEMS {
-                    if item["group"] == group {
-                        groupItems.push(item);
-                    }
-                }
-                return <ExplorerGroup
-                    key={group}
-                    title={group}
-                    items={groupItems}
-                    selectedItem={selectedItem}
-                    onSelect={onSelect}
-                />;
-            })}
+            <div className="p-3 pb-2">
+                <div className="relative">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="absolute left-2.5 top-1/2 -translate-y-1/2 text-muted-foreground">
+                        <circle cx="11" cy="11" r="8" />
+                        <path d="m21 21-4.3-4.3" />
+                    </svg>
+                    <input
+                        type="text"
+                        placeholder="Search..."
+                        value={searchQuery}
+                        onChange={lambda(e: Any) -> None { searchQuery = e.target.value; }}
+                        className="w-full rounded-md border border-border/50 bg-transparent px-2 py-1.5 pl-8 text-xs text-foreground placeholder:text-muted-foreground focus:border-ring focus:outline-none"
+                    />
+                </div>
+            </div>
+
+            <div className="relative flex-1 overflow-hidden">
+                <div className="pointer-events-none absolute inset-x-0 top-0 z-10 h-4 bg-gradient-to-b from-[var(--background)] to-transparent" />
+                <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 h-8 bg-gradient-to-t from-[var(--background)] to-transparent" />
+
+                <div className="h-full overflow-y-auto no-scrollbar px-3 pt-1 pb-6">
+                    {_groups.map(lambda(group: Any) -> Any {
+                        groupItems = [];
+                        for item in filteredItems {
+                            if item["group"] == group {
+                                groupItems.push(item);
+                            }
+                        }
+                        if groupItems.length == 0 {
+                            return None;
+                        }
+                        return <ExplorerGroup
+                            key={group}
+                            title={group}
+                            items={groupItems}
+                            selectedItem={selectedItem}
+                            onSelect={onSelect}
+                        />;
+                    })}
+                    {filteredItems.length == 0 and <div className="text-xs text-muted-foreground text-center py-4">No components found</div>}
+                </div>
+            </div>
         </aside>;
     }
 
     def:pub ExplorerGroup(props: Any) -> JsxElement {
         return <div className="mb-3">
-            <div className="flex items-center gap-1 pb-1.5 text-[0.8rem] font-medium">
+            <div className="flex items-center gap-1 pb-1.5 text-[0.8rem] font-medium text-foreground">
                 <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-muted-foreground">
                     <polyline points="6 9 12 15 18 9"></polyline>
                 </svg>
@@ -103,14 +150,12 @@ cl {
                     itemName = item["name"];
                     return <div key={item["name"]} className="relative">
                         <div className={cn(
-                            "absolute top-1/2 -left-2 h-px w-2 border-t border-border/50",
-                            isLast and "bg-[oklch(0.985_0_0)]"
+                            "absolute top-1/2 -left-2 h-px w-2 border-t border-border/50"
                         )} />
-                        {isLast and <div className="absolute top-1/2 -bottom-1 -left-[9px] w-1 bg-[oklch(0.985_0_0)]" />}
                         <button
                             onClick={lambda -> None { selectHandler.call(None, itemName); }}
                             className={cn(
-                                "w-full cursor-pointer rounded-md px-2 py-1 text-left text-[0.8rem] font-normal transition-colors",
+                                "w-full cursor-pointer rounded-md px-2 py-1 text-left text-[0.8rem] font-normal transition-colors bg-transparent border-none outline-none",
                                 isActive and "bg-accent text-accent-foreground font-medium",
                                 not isActive and "text-muted-foreground hover:bg-muted hover:text-foreground"
                             )}

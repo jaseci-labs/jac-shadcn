@@ -21,7 +21,7 @@ No separate build step. The Jac compiler handles transpilation to JS + Vite bund
 
 ```
 jac-shadcn/
-├── main.jac                          # Entry point — app + 3 REST endpoints
+├── main.jac                          # Entry point — app + 3 REST endpoints + mobile sheets
 ├── jac.toml                          # Project config (npm deps, Vite plugins, Tailwind)
 ├── global.css                        # Tailwind CSS + shadcn theme variables (oklch)
 ├── styles/                           # 5 style CSS files (cn-* token definitions, ~327 per file)
@@ -34,11 +34,24 @@ jac-shadcn/
 │   ├── design-system-provider.cl.jac # React context — applies theme to DOM
 │   └── export_service.jac            # Server-side: parse CSS, resolve components, build jacpack
 ├── components/
-│   ├── customizer.cl.jac             # Right sidebar — 7 picker sub-components
+│   ├── customizer.cl.jac             # Right sidebar — 7 picker sub-components (desktop + mobile)
 │   ├── preview-panel.cl.jac          # Center — live component preview
-│   ├── item-explorer.cl.jac          # Left sidebar — component list
-│   ├── component-showcases.cl.jac    # Component demo cards
-│   └── ui/                           # UI components (button, card, dialog, etc.)
+│   ├── item-explorer.cl.jac          # Left sidebar — component list (desktop + mobile)
+│   ├── site-header.cl.jac            # Sticky navbar — hamburger + palette icons on mobile
+│   ├── site-footer.cl.jac            # Footer with links
+│   ├── home-page.cl.jac              # Landing page
+│   ├── showcases/                    # Split from monolithic component-showcases.cl.jac
+│   │   ├── shared.cl.jac             # ShowcaseSection, ShowcaseHeader, CopyCommand + helpers
+│   │   ├── router.cl.jac             # ComponentShowcase dispatcher (imports all categories)
+│   │   ├── form-controls.cl.jac      # Button, Checkbox, Switch, RadioGroup, Slider
+│   │   ├── form-inputs.cl.jac        # Input, Textarea, Select, Combobox, Field, InputGroup, Label, NativeSelect, InputOTP
+│   │   ├── overlay.cl.jac            # Dialog, AlertDialog, Sheet, Drawer, Popover, HoverCard, Tooltip, DropdownMenu, ContextMenu, Command
+│   │   ├── navigation.cl.jac         # Tabs, Accordion, Breadcrumb, Pagination, NavigationMenu, Menubar, Sidebar, Collapsible
+│   │   ├── display.cl.jac            # Card, Badge, Avatar, Table, Calendar, Carousel, ScrollArea, AspectRatio, Resizable
+│   │   ├── feedback.cl.jac           # Alert, Progress, Skeleton, Spinner, Empty
+│   │   ├── utility.cl.jac            # Separator, Toggle, ToggleGroup, ButtonGroup, Kbd, Item
+│   │   └── chart.cl.jac              # Chart (Recharts)
+│   └── ui/                           # 53 UI components (button, card, dialog, etc.)
 ├── data/                             # themes.json, registry.json
 └── docs/                             # tsx-to-jac-conversion-guide.md, jaccn-architecture.md
 ```
@@ -207,6 +220,6 @@ has theme: str = "light";
 4. Add corresponding `cn-*` definitions to all 5 style CSS files (`styles/style-*.css`)
 5. Verify resolution: 0 unresolved cn-* tokens across all styles
 6. Register in `data/registry.json` with npmDeps and peerComponents
-7. Add showcase in `components/component-showcases.cl.jac`
+7. Add showcase in the appropriate `components/showcases/<category>.cl.jac` file
 8. Add to export_service.jac component list for jacpack generation
 9. Test in customizer: renders correctly, all 5 style switches work
