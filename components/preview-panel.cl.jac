@@ -1,5 +1,4 @@
-cl import from ".component-example" { ComponentExample }
-cl import from ".component-showcases" { ComponentShowcase }
+cl import from ".showcases.router" { ComponentShowcase }
 cl import from ".home-page" { HomePage }
 cl import from "..lib.design-system-provider" { useDesignSystem }
 cl import from ..lib.utils { cn }

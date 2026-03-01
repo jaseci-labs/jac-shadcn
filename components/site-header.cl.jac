@@ -10,6 +10,8 @@ cl {
         has isDark: bool = False;
         selectedItem = props.selectedItem or "home";
         onSelectItem = props.onSelectItem;
+        onToggleNav = props.onToggleNav;
+        onToggleCustomizer = props.onToggleCustomizer;
 
         useEffect(lambda -> Any {
             isDark = document.documentElement.classList.contains("dark");
@@ -43,6 +45,17 @@ cl {
 
         return <header className="sticky top-0 z-50 w-full border-b border-border/50 bg-background/80 backdrop-blur-lg supports-[backdrop-filter]:bg-background/60">
             <div className="flex h-14 items-center px-4 lg:px-6">
+                <button
+                    onClick={lambda -> None { onToggleNav and onToggleNav.call(None); }}
+                    className="mr-2 inline-flex items-center justify-center rounded-md p-1.5 text-muted-foreground hover:text-foreground hover:bg-muted transition-colors cursor-pointer bg-transparent border-none outline-none xl:hidden"
+                    aria-label="Toggle navigation"
+                >
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <line x1="4" x2="20" y1="12" y2="12" />
+                        <line x1="4" x2="20" y1="6" y2="6" />
+                        <line x1="4" x2="20" y1="18" y2="18" />
+                    </svg>
+                </button>
                 <div className="flex items-center gap-2 mr-6">
                     <button
                         onClick={lambda -> None { onSelectItem and onSelectItem.call(None, "home"); }}
@@ -83,6 +96,23 @@ cl {
                 </nav>
 
                 <div className="ml-auto flex items-center gap-1.5">
+                    <button
+                        onClick={lambda -> None { onToggleCustomizer and onToggleCustomizer.call(None); }}
+                        className="inline-flex items-center justify-center rounded-md p-1.5 text-muted-foreground hover:text-foreground hover:bg-muted transition-colors cursor-pointer bg-transparent border-none outline-none xl:hidden"
+                        aria-label="Toggle customizer"
+                    >
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                            <circle cx="13.5" cy="6.5" r="2.5" />
+                            <path d="M17 6.5H22" />
+                            <path d="M2 6.5h8.5" />
+                            <circle cx="8.5" cy="12.5" r="2.5" />
+                            <path d="M2 12.5h3.5" />
+                            <path d="M12 12.5h10" />
+                            <circle cx="15.5" cy="18.5" r="2.5" />
+                            <path d="M19 18.5h3" />
+                            <path d="M2 18.5h11" />
+                        </svg>
+                    </button>
                     <TooltipProvider delayDuration={0}>
                         <Tooltip>
                             <TooltipTrigger className={buttonVariants().call(None, {"variant": "ghost", "size": "icon", "className": "size-8"})}>

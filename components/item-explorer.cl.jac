@@ -64,6 +64,7 @@ cl {
     def:pub ItemExplorer(props: Any) -> JsxElement {
         selectedItem = props.selectedItem or "home";
         onSelect = props.onSelectItem;
+        isMobile = props.mobile or False;
         has searchQuery: str = "";
 
         filteredItems = useMemo(lambda -> Any {
@@ -80,9 +81,13 @@ cl {
             return result;
         }, [searchQuery]);
 
+        wrapperClass = isMobile
+            and "flex flex-col h-full"
+            or "sticky top-0 z-30 hidden h-[calc(100vh-3.5rem)] w-48 shrink-0 flex-col border-r border-border/50 xl:flex";
+
         return <aside
             data-slot="app-sidebar"
-            className="sticky top-0 z-30 hidden h-[calc(100vh-3.5rem)] w-48 shrink-0 flex-col border-r border-border/50 xl:flex"
+            className={wrapperClass}
         >
             <div className="p-3 pb-2">
                 <div className="relative">

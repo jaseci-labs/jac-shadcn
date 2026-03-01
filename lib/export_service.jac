@@ -166,12 +166,13 @@ glob COMPONENT_FILES: list = [
     "textarea.cl.jac",
     "label.cl.jac",
     "separator.cl.jac",
-    "field.cl.jac",
-    "input-group.cl.jac",
-    "select.cl.jac",
-    "combobox.cl.jac",
-    "dropdown-menu.cl.jac",
-    "alert-dialog.cl.jac"
+    "tabs.cl.jac",
+    "switch.cl.jac",
+    "checkbox.cl.jac",
+    "progress.cl.jac",
+    "avatar.cl.jac",
+    "skeleton.cl.jac",
+    "alert.cl.jac"
 ];
 
 glob THEME_INLINE_COLORS: list = [
@@ -297,39 +298,123 @@ def generate_global_css(font_value: str, css_vars: dict) -> str {
 def generate_main_jac() -> str {
     lines: list = [];
     lines.append('cl import from ".components.ui.button" { Button }');
-    lines.append('cl import from ".components.ui.card" { Card, CardContent, CardHeader, CardTitle, CardDescription }');
+    lines.append('cl import from ".components.ui.card" { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter }');
     lines.append('cl import from ".components.ui.badge" { Badge }');
     lines.append('cl import from ".components.ui.input" { Input }');
     lines.append('cl import from ".components.ui.label" { Label }');
+    lines.append('cl import from ".components.ui.textarea" { Textarea }');
+    lines.append('cl import from ".components.ui.separator" { Separator }');
+    lines.append('cl import from ".components.ui.tabs" { Tabs, TabsList, TabsTrigger, TabsContent }');
+    lines.append('cl import from ".components.ui.switch" { Switch }');
+    lines.append('cl import from ".components.ui.checkbox" { Checkbox }');
+    lines.append('cl import from ".components.ui.progress" { Progress }');
+    lines.append('cl import from ".components.ui.avatar" { Avatar, AvatarFallback }');
+    lines.append('cl import from ".components.ui.skeleton" { Skeleton }');
+    lines.append('cl import from ".components.ui.alert" { Alert, AlertTitle, AlertDescription }');
     lines.append('cl import ".global.css";');
     lines.append("");
     lines.append("cl {");
     lines.append("    def:pub app() -> JsxElement {");
-    lines.append('        return <div className="min-h-screen bg-background text-foreground p-8">');
-    lines.append('            <div className="max-w-2xl mx-auto space-y-8">');
-    lines.append("                <Card>");
-    lines.append("                    <CardHeader>");
-    lines.append('                        <CardTitle>{"Welcome to Your Themed App"}</CardTitle>');
-    lines.append('                        <CardDescription>{"Built with jac-shadcn theme customizer."}</CardDescription>');
-    lines.append("                    </CardHeader>");
-    lines.append('                    <CardContent className="space-y-4">');
-    lines.append('                        <div className="flex gap-2">');
-    lines.append('                            <Button>{"Primary"}</Button>');
-    lines.append('                            <Button variant="outline">{"Outline"}</Button>');
-    lines.append('                            <Button variant="secondary">{"Secondary"}</Button>');
-    lines.append("                        </div>");
-    lines.append('                        <div className="flex gap-2">');
-    lines.append('                            <Badge>{"Default"}</Badge>');
-    lines.append('                            <Badge variant="secondary">{"Secondary"}</Badge>');
-    lines.append('                            <Badge variant="outline">{"Outline"}</Badge>');
-    lines.append("                        </div>");
-    lines.append('                        <div className="grid gap-2">');
-    lines.append('                            <Label htmlFor="email">{"Email"}</Label>');
-    lines.append('                            <Input id="email" type="email" placeholder="Enter your email" />');
-    lines.append("                        </div>");
-    lines.append("                    </CardContent>");
-    lines.append("                </Card>");
-    lines.append("            </div>");
+    lines.append('        has darkMode: bool = False;');
+    lines.append("");
+    lines.append('        return <div className="min-h-screen bg-background text-foreground">');
+    lines.append('            <header className="border-b border-border p-4">');
+    lines.append('                <div className="max-w-4xl mx-auto flex items-center justify-between">');
+    lines.append('                    <h1 className="text-lg font-bold">My App</h1>');
+    lines.append('                    <div className="flex items-center gap-2">');
+    lines.append('                        <label className="flex items-center gap-2 text-sm">');
+    lines.append('                            <Switch checked={darkMode} onCheckedChange={lambda(v: Any) -> None {');
+    lines.append('                                darkMode = v;');
+    lines.append('                                if v {');
+    lines.append('                                    document.documentElement.classList.add("dark");');
+    lines.append('                                } else {');
+    lines.append('                                    document.documentElement.classList.remove("dark");');
+    lines.append('                                }');
+    lines.append('                            }} />');
+    lines.append('                            Dark Mode');
+    lines.append('                        </label>');
+    lines.append('                    </div>');
+    lines.append('                </div>');
+    lines.append('            </header>');
+    lines.append('            <main className="max-w-4xl mx-auto p-6 space-y-8">');
+    lines.append('                <Alert>');
+    lines.append('                    <AlertTitle>{"Welcome!"}</AlertTitle>');
+    lines.append('                    <AlertDescription>Your themed project is ready. Start building!</AlertDescription>');
+    lines.append('                </Alert>');
+    lines.append("");
+    lines.append('                <Tabs defaultValue="overview">');
+    lines.append('                    <TabsList>');
+    lines.append('                        <TabsTrigger value="overview">Overview</TabsTrigger>');
+    lines.append('                        <TabsTrigger value="settings">Settings</TabsTrigger>');
+    lines.append('                    </TabsList>');
+    lines.append('                    <TabsContent value="overview">');
+    lines.append('                        <div className="grid gap-4 md:grid-cols-2 mt-4">');
+    lines.append('                            <Card>');
+    lines.append('                                <CardHeader>');
+    lines.append('                                    <CardTitle>Project Stats</CardTitle>');
+    lines.append('                                    <CardDescription>Your project overview</CardDescription>');
+    lines.append('                                </CardHeader>');
+    lines.append('                                <CardContent className="space-y-4">');
+    lines.append('                                    <div className="flex items-center justify-between text-sm">');
+    lines.append('                                        <span className="text-muted-foreground">Progress</span>');
+    lines.append('                                        <span className="font-medium">68%</span>');
+    lines.append('                                    </div>');
+    lines.append('                                    <Progress value={68} />');
+    lines.append('                                    <div className="flex gap-2">');
+    lines.append('                                        <Badge>Active</Badge>');
+    lines.append('                                        <Badge variant="secondary">v1.0</Badge>');
+    lines.append('                                        <Badge variant="outline">Jac</Badge>');
+    lines.append('                                    </div>');
+    lines.append('                                </CardContent>');
+    lines.append('                            </Card>');
+    lines.append('                            <Card>');
+    lines.append('                                <CardHeader>');
+    lines.append('                                    <CardTitle>Team</CardTitle>');
+    lines.append('                                    <CardDescription>Project members</CardDescription>');
+    lines.append('                                </CardHeader>');
+    lines.append('                                <CardContent className="space-y-3">');
+    lines.append('                                    <div className="flex items-center gap-3">');
+    lines.append('                                        <Avatar>');
+    lines.append('                                            <AvatarFallback>JM</AvatarFallback>');
+    lines.append('                                        </Avatar>');
+    lines.append('                                        <div>');
+    lines.append('                                            <p className="text-sm font-medium">Jason Mars</p>');
+    lines.append('                                            <p className="text-xs text-muted-foreground">Owner</p>');
+    lines.append('                                        </div>');
+    lines.append('                                    </div>');
+    lines.append('                                    <Separator />');
+    lines.append('                                    <div className="flex items-center gap-2">');
+    lines.append('                                        <Checkbox id="newsletter" defaultChecked={True} />');
+    lines.append('                                        <Label htmlFor="newsletter" className="text-sm">Receive updates</Label>');
+    lines.append('                                    </div>');
+    lines.append('                                </CardContent>');
+    lines.append('                            </Card>');
+    lines.append('                        </div>');
+    lines.append('                    </TabsContent>');
+    lines.append('                    <TabsContent value="settings">');
+    lines.append('                        <Card className="mt-4">');
+    lines.append('                            <CardHeader>');
+    lines.append('                                <CardTitle>Settings</CardTitle>');
+    lines.append('                                <CardDescription>Manage your preferences</CardDescription>');
+    lines.append('                            </CardHeader>');
+    lines.append('                            <CardContent className="space-y-4">');
+    lines.append('                                <div className="space-y-2">');
+    lines.append('                                    <Label htmlFor="project-name">Project Name</Label>');
+    lines.append('                                    <Input id="project-name" placeholder="My Project" />');
+    lines.append('                                </div>');
+    lines.append('                                <div className="space-y-2">');
+    lines.append('                                    <Label htmlFor="description">Description</Label>');
+    lines.append('                                    <Textarea id="description" placeholder="Describe your project..." />');
+    lines.append('                                </div>');
+    lines.append('                                <div className="flex gap-2">');
+    lines.append('                                    <Button>Save</Button>');
+    lines.append('                                    <Button variant="outline">Cancel</Button>');
+    lines.append('                                </div>');
+    lines.append('                            </CardContent>');
+    lines.append('                        </Card>');
+    lines.append('                    </TabsContent>');
+    lines.append('                </Tabs>');
+    lines.append("            </main>");
     lines.append("        </div>;");
     lines.append("    }");
     lines.append("}");
@@ -342,7 +427,7 @@ def generate_main_jac() -> str {
 Includes [jac-shadcn] section with all 7 customization fields."""
 def build_jac_toml_config(font_npm: str, shadcn_config: dict) -> dict {
     npm_deps: dict = {
-        "jac-client-node": "1.0.4",
+        "jac-client-node": "1.0.7",
         "class-variance-authority": "^0.7.1",
         "clsx": "^2.1.1",
         "tailwind-merge": "^3.5.0",
@@ -354,6 +439,16 @@ def build_jac_toml_config(font_npm: str, shadcn_config: dict) -> dict {
         "shadcn": "^3.8.5"
     };
     npm_deps[font_npm] = "*";
+
+    # Add component-level npm deps from the registry
+    all_files = resolve_dependencies(COMPONENT_FILES);
+    component_deps = collect_npm_deps(all_files);
+    for dep in component_deps {
+        if dep not in npm_deps {
+            npm_deps[dep] = "*";
+        }
+    }
+
     npm_deps["dev"] = {
         "@jac-client/dev-deps": "1.0.0",
         "@tailwindcss/vite": "latest",
@@ -402,6 +497,74 @@ def build_jac_toml_config(font_npm: str, shadcn_config: dict) -> dict {
 }
 
 
+"""Resolve all peer dependencies for a set of component filenames.
+Reads registry.json to find peerComponents and recursively includes them.
+Returns the full set of filenames that need to be exported."""
+def resolve_dependencies(component_filenames: list) -> list {
+    registry = load_registry();
+    components = registry.get("components", {});
+
+    # Build a reverse lookup: filename -> component name
+    file_to_name: dict = {};
+    name_to_file: dict = {};
+    for cname in components {
+        comp = components[cname];
+        file_to_name[comp["file"]] = cname;
+        name_to_file[cname] = comp["file"];
+    }
+
+    # Start with all requested files
+    needed: set = set(component_filenames);
+    queue: list = list(component_filenames);
+
+    while len(queue) > 0 {
+        current = queue.pop(0);
+        cname = file_to_name.get(current, "");
+        if not cname {
+            continue;
+        }
+        comp = components.get(cname, {});
+        peers = comp.get("peerComponents", []);
+        for peer in peers {
+            peer_file = name_to_file.get(peer, "");
+            if peer_file and peer_file not in needed {
+                needed.add(peer_file);
+                queue.append(peer_file);
+            }
+        }
+    }
+
+    return sorted(list(needed));
+}
+
+
+"""Collect all npm dependencies for a set of component names from the registry."""
+def collect_npm_deps(component_filenames: list) -> list {
+    registry = load_registry();
+    components = registry.get("components", {});
+
+    file_to_name: dict = {};
+    for cname in components {
+        comp = components[cname];
+        file_to_name[comp["file"]] = cname;
+    }
+
+    all_deps: set = set();
+    for filename in component_filenames {
+        cname = file_to_name.get(filename, "");
+        if not cname {
+            continue;
+        }
+        comp = components.get(cname, {});
+        for dep in comp.get("npmDeps", []) {
+            all_deps.add(dep);
+        }
+    }
+
+    return sorted(list(all_deps));
+}
+
+
 """Build the complete jacpack dict ready for download.
 shadcn_config: dict with all 7 fields (style, baseColor, theme, font, radius, menuAccent, menuColor)
 css_vars: resolved CSS variables dict with 'light' and 'dark' keys"""
@@ -411,10 +574,13 @@ def build_jacpack(shadcn_config: dict, css_vars: dict) -> dict {
 
     resolution_map = parse_style_css(style);
 
+    # Resolve all dependencies (peer components included)
+    all_files = resolve_dependencies(COMPONENT_FILES);
+
     files: dict = {};
     components_dir = os.path.join("components", "ui");
 
-    for filename in COMPONENT_FILES {
+    for filename in all_files {
         filepath = os.path.join(components_dir, filename);
         if os.path.isfile(filepath) {
             with open(filepath, "r") as f {
