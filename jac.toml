@@ -71,3 +71,7 @@ lib_imports = ["import tailwindcss from '@tailwindcss/vite'"]
 
 [plugins.client.configs.tailwind]
 content = ["./src/**/*.{jac,tsx,jsx}"]
+
+[plugins.scale.kubernetes]
+app_name = "jac-shadcn"
+namespace = "jac-shadcn"
