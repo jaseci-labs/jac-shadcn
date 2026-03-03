@@ -1,17 +1,21 @@
-"""Site header — sticky navbar with Jaseci branding, nav links, dark/light toggle."""
+"""Site header — sticky navbar with route-aware navigation, + New Project, dark/light toggle."""
 cl import from ..lib.utils { cn }
 cl import from ".ui.button" { Button, buttonVariants }
 cl import from ".ui.tooltip" { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger }
-cl import from "..lib.design-system-provider" { useDesignSystem }
+cl import from ".ui.sheet" { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription }
+cl import from "@jac/runtime" { Link, useLocation }
 cl import from react { useEffect }
 
 cl {
     def:pub SiteHeader(props: Any) -> JsxElement {
-        has isDark: bool = False;
-        selectedItem = props.selectedItem or "home";
-        onSelectItem = props.onSelectItem;
-        onToggleNav = props.onToggleNav;
-        onToggleCustomizer = props.onToggleCustomizer;
+        has isDark: bool = True;
+        has mobileMenuOpen: bool = False;
+        location = useLocation();
+        pathname = location.pathname;
+
+        isHome = pathname == "/" or pathname == "";
+        isComponents = pathname.startsWith("/components");
+        isCreate = pathname == "/create";
 
         useEffect(lambda -> Any {
             isDark = document.documentElement.classList.contains("dark");
@@ -43,12 +47,14 @@ cl {
             };
         }, [isDark]);
 
+        closeMenu = lambda -> None { mobileMenuOpen = False; };
+
         return <header className="sticky top-0 z-50 w-full border-b border-border/50 bg-background/80 backdrop-blur-lg supports-[backdrop-filter]:bg-background/60">
             <div className="flex h-14 items-center px-4 lg:px-6">
                 <button
-                    onClick={lambda -> None { onToggleNav and onToggleNav.call(None); }}
-                    className="mr-2 inline-flex items-center justify-center rounded-md p-1.5 text-muted-foreground hover:text-foreground hover:bg-muted transition-colors cursor-pointer bg-transparent border-none outline-none xl:hidden"
-                    aria-label="Toggle navigation"
+                    onClick={lambda -> None { mobileMenuOpen = True; }}
+                    className="mr-2 inline-flex items-center justify-center rounded-md p-1.5 text-muted-foreground hover:text-foreground hover:bg-muted transition-colors cursor-pointer bg-transparent border-none outline-none md:hidden"
+                    aria-label="Open menu"
                 >
                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                         <line x1="4" x2="20" y1="12" y2="12" />
@@ -57,34 +63,31 @@ cl {
                     </svg>
                 </button>
                 <div className="flex items-center gap-2 mr-6">
-                    <button
-                        onClick={lambda -> None { onSelectItem and onSelectItem.call(None, "home"); }}
-                        className="flex items-center gap-2.5 cursor-pointer bg-transparent border-none outline-none"
-                    >
-                        <img src="static/logo.png" alt="Jaseci" className="size-7" />
+                    <Link to="/" className="flex items-center gap-2.5 no-underline">
+                        <img src="/static/logo.png" alt="Jaseci" className="size-7" />
                         <span className="text-foreground font-semibold text-base tracking-tight hidden sm:inline-block">jac-shadcn</span>
-                    </button>
+                    </Link>
                 </div>
 
                 <nav className="hidden md:flex items-center gap-1 text-sm">
-                    <button
-                        onClick={lambda -> None { onSelectItem and onSelectItem.call(None, "home"); }}
+                    <Link
+                        to="/"
                         className={cn(
-                            "px-3 py-1.5 rounded-md text-sm font-medium transition-colors bg-transparent border-none cursor-pointer outline-none",
-                            selectedItem == "home" and "text-foreground" or "text-muted-foreground hover:text-foreground"
+                            "px-3 py-1.5 rounded-md text-sm font-medium transition-colors no-underline",
+                            isHome and "text-foreground" or "text-muted-foreground hover:text-foreground"
                         )}
                     >
                         Home
-                    </button>
-                    <button
-                        onClick={lambda -> None { onSelectItem and onSelectItem.call(None, "button"); }}
+                    </Link>
+                    <Link
+                        to="/components"
                         className={cn(
-                            "px-3 py-1.5 rounded-md text-sm font-medium transition-colors bg-transparent border-none cursor-pointer outline-none",
-                            selectedItem != "home" and "text-foreground" or "text-muted-foreground hover:text-foreground"
+                            "px-3 py-1.5 rounded-md text-sm font-medium transition-colors no-underline",
+                            isComponents and "text-foreground" or "text-muted-foreground hover:text-foreground"
                         )}
                     >
                         Components
-                    </button>
+                    </Link>
                     <a
                         href="https://docs.jaseci.org"
                         target="_blank"
@@ -96,23 +99,23 @@ cl {
                 </nav>
 
                 <div className="ml-auto flex items-center gap-1.5">
-                    <button
-                        onClick={lambda -> None { onToggleCustomizer and onToggleCustomizer.call(None); }}
-                        className="inline-flex items-center justify-center rounded-md p-1.5 text-muted-foreground hover:text-foreground hover:bg-muted transition-colors cursor-pointer bg-transparent border-none outline-none xl:hidden"
-                        aria-label="Toggle customizer"
-                    >
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                            <circle cx="13.5" cy="6.5" r="2.5" />
-                            <path d="M17 6.5H22" />
-                            <path d="M2 6.5h8.5" />
-                            <circle cx="8.5" cy="12.5" r="2.5" />
-                            <path d="M2 12.5h3.5" />
-                            <path d="M12 12.5h10" />
-                            <circle cx="15.5" cy="18.5" r="2.5" />
-                            <path d="M19 18.5h3" />
-                            <path d="M2 18.5h11" />
-                        </svg>
-                    </button>
+                    <Link to="/create" className="no-underline hidden sm:block">
+                        <Button size="sm" variant={isCreate and "default" or "outline"} className="h-8 text-xs gap-1">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                <path d="M12 5v14" />
+                                <path d="M5 12h14" />
+                            </svg>
+                            New Project
+                        </Button>
+                    </Link>
+                    <Link to="/create" className="sm:hidden no-underline">
+                        <Button size="icon" variant={isCreate and "default" or "ghost"} className="size-8">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                <path d="M12 5v14" />
+                                <path d="M5 12h14" />
+                            </svg>
+                        </Button>
+                    </Link>
                     <TooltipProvider delayDuration={0}>
                         <Tooltip>
                             <TooltipTrigger className={buttonVariants().call(None, {"variant": "ghost", "size": "icon", "className": "size-8"})}>
@@ -158,6 +161,79 @@ cl {
                     </TooltipProvider>
                 </div>
             </div>
+
+            <Sheet open={mobileMenuOpen} onOpenChange={lambda(v: Any) -> None { mobileMenuOpen = v; }}>
+                <SheetContent side="left" className="w-64">
+                    <SheetHeader>
+                        <SheetTitle>
+                            <div className="flex items-center gap-2">
+                                <img src="/static/logo.png" alt="Jaseci" className="size-5" />
+                                <span>jac-shadcn</span>
+                            </div>
+                        </SheetTitle>
+                        <SheetDescription className="sr-only">Site navigation</SheetDescription>
+                    </SheetHeader>
+                    <nav className="flex flex-col gap-1 mt-4">
+                        <Link
+                            to="/"
+                            onClick={closeMenu}
+                            className={cn(
+                                "flex items-center gap-2 px-3 py-2 rounded-md text-sm font-medium transition-colors no-underline",
+                                isHome and "bg-accent text-accent-foreground" or "text-muted-foreground hover:text-foreground hover:bg-muted"
+                            )}
+                        >
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                                <polyline points="9 22 9 12 15 12 15 22" />
+                            </svg>
+                            Home
+                        </Link>
+                        <Link
+                            to="/components"
+                            onClick={closeMenu}
+                            className={cn(
+                                "flex items-center gap-2 px-3 py-2 rounded-md text-sm font-medium transition-colors no-underline",
+                                isComponents and "bg-accent text-accent-foreground" or "text-muted-foreground hover:text-foreground hover:bg-muted"
+                            )}
+                        >
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                <rect width="7" height="7" x="3" y="3" rx="1" />
+                                <rect width="7" height="7" x="14" y="3" rx="1" />
+                                <rect width="7" height="7" x="14" y="14" rx="1" />
+                                <rect width="7" height="7" x="3" y="14" rx="1" />
+                            </svg>
+                            Components
+                        </Link>
+                        <Link
+                            to="/create"
+                            onClick={closeMenu}
+                            className={cn(
+                                "flex items-center gap-2 px-3 py-2 rounded-md text-sm font-medium transition-colors no-underline",
+                                isCreate and "bg-accent text-accent-foreground" or "text-muted-foreground hover:text-foreground hover:bg-muted"
+                            )}
+                        >
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                <path d="M12 5v14" />
+                                <path d="M5 12h14" />
+                            </svg>
+                            New Project
+                        </Link>
+                        <a
+                            href="https://docs.jaseci.org"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            onClick={closeMenu}
+                            className="flex items-center gap-2 px-3 py-2 rounded-md text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-muted transition-colors no-underline"
+                        >
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" />
+                                <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
+                            </svg>
+                            Documentation
+                        </a>
+                    </nav>
+                </SheetContent>
+            </Sheet>
         </header>;
     }
 }

@@ -3,70 +3,22 @@
 import from lib.export_service { build_jacpack, build_jacpack_from_config, load_registry, resolve_single_component }
 import from http { HTTPMethod }
 
-cl import from ".components.item-explorer" { ItemExplorer }
-cl import from ".components.preview-panel" { PreviewPanel }
-cl import from ".components.customizer" { Customizer }
-cl import from ".components.site-header" { SiteHeader }
-cl import from ".components.site-footer" { SiteFooter }
 cl import from ".lib.design-system-provider" { DesignSystemProvider }
-cl import from ".components.ui.sheet" { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription }
+cl import from react { useEffect }
 cl import ".global.css";
 
 cl {
-    def:pub app() -> JsxElement {
-        has selectedItem: str = "home";
-        has mobileNavOpen: bool = False;
-        has mobileCustomizerOpen: bool = False;
-
-        handleSelectItem = lambda(name: Any) -> None {
-            selectedItem = name;
-            mobileNavOpen = False;
-        };
+    """App shell — wraps all pages with DesignSystemProvider and initializes dark mode."""
+    def:pub app(children: Any = None) -> JsxElement {
+        useEffect(lambda -> Any {
+            document.documentElement.classList.add("dark");
+            document.body.classList.add("dark");
+            return;
+        }, []);
 
         return <DesignSystemProvider>
             <div className="flex min-h-screen flex-col">
-                <SiteHeader
-                    selectedItem={selectedItem}
-                    onSelectItem={handleSelectItem}
-                    onToggleNav={lambda -> None { mobileNavOpen = True; }}
-                    onToggleCustomizer={lambda -> None { mobileCustomizerOpen = True; }}
-                />
-                <div className="flex flex-1">
-                    <ItemExplorer
-                        selectedItem={selectedItem}
-                        onSelectItem={handleSelectItem}
-                    />
-                    <PreviewPanel
-                        selectedItem={selectedItem}
-                        onSelectItem={handleSelectItem}
-                    />
-                    <Customizer />
-                </div>
-                <SiteFooter />
-
-                <Sheet open={mobileNavOpen} onOpenChange={lambda(v: Any) -> None { mobileNavOpen = v; }}>
-                    <SheetContent side="left" className="w-64 p-0">
-                        <SheetHeader className="sr-only">
-                            <SheetTitle>Navigation</SheetTitle>
-                            <SheetDescription>Browse components</SheetDescription>
-                        </SheetHeader>
-                        <ItemExplorer
-                            mobile={True}
-                            selectedItem={selectedItem}
-                            onSelectItem={handleSelectItem}
-                        />
-                    </SheetContent>
-                </Sheet>
-
-                <Sheet open={mobileCustomizerOpen} onOpenChange={lambda(v: Any) -> None { mobileCustomizerOpen = v; }}>
-                    <SheetContent side="right" className="w-64 p-0 overflow-y-auto">
-                        <SheetHeader className="sr-only">
-                            <SheetTitle>Customizer</SheetTitle>
-                            <SheetDescription>Customize theme settings</SheetDescription>
-                        </SheetHeader>
-                        <Customizer mobile={True} />
-                    </SheetContent>
-                </Sheet>
+                {children}
             </div>
         </DesignSystemProvider>;
     }

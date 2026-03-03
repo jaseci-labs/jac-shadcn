@@ -33,7 +33,7 @@ glob MENU_COLORS: list = [
 glob DEFAULT_CONFIG: dict = {
     "style": "nova",
     "baseColor": "neutral",
-    "theme": "neutral",
+    "theme": "orange",
     "font": "figtree",
     "menuAccent": "subtle",
     "menuColor": "default",

@@ -2,6 +2,7 @@
 cl import from ..lib.utils { cn }
 cl import from .ui.badge { Badge }
 cl import from .ui.button { Button, buttonVariants }
+cl import from "@jac/runtime" { Link }
 cl import from ".ui.button-group" { ButtonGroup, ButtonGroupText, ButtonGroupSeparator }
 cl import from .ui.card { Card, CardAction, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 cl import from .ui.checkbox { Checkbox }
@@ -38,8 +39,6 @@ glob _frameworks: list = ["Next.js", "SvelteKit", "Nuxt.js", "Remix", "Astro"];
 cl {
     """Hero section — centered heading with description and CTA buttons."""
     def:pub HeroSection(props: Any) -> JsxElement {
-        onGetStarted = props.onGetStarted;
-
         return <div className="relative overflow-hidden border-b border-border/50">
             <div className="bg-grid-pattern absolute inset-0 opacity-40" />
             <div className="relative mx-auto max-w-4xl px-6 py-16 text-center sm:py-20 lg:py-24">
@@ -55,12 +54,23 @@ cl {
                     A set of beautifully designed components that you can customize, extend, and build on. Powered by Jac and Radix UI primitives.
                 </p>
                 <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
-                    <Button size="sm" onClick={lambda -> None { onGetStarted and onGetStarted.call(None, "button"); }}>
-                        Get Started
-                        <HugeiconsIcon icon={ArrowRight01Icon} strokeWidth={2} data-icon="inline-end" />
-                    </Button>
-                    <a href="https://docs.jaseci.org" target="_blank" rel="noopener noreferrer" className="no-underline">
+                    <Link to="/components" className="no-underline">
+                        <Button size="sm">
+                            Get Started
+                            <HugeiconsIcon icon={ArrowRight01Icon} strokeWidth={2} data-icon="inline-end" />
+                        </Button>
+                    </Link>
+                    <Link to="/create" className="no-underline">
                         <Button variant="outline" size="sm">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-1">
+                                <path d="M12 5v14" />
+                                <path d="M5 12h14" />
+                            </svg>
+                            New Project
+                        </Button>
+                    </Link>
+                    <a href="https://docs.jaseci.org" target="_blank" rel="noopener noreferrer" className="no-underline">
+                        <Button variant="ghost" size="sm">
                             Documentation
                         </Button>
                     </a>
@@ -555,10 +565,8 @@ cl {
 
     """Full homepage — hero + grid."""
     def:pub HomePage(props: Any) -> JsxElement {
-        onSelectItem = props.onSelectItem;
-
         return <div className="w-full">
-            <HeroSection onGetStarted={onSelectItem} />
+            <HeroSection />
             <div className="mx-auto w-full max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
                 <RootComponentGrid />
             </div>

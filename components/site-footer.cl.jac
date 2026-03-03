@@ -6,7 +6,7 @@ cl {
         return <footer className="border-t border-border/50 bg-background">
             <div className="flex flex-col items-center justify-between gap-4 px-6 py-6 md:flex-row">
                 <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                    <img src="static/logo.png" alt="Jaseci" className="size-4 opacity-60" />
+                    <img src="/static/logo.png" alt="Jaseci" className="size-4 opacity-60" />
                     <span>{"Built with Jac by "}
                         <a
                             href="https://jaseci.org"
