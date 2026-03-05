@@ -31,7 +31,7 @@ cl {
                 onSelectItem={handleSelectItem}
             />
             <main
-                className={cn("flex-1 min-w-0 overflow-y-auto bg-background text-foreground", themeClassName)}
+                className={cn("flex-1 min-w-0 overflow-y-auto no-scrollbar bg-background text-foreground ds-preview", themeClassName)}
             >
                 <div className="sticky top-0 z-20 flex items-center gap-2 border-b border-border/50 bg-background/80 backdrop-blur-sm px-4 py-2.5 xl:hidden">
                     <button

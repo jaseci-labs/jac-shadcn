@@ -3,11 +3,10 @@ cl import from "recharts" {
     Legend as RechartsLegend,
     ResponsiveContainer
 }
-cl import from react { createContext, useContext, useId }
+cl import from react { createContext, useContext }
 cl import from ...lib.utils { cn }
 
 glob ChartContext: Any = createContext(null);
-glob _chartThemes: Any = {light: "", dark: ".dark"};
 
 cl {
     def getPayloadConfig(config: Any, payload: Any, key: Any) -> Any {
@@ -20,39 +19,35 @@ cl {
         return config[key] if key in config else None;
     }
 
-    def buildChartCss(id: Any, config: Any) -> Any {
-        colorEntries = Object.entries(config).filter(lambda(e: Any) -> Any { return e[1].theme or e[1].color; });
-        blocks = Object.entries(_chartThemes).map(lambda(te: Any) -> Any {
-            themeKey = te[0];
-            prefix = te[1];
-            lines = colorEntries.map(lambda(ce: Any) -> Any {
-                k = ce[0];
-                ic = ce[1];
-                color = ic.theme[themeKey] if ic.theme else ic.color;
-                return "  --color-" + k + ": " + color + ";" if color else "";
-            }).filter(lambda(s: Any) -> Any { return s != ""; });
-            return prefix + " [data-chart=" + id + "] {\n" + lines.join("\n") + "\n}";
-        });
-        return blocks.join("\n");
+    def buildChartStyle(config: Any) -> Any {
+        """Build inline style object with --color-* vars for chart colors."""
+        styleObj = {};
+        entries = Object.entries(config).filter(lambda(e: Any) -> Any { return e[1].theme or e[1].color; });
+        for entry in entries {
+            k = entry[0];
+            ic = entry[1];
+            color = ic.color if ic.color else None;
+            if color {
+                styleObj["--color-" + k] = color;
+            }
+        }
+        return styleObj;
     }
 
     def:pub ChartContainer(props: Any) -> JsxElement {
         config = props.config or {};
-        uid = useId();
-        chartId = "chart-" + (props.id if props.id else uid);
-        cssHtml = buildChartCss(chartId, config);
+        colorStyle = buildChartStyle(config);
         ctxValue = {config: config};
         return <ChartContext.Provider value={ctxValue}>
             <div
                 {...props}
                 data-slot="chart"
-                data-chart={chartId}
+                style={Object.assign({}, props.style or {}, colorStyle)}
                 className={cn(
                     "cn-chart flex aspect-video justify-center text-xs",
                     props.className
                 )}
             >
-                <style dangerouslySetInnerHTML={{__html: cssHtml}} />
                 <ResponsiveContainer>
                     {props.children}
                 </ResponsiveContainer>

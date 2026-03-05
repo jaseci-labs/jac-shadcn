@@ -15,8 +15,8 @@ cl {
         ds = useDesignSystem();
         themeClassName = ds["themeClassName"] or "";
 
-        return <div className={cn("flex flex-1", themeClassName)}>
-            <main className="flex-1 min-w-0 overflow-y-auto h-[calc(100vh-3.5rem)]">
+        return <div className="flex flex-1">
+            <main className="flex-1 min-w-0 overflow-y-auto no-scrollbar h-[calc(100vh-3.5rem)]">
                 <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
                     <div className="mb-8 max-w-2xl">
                         <h1 className="text-2xl font-bold tracking-tight sm:text-3xl">Create Your Project</h1>
@@ -25,7 +25,7 @@ cl {
                         </p>
                     </div>
 
-                    <div className="rounded-xl border border-border/60 overflow-hidden bg-background shadow-sm">
+                    <div className={cn("rounded-xl border border-border/60 overflow-hidden bg-background shadow-sm ds-preview", themeClassName)}>
                         <div className="flex items-center gap-1.5 border-b border-border/50 bg-muted/30 px-4 py-2.5">
                             <div className="flex items-center gap-1.5">
                                 <span className="size-3 rounded-full bg-red-400/60" />
@@ -46,7 +46,7 @@ cl {
                 <SiteFooter />
             </main>
 
-            <Customizer />
+            <Customizer title="Your Project" />
 
             <div className="fixed bottom-6 right-6 lg:hidden z-40">
                 <Button

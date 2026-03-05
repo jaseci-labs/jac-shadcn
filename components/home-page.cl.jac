@@ -7,7 +7,7 @@ cl import from ".ui.button-group" { ButtonGroup, ButtonGroupText, ButtonGroupSep
 cl import from .ui.card { Card, CardAction, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 cl import from .ui.checkbox { Checkbox }
 cl import from .ui.input { Input }
-cl import from ".ui.input-group" { InputGroup }
+cl import from ".ui.input-group" { InputGroup, InputGroupInput, InputGroupAddon }
 cl import from .ui.label { Label }
 cl import from .ui.progress { Progress }
 cl import from .ui.select { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue }
@@ -69,11 +69,6 @@ cl {
                             New Project
                         </Button>
                     </Link>
-                    <a href="https://docs.jaseci.org" target="_blank" rel="noopener noreferrer" className="no-underline">
-                        <Button variant="ghost" size="sm">
-                            Documentation
-                        </Button>
-                    </a>
                 </div>
             </div>
         </div>;
@@ -229,13 +224,19 @@ cl {
     def:pub InputGroupDemo() -> JsxElement {
         return <div className="w-full space-y-3">
             <InputGroup>
-                <HugeiconsIcon icon={SearchIcon} strokeWidth={2} className="text-muted-foreground" />
-                <Input placeholder="Search..." className="border-0 shadow-none" />
-                <span className="text-xs text-muted-foreground whitespace-nowrap">12 results</span>
+                <InputGroupAddon>
+                    <HugeiconsIcon icon={SearchIcon} strokeWidth={2} className="text-muted-foreground" />
+                </InputGroupAddon>
+                <InputGroupInput placeholder="Search..." />
+                <InputGroupAddon align="inline-end">
+                    <span className="text-xs text-muted-foreground whitespace-nowrap">12 results</span>
+                </InputGroupAddon>
             </InputGroup>
             <InputGroup>
-                <span className="text-sm text-muted-foreground">https://</span>
-                <Input placeholder="example.com" className="border-0 shadow-none" />
+                <InputGroupAddon>
+                    <span className="text-sm text-muted-foreground">https://</span>
+                </InputGroupAddon>
+                <InputGroupInput placeholder="example.com" />
             </InputGroup>
         </div>;
     }
@@ -390,11 +391,11 @@ cl {
 
         return <div className="flex items-center gap-3">
             <ButtonGroup>
-                <Button variant={currentPage == 1 and "default" or "outline"} size="sm" className="size-8 text-xs" onClick={lambda -> None { currentPage = 1; }}>1</Button>
+                <Button variant={currentPage == 1 and "default" or "outline"} size="icon" className="size-8 text-xs" onClick={lambda -> None { currentPage = 1; }}>1</Button>
                 <ButtonGroupSeparator />
-                <Button variant={currentPage == 2 and "default" or "outline"} size="sm" className="size-8 text-xs" onClick={lambda -> None { currentPage = 2; }}>2</Button>
+                <Button variant={currentPage == 2 and "default" or "outline"} size="icon" className="size-8 text-xs" onClick={lambda -> None { currentPage = 2; }}>2</Button>
                 <ButtonGroupSeparator />
-                <Button variant={currentPage == 3 and "default" or "outline"} size="sm" className="size-8 text-xs" onClick={lambda -> None { currentPage = 3; }}>3</Button>
+                <Button variant={currentPage == 3 and "default" or "outline"} size="icon" className="size-8 text-xs" onClick={lambda -> None { currentPage = 3; }}>3</Button>
                 <ButtonGroupSeparator />
                 <Button variant="outline" size="icon" className="size-8">
                     <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m15 18-6-6 6-6"/></svg>

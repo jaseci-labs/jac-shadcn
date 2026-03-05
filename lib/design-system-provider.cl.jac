@@ -30,7 +30,24 @@ cl {
             });
         }, [baseColorName, themeName, menuAccent, radiusName]);
 
+        # Default theme (orange) — static, never changes with customizer
+        defaultRegistryTheme = useMemo(lambda -> Any {
+            dc = getDefaultConfig();
+            return buildRegistryTheme({
+                "baseColor": dc["baseColor"] or "neutral",
+                "theme": dc["theme"] or "neutral",
+                "menuAccent": dc["menuAccent"] or "subtle",
+                "radius": dc["radius"] or "default"
+            });
+        }, []);
+
         themeClassName = "style-" + styleName + " base-color-" + baseColorName;
+
+        # Default body classes — pinned to default config so header/landing never change
+        defaultThemeClassName = useMemo(lambda -> Any {
+            dc = getDefaultConfig();
+            return "style-" + (dc["style"] or "nova") + " base-color-" + (dc["baseColor"] or "neutral");
+        }, []);
 
         useEffect(lambda -> Any {
             if not menuColor {
@@ -83,53 +100,65 @@ cl {
                 styleEl.id = "ds-theme-vars";
                 document.head.appendChild(styleEl);
             }
-            lightLines = [];
-            darkLines = [];
-            if registryTheme and registryTheme["cssVars"] {
-                lightVars = registryTheme["cssVars"]["light"] or {};
-                lightKeys = Object.keys(lightVars);
-                for i in range(lightKeys.length) {
-                    k = lightKeys[i];
-                    v = lightVars[k];
-                    if v {
-                        lightLines.push("--" + k + ": " + v + ";");
+
+            # Helper: extract light/dark CSS lines from a registry theme + optional font
+            extractLines = lambda(rt: Any, fontVar: Any) -> Any {
+                light = [];
+                dark = [];
+                if rt and rt["cssVars"] {
+                    lv = rt["cssVars"]["light"] or {};
+                    lk = Object.keys(lv);
+                    for i in range(lk.length) {
+                        k = lk[i];
+                        v = lv[k];
+                        if v { light.push("--" + k + ": " + v + ";"); }
+                    }
+                    dv = rt["cssVars"]["dark"] or {};
+                    dk = Object.keys(dv);
+                    for i in range(dk.length) {
+                        k = dk[i];
+                        v = dv[k];
+                        if v { dark.push("--" + k + ": " + v + ";"); }
+                    }
+                    rv = (rt["cssVars"]["light"] or {})["radius"];
+                    if rv {
+                        rl = [
+                            "--radius: " + rv + ";",
+                            "--radius-sm: calc(" + rv + " - 4px);",
+                            "--radius-md: calc(" + rv + " - 2px);",
+                            "--radius-lg: " + rv + ";",
+                            "--radius-xl: calc(" + rv + " + 4px);",
+                            "--radius-2xl: calc(" + rv + " + 8px);",
+                            "--radius-3xl: calc(" + rv + " + 12px);",
+                            "--radius-4xl: calc(" + rv + " + 16px);"
+                        ];
+                        light = light.concat(rl);
+                        dark = dark.concat(rl);
                     }
                 }
-                darkVars = registryTheme["cssVars"]["dark"] or {};
-                darkKeys = Object.keys(darkVars);
-                for i in range(darkKeys.length) {
-                    k = darkKeys[i];
-                    v = darkVars[k];
-                    if v {
-                        darkLines.push("--" + k + ": " + v + ";");
-                    }
+                if fontVar {
+                    light.push("--font-sans: " + fontVar + ";");
+                    dark.push("--font-sans: " + fontVar + ";");
+                }
+                return {"light": light, "dark": dark};
+            };
+
+            # Default theme font
+            defaultFontFamily = None;
+            dc = getDefaultConfig();
+            allFonts = getFontsData();
+            for f in allFonts {
+                if f["value"] == (dc["font"] or "figtree") {
+                    defaultFontFamily = f["family"];
                 }
             }
-            # Compute radius-derived vars for both modes
-            if registryTheme and registryTheme["cssVars"] {
-                rv = (registryTheme["cssVars"]["light"] or {})["radius"];
-                if rv {
-                    radiusLines = [
-                        "--radius: " + rv + ";",
-                        "--radius-sm: calc(" + rv + " - 4px);",
-                        "--radius-md: calc(" + rv + " - 2px);",
-                        "--radius-lg: " + rv + ";",
-                        "--radius-xl: calc(" + rv + " + 4px);",
-                        "--radius-2xl: calc(" + rv + " + 8px);",
-                        "--radius-3xl: calc(" + rv + " + 12px);",
-                        "--radius-4xl: calc(" + rv + " + 16px);"
-                    ];
-                    lightLines = lightLines.concat(radiusLines);
-                    darkLines = darkLines.concat(radiusLines);
-                }
-            }
-            # Font var
-            fontStyle = themeStyle["--font-sans"];
-            if fontStyle {
-                lightLines.push("--font-sans: " + fontStyle + ";");
-                darkLines.push("--font-sans: " + fontStyle + ";");
-            }
-            css = "body { " + lightLines.join(" ") + " } .dark body, body.dark { " + darkLines.join(" ") + " }";
+
+            # Body: default theme (static orange)
+            bodyVars = extractLines(defaultRegistryTheme, defaultFontFamily);
+            # Preview: current customized theme
+            previewVars = extractLines(registryTheme, themeStyle["--font-sans"]);
+
+            css = "body { " + bodyVars["light"].join(" ") + " } .dark body, body.dark { " + bodyVars["dark"].join(" ") + " } .ds-preview { " + previewVars["light"].join(" ") + " } .dark .ds-preview { " + previewVars["dark"].join(" ") + " }";
             styleEl.textContent = css;
             return lambda -> None {
                 existing = document.getElementById("ds-theme-vars");
@@ -137,23 +166,24 @@ cl {
                     existing.remove();
                 }
             };
-        }, [registryTheme, themeStyle]);
+        }, [registryTheme, themeStyle, defaultRegistryTheme]);
 
         useLayoutEffect(lambda -> Any {
-            classes = themeClassName.split(" ");
-            for i in range(classes.length) {
-                if classes[i] {
-                    document.body.classList.add(classes[i]);
+            # Apply default style classes to body (pinned, never changes with customizer)
+            defClasses = defaultThemeClassName.split(" ");
+            for i in range(defClasses.length) {
+                if defClasses[i] {
+                    document.body.classList.add(defClasses[i]);
                 }
             }
             return lambda -> None {
-                for i in range(classes.length) {
-                    if classes[i] {
-                        document.body.classList.remove(classes[i]);
+                for i in range(defClasses.length) {
+                    if defClasses[i] {
+                        document.body.classList.remove(defClasses[i]);
                     }
                 }
             };
-        }, [themeClassName]);
+        }, [defaultThemeClassName]);
 
         contextValue = useMemo(lambda -> Any {
             return {"config": config, "setConfig": setConfig, "themeStyle": {}, "themeClassName": themeClassName};

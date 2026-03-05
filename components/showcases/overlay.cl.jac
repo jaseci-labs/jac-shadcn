@@ -182,7 +182,7 @@ cl {
                             <SheetTitle>Edit profile</SheetTitle>
                             <SheetDescription>Make changes to your profile here.</SheetDescription>
                         </SheetHeader>
-                        <div className="grid gap-4 py-4">
+                        <div className="grid gap-4 px-4 py-4">
                             <div className="grid grid-cols-4 items-center gap-4">
                                 <Label className="text-right">Name</Label>
                                 <Input defaultValue="Pedro Duarte" className="col-span-3" />

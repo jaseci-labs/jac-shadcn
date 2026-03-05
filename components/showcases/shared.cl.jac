@@ -119,12 +119,12 @@ cl {
 
         return <div className="space-y-3">
             {props.title and <h3 className="text-sm font-medium text-muted-foreground">{props.title}</h3>}
-            <div className="rounded-xl border overflow-hidden">
+            <div className="rounded-xl border">
                 <div className={cn("flex flex-wrap items-center gap-2 p-6 min-h-[120px] justify-center", props.className)}>
                     {props.children}
                 </div>
                 {hasCode and (
-                    <div className="relative border-t bg-zinc-50 dark:bg-zinc-900">
+                    <div className="relative border-t bg-zinc-50 dark:bg-zinc-900 rounded-b-xl overflow-hidden">
                         {showCode and (
                             <div className="relative">
                                 <button

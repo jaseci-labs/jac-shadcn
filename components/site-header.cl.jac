@@ -5,6 +5,7 @@ cl import from ".ui.tooltip" { Tooltip, TooltipContent, TooltipProvider, Tooltip
 cl import from ".ui.sheet" { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription }
 cl import from "@jac/runtime" { Link, useLocation }
 cl import from react { useEffect }
+cl import from .customizer { CreateProjectModal }
 
 cl {
     def:pub SiteHeader(props: Any) -> JsxElement {
@@ -88,34 +89,49 @@ cl {
                     >
                         Components
                     </Link>
-                    <a
-                        href="https://docs.jaseci.org"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="px-3 py-1.5 rounded-md text-sm font-medium text-muted-foreground hover:text-foreground transition-colors no-underline"
-                    >
-                        Docs
-                    </a>
                 </nav>
 
                 <div className="ml-auto flex items-center gap-1.5">
-                    <Link to="/create" className="no-underline hidden sm:block">
-                        <Button size="sm" variant={isCreate and "default" or "outline"} className="h-8 text-xs gap-1">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                <path d="M12 5v14" />
-                                <path d="M5 12h14" />
-                            </svg>
-                            New Project
-                        </Button>
-                    </Link>
-                    <Link to="/create" className="sm:hidden no-underline">
-                        <Button size="icon" variant={isCreate and "default" or "ghost"} className="size-8">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                <path d="M12 5v14" />
-                                <path d="M5 12h14" />
-                            </svg>
-                        </Button>
-                    </Link>
+                    {isCreate
+                        and <span className="hidden sm:block">
+                            <CreateProjectModal trigger={
+                                <Button size="sm" className="h-8 text-xs gap-1 cursor-pointer">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                        <path d="M12 5v14" />
+                                        <path d="M5 12h14" />
+                                    </svg>
+                                    Create Project
+                                </Button>
+                            } />
+                        </span>
+                        or <Link to="/create" className="no-underline hidden sm:block">
+                            <Button size="sm" variant="outline" className="h-8 text-xs gap-1">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                    <path d="M12 5v14" />
+                                    <path d="M5 12h14" />
+                                </svg>
+                                New Project
+                            </Button>
+                        </Link>}
+                    {isCreate
+                        and <span className="sm:hidden">
+                            <CreateProjectModal trigger={
+                                <Button size="icon" className="size-8 cursor-pointer">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                        <path d="M12 5v14" />
+                                        <path d="M5 12h14" />
+                                    </svg>
+                                </Button>
+                            } />
+                        </span>
+                        or <Link to="/create" className="sm:hidden no-underline">
+                            <Button size="icon" variant="ghost" className="size-8">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                    <path d="M12 5v14" />
+                                    <path d="M5 12h14" />
+                                </svg>
+                            </Button>
+                        </Link>}
                     <TooltipProvider delayDuration={0}>
                         <Tooltip>
                             <TooltipTrigger className={buttonVariants().call(None, {"variant": "ghost", "size": "icon", "className": "size-8"})}>
@@ -218,19 +234,6 @@ cl {
                             </svg>
                             New Project
                         </Link>
-                        <a
-                            href="https://docs.jaseci.org"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            onClick={closeMenu}
-                            className="flex items-center gap-2 px-3 py-2 rounded-md text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-muted transition-colors no-underline"
-                        >
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" />
-                                <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
-                            </svg>
-                            Documentation
-                        </a>
                     </nav>
                 </SheetContent>
             </Sheet>

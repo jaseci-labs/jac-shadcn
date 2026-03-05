@@ -5,7 +5,7 @@ cl import from ..ui.checkbox { Checkbox }
 cl import from ..ui.tabs { Tabs, TabsList, TabsTrigger, TabsContent }
 cl import from "..ui.radio-group" { RadioGroup, RadioGroupItem }
 cl import from "@hugeicons/react" { HugeiconsIcon }
-cl import from "@hugeicons/core-free-icons" { ArrowRight01Icon, ArrowDownIcon, ArrowUpIcon, PlusSignIcon, DownloadIcon, MailIcon, SearchIcon, SettingsIcon, UserIcon, Copy01Icon, Tick01Icon, TextAlignLeftIcon, TextAlignCenterIcon, TextAlignRightIcon, TextBoldIcon, TextItalicIcon, TextUnderlineIcon }
+cl import from "@hugeicons/core-free-icons" { ArrowRight01Icon, ArrowDownIcon, ArrowUpIcon, PlusSignIcon, DownloadIcon, MailIcon, SearchIcon, SettingsIcon, UserIcon, Copy01Icon, Tick01Icon, TextAlignLeftIcon, TextAlignCenterIcon, TextAlignRightIcon, TextBoldIcon, TextItalicIcon, TextUnderlineIcon, Home01Icon, DashboardSquare01Icon, Folder01Icon, Calendar01Icon, Message01Icon, NotificationIcon, BookOpen01Icon, BarChartIcon, LayersIcon }
 cl import from ..ui.accordion { Accordion, AccordionItem, AccordionTrigger, AccordionContent }
 cl import from ..ui.breadcrumb { Breadcrumb, BreadcrumbList, BreadcrumbItem, BreadcrumbLink, BreadcrumbPage, BreadcrumbSeparator, BreadcrumbEllipsis }
 cl import from ..ui.collapsible { Collapsible, CollapsibleTrigger, CollapsibleContent }
@@ -13,7 +13,9 @@ cl import from ..ui.menubar { Menubar, MenubarMenu, MenubarTrigger, MenubarConte
 cl import from "..ui.navigation-menu" { NavigationMenu, NavigationMenuList, NavigationMenuItem, NavigationMenuTrigger, NavigationMenuContent, NavigationMenuLink, NavigationMenuViewport, navigationMenuTriggerStyle }
 cl import from ..ui.pagination { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious, PaginationEllipsis }
 cl import from ..ui.item { Item, ItemGroup, ItemMedia, ItemContent, ItemTitle, ItemDescription, ItemActions, ItemSeparator }
-cl import from ..ui.sidebar { Sidebar, SidebarContent, SidebarFooter, SidebarGroup, SidebarGroupContent, SidebarGroupLabel, SidebarHeader, SidebarInset, SidebarMenu, SidebarMenuButton, SidebarMenuItem, SidebarProvider, SidebarTrigger }
+cl import from ..ui.sidebar { Sidebar, SidebarContent, SidebarFooter, SidebarGroup, SidebarGroupContent, SidebarGroupLabel, SidebarHeader, SidebarInset, SidebarMenu, SidebarMenuButton, SidebarMenuItem, SidebarMenuBadge, SidebarMenuSub, SidebarMenuSubItem, SidebarMenuSubButton, SidebarProvider, SidebarTrigger, SidebarSeparator, SidebarRail }
+cl import from ..ui.avatar { Avatar, AvatarFallback }
+cl import from "..ui.dropdown-menu" { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuLabel }
 cl import from "recharts" { Bar, BarChart, CartesianGrid, XAxis, YAxis, Line, LineChart, Area, AreaChart, Pie, PieChart, RadialBar, RadialBarChart }
 cl import from ".shared" { ShowcaseSection, ShowcaseHeader }
 
@@ -26,7 +28,7 @@ glob _codeExamples: dict = {
     "menubar": "cl import from .ui.menubar {\n    Menubar, MenubarMenu, MenubarTrigger,\n    MenubarContent, MenubarItem, MenubarSeparator\n}\n\n<Menubar>\n    <MenubarMenu>\n        <MenubarTrigger>File</MenubarTrigger>\n        <MenubarContent>\n            <MenubarItem>New Tab</MenubarItem>\n            <MenubarItem>New Window</MenubarItem>\n            <MenubarSeparator />\n            <MenubarItem>Print</MenubarItem>\n        </MenubarContent>\n    </MenubarMenu>\n</Menubar>",
     "navigation-menu": "cl import from '.ui.navigation-menu' {\n    NavigationMenu, NavigationMenuList,\n    NavigationMenuItem, NavigationMenuTrigger,\n    NavigationMenuContent, NavigationMenuLink\n}\n\n<NavigationMenu>\n    <NavigationMenuList>\n        <NavigationMenuItem>\n            <NavigationMenuTrigger>Getting started</NavigationMenuTrigger>\n            <NavigationMenuContent>\n                <ul className='grid gap-3 p-4'>\n                    <li>\n                        <NavigationMenuLink href='#'>\n                            Introduction\n                        </NavigationMenuLink>\n                    </li>\n                </ul>\n            </NavigationMenuContent>\n        </NavigationMenuItem>\n    </NavigationMenuList>\n</NavigationMenu>",
     "pagination": "cl import from .ui.pagination {\n    Pagination, PaginationContent,\n    PaginationItem, PaginationLink,\n    PaginationNext, PaginationPrevious\n}\n\n<Pagination>\n    <PaginationContent>\n        <PaginationItem>\n            <PaginationPrevious href='#' />\n        </PaginationItem>\n        <PaginationItem>\n            <PaginationLink href='#' isActive={True}>1</PaginationLink>\n        </PaginationItem>\n        <PaginationItem>\n            <PaginationLink href='#'>2</PaginationLink>\n        </PaginationItem>\n        <PaginationItem>\n            <PaginationNext href='#' />\n        </PaginationItem>\n    </PaginationContent>\n</Pagination>",
-    "sidebar": "cl import from .ui.sidebar {\n    Sidebar, SidebarContent, SidebarGroup,\n    SidebarGroupLabel, SidebarGroupContent,\n    SidebarMenu, SidebarMenuItem,\n    SidebarMenuButton, SidebarProvider\n}\n\n<SidebarProvider>\n    <Sidebar>\n        <SidebarContent>\n            <SidebarGroup>\n                <SidebarGroupLabel>Nav</SidebarGroupLabel>\n                <SidebarGroupContent>\n                    <SidebarMenu>\n                        <SidebarMenuItem>\n                            <SidebarMenuButton>\n                                Home\n                            </SidebarMenuButton>\n                        </SidebarMenuItem>\n                    </SidebarMenu>\n                </SidebarGroupContent>\n            </SidebarGroup>\n        </SidebarContent>\n    </Sidebar>\n</SidebarProvider>",
+    "sidebar": "cl import from .ui.sidebar {\n    Sidebar, SidebarContent, SidebarHeader,\n    SidebarFooter, SidebarGroup,\n    SidebarGroupLabel, SidebarGroupContent,\n    SidebarMenu, SidebarMenuItem,\n    SidebarMenuButton, SidebarMenuBadge,\n    SidebarMenuSub, SidebarMenuSubItem,\n    SidebarMenuSubButton, SidebarProvider,\n    SidebarSeparator, SidebarInset\n}\n\n<SidebarProvider>\n    <Sidebar>\n        <SidebarHeader>\n            <span className='font-semibold'>Acme Inc</span>\n        </SidebarHeader>\n        <SidebarSeparator />\n        <SidebarContent>\n            <SidebarGroup>\n                <SidebarGroupLabel>Platform</SidebarGroupLabel>\n                <SidebarGroupContent>\n                    <SidebarMenu>\n                        <SidebarMenuItem>\n                            <SidebarMenuButton isActive={True}>\n                                Dashboard\n                            </SidebarMenuButton>\n                            <SidebarMenuBadge>12</SidebarMenuBadge>\n                        </SidebarMenuItem>\n                        <SidebarMenuItem>\n                            <SidebarMenuButton>\n                                Projects\n                            </SidebarMenuButton>\n                        </SidebarMenuItem>\n                    </SidebarMenu>\n                </SidebarGroupContent>\n            </SidebarGroup>\n        </SidebarContent>\n        <SidebarFooter>\n            <span className='text-sm'>John Doe</span>\n        </SidebarFooter>\n    </Sidebar>\n    <SidebarInset className='p-4'>\n        Main content area\n    </SidebarInset>\n</SidebarProvider>",
     "tabs": "cl import from .ui.tabs {\n    Tabs, TabsList, TabsTrigger, TabsContent\n}\n\n<Tabs defaultValue='account'>\n    <TabsList>\n        <TabsTrigger value='account'>Account</TabsTrigger>\n        <TabsTrigger value='password'>Password</TabsTrigger>\n    </TabsList>\n    <TabsContent value='account'>\n        Account settings here.\n    </TabsContent>\n    <TabsContent value='password'>\n        Password settings here.\n    </TabsContent>\n</Tabs>",
     "tabs-disabled": "<Tabs defaultValue='active'>\n    <TabsList>\n        <TabsTrigger value='active'>Active</TabsTrigger>\n        <TabsTrigger value='disabled'\n            disabled={True}>Disabled</TabsTrigger>\n        <TabsTrigger value='other'>Other</TabsTrigger>\n    </TabsList>\n</Tabs>",
     "tabs-line": "cl import from .ui.tabs {\n    Tabs, TabsList, TabsTrigger, TabsContent\n}\n\n<Tabs defaultValue='general'>\n    <TabsList variant='line'>\n        <TabsTrigger value='general'>General</TabsTrigger>\n        <TabsTrigger value='security'>Security</TabsTrigger>\n    </TabsList>\n    <TabsContent value='general'>\n        General settings.\n    </TabsContent>\n    <TabsContent value='security'>\n        Security settings.\n    </TabsContent>\n</Tabs>",
@@ -209,8 +211,8 @@ cl {
     def:pub NavigationMenuShowcase() -> JsxElement {
         return <div className="space-y-8">
             <ShowcaseHeader title="Navigation Menu" description="A collection of links for navigating websites." name="navigation-menu" />
-            <ShowcaseSection title="Default" code={_codeExamples["navigation-menu"]}>
-                <NavigationMenu>
+            <ShowcaseSection title="Default" className="relative items-start pb-48" code={_codeExamples["navigation-menu"]}>
+                <NavigationMenu viewport={false}>
                     <NavigationMenuList>
                         <NavigationMenuItem>
                             <NavigationMenuTrigger>Getting started</NavigationMenuTrigger>
@@ -282,35 +284,174 @@ cl {
     }
 
     def:pub SidebarShowcase() -> JsxElement {
-        navItems = [
-            {"title": "Home", "url": "#"},
-            {"title": "Dashboard", "url": "#"},
-            {"title": "Settings", "url": "#"}
-        ];
+        has activeItem: str = "dashboard";
+        has projectsOpen: bool = True;
+
         return <div className="space-y-8">
-            <ShowcaseHeader title="Sidebar" description="A composable, themeable sidebar component." name="sidebar" />
-            <ShowcaseSection title="Default" className="flex-col w-full" code={_codeExamples["sidebar"]}>
-                <SidebarProvider style={{"--sidebar-width": "200px"}}>
-                    <Sidebar collapsible="none" className="border">
-                        <SidebarHeader className="p-2 font-semibold text-sm">My App</SidebarHeader>
+            <ShowcaseHeader title="Sidebar" description="A composable, themeable sidebar component with header, groups, menus, badges, sub-menus, and footer." name="sidebar" />
+            <ShowcaseSection title="Application Sidebar" className="flex-col w-full" code={_codeExamples["sidebar"]}>
+                <SidebarProvider style={{"--sidebar-width": "240px"}}>
+                    <Sidebar collapsible="none" className="border rounded-lg">
+                        <SidebarHeader className="p-3">
+                            <div className="flex items-center gap-2">
+                                <div className="flex size-7 items-center justify-center rounded-md bg-primary text-primary-foreground text-xs font-bold">A</div>
+                                <div className="flex flex-col">
+                                    <span className="text-sm font-semibold">Acme Inc</span>
+                                    <span className="text-[10px] text-muted-foreground">Enterprise</span>
+                                </div>
+                            </div>
+                        </SidebarHeader>
+                        <SidebarSeparator />
                         <SidebarContent>
                             <SidebarGroup>
-                                <SidebarGroupLabel>Navigation</SidebarGroupLabel>
+                                <SidebarGroupLabel>Platform</SidebarGroupLabel>
                                 <SidebarGroupContent>
                                     <SidebarMenu>
-                                        {navItems.map(lambda(item: Any) -> Any {
-                                            return <SidebarMenuItem key={item["title"]}>
-                                                <SidebarMenuButton asChild={true}>
-                                                    <a href={item["url"]}>{item["title"]}</a>
-                                                </SidebarMenuButton>
-                                            </SidebarMenuItem>;
-                                        })}
+                                        <SidebarMenuItem>
+                                            <SidebarMenuButton isActive={activeItem == "home"} onClick={lambda -> None { activeItem = "home"; }}>
+                                                <HugeiconsIcon icon={Home01Icon} strokeWidth={2} className="size-4" />
+                                                <span>Home</span>
+                                            </SidebarMenuButton>
+                                        </SidebarMenuItem>
+                                        <SidebarMenuItem>
+                                            <SidebarMenuButton isActive={activeItem == "dashboard"} onClick={lambda -> None { activeItem = "dashboard"; }}>
+                                                <HugeiconsIcon icon={DashboardSquare01Icon} strokeWidth={2} className="size-4" />
+                                                <span>Dashboard</span>
+                                            </SidebarMenuButton>
+                                            <SidebarMenuBadge>12</SidebarMenuBadge>
+                                        </SidebarMenuItem>
+                                        <SidebarMenuItem>
+                                            <SidebarMenuButton isActive={activeItem == "projects"} onClick={lambda -> None { activeItem = "projects"; projectsOpen = not projectsOpen; }}>
+                                                <HugeiconsIcon icon={Folder01Icon} strokeWidth={2} className="size-4" />
+                                                <span>Projects</span>
+                                            </SidebarMenuButton>
+                                            {projectsOpen and <SidebarMenuSub>
+                                                <SidebarMenuSubItem>
+                                                    <SidebarMenuSubButton isActive={activeItem == "design"}>
+                                                        Design System
+                                                    </SidebarMenuSubButton>
+                                                </SidebarMenuSubItem>
+                                                <SidebarMenuSubItem>
+                                                    <SidebarMenuSubButton isActive={activeItem == "api"}>
+                                                        API Gateway
+                                                    </SidebarMenuSubButton>
+                                                </SidebarMenuSubItem>
+                                                <SidebarMenuSubItem>
+                                                    <SidebarMenuSubButton isActive={activeItem == "mobile"}>
+                                                        Mobile App
+                                                    </SidebarMenuSubButton>
+                                                </SidebarMenuSubItem>
+                                            </SidebarMenuSub>}
+                                        </SidebarMenuItem>
+                                        <SidebarMenuItem>
+                                            <SidebarMenuButton isActive={activeItem == "calendar"} onClick={lambda -> None { activeItem = "calendar"; }}>
+                                                <HugeiconsIcon icon={Calendar01Icon} strokeWidth={2} className="size-4" />
+                                                <span>Calendar</span>
+                                            </SidebarMenuButton>
+                                        </SidebarMenuItem>
+                                        <SidebarMenuItem>
+                                            <SidebarMenuButton isActive={activeItem == "messages"} onClick={lambda -> None { activeItem = "messages"; }}>
+                                                <HugeiconsIcon icon={Message01Icon} strokeWidth={2} className="size-4" />
+                                                <span>Messages</span>
+                                            </SidebarMenuButton>
+                                            <SidebarMenuBadge>3</SidebarMenuBadge>
+                                        </SidebarMenuItem>
+                                    </SidebarMenu>
+                                </SidebarGroupContent>
+                            </SidebarGroup>
+                            <SidebarGroup>
+                                <SidebarGroupLabel>Resources</SidebarGroupLabel>
+                                <SidebarGroupContent>
+                                    <SidebarMenu>
+                                        <SidebarMenuItem>
+                                            <SidebarMenuButton isActive={activeItem == "analytics"} onClick={lambda -> None { activeItem = "analytics"; }}>
+                                                <HugeiconsIcon icon={BarChartIcon} strokeWidth={2} className="size-4" />
+                                                <span>Analytics</span>
+                                            </SidebarMenuButton>
+                                        </SidebarMenuItem>
+                                        <SidebarMenuItem>
+                                            <SidebarMenuButton isActive={activeItem == "docs"} onClick={lambda -> None { activeItem = "docs"; }}>
+                                                <HugeiconsIcon icon={BookOpen01Icon} strokeWidth={2} className="size-4" />
+                                                <span>Documentation</span>
+                                            </SidebarMenuButton>
+                                        </SidebarMenuItem>
+                                        <SidebarMenuItem>
+                                            <SidebarMenuButton isActive={activeItem == "settings"} onClick={lambda -> None { activeItem = "settings"; }}>
+                                                <HugeiconsIcon icon={SettingsIcon} strokeWidth={2} className="size-4" />
+                                                <span>Settings</span>
+                                            </SidebarMenuButton>
+                                        </SidebarMenuItem>
                                     </SidebarMenu>
                                 </SidebarGroupContent>
                             </SidebarGroup>
                         </SidebarContent>
+                        <SidebarFooter className="p-3">
+                            <SidebarMenu>
+                                <SidebarMenuItem>
+                                    <DropdownMenu>
+                                        <DropdownMenuTrigger className="w-full rounded-md p-1.5 hover:bg-muted transition-colors cursor-pointer bg-transparent border-none outline-none text-left">
+                                            <div className="flex items-center gap-2">
+                                                <Avatar className="size-7">
+                                                    <AvatarFallback className="text-xs">JD</AvatarFallback>
+                                                </Avatar>
+                                                <div className="flex flex-col flex-1 min-w-0">
+                                                    <span className="text-sm font-medium truncate">John Doe</span>
+                                                    <span className="text-[10px] text-muted-foreground truncate">john@acme.com</span>
+                                                </div>
+                                            </div>
+                                        </DropdownMenuTrigger>
+                                        <DropdownMenuContent side="top" align="start" className="w-[200px]">
+                                            <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                                            <DropdownMenuSeparator />
+                                            <DropdownMenuItem>
+                                                <HugeiconsIcon icon={UserIcon} strokeWidth={2} className="size-4" />
+                                                Profile
+                                            </DropdownMenuItem>
+                                            <DropdownMenuItem>
+                                                <HugeiconsIcon icon={SettingsIcon} strokeWidth={2} className="size-4" />
+                                                Settings
+                                            </DropdownMenuItem>
+                                            <DropdownMenuSeparator />
+                                            <DropdownMenuItem className="text-destructive">
+                                                Log out
+                                            </DropdownMenuItem>
+                                        </DropdownMenuContent>
+                                    </DropdownMenu>
+                                </SidebarMenuItem>
+                            </SidebarMenu>
+                        </SidebarFooter>
                     </Sidebar>
-                    <SidebarInset className="p-4 text-sm text-muted-foreground">Main content area</SidebarInset>
+                    <SidebarInset className="p-6">
+                        <div className="space-y-4">
+                            <Breadcrumb>
+                                <BreadcrumbList>
+                                    <BreadcrumbItem>
+                                        <BreadcrumbLink href="#">Home</BreadcrumbLink>
+                                    </BreadcrumbItem>
+                                    <BreadcrumbSeparator />
+                                    <BreadcrumbItem>
+                                        <BreadcrumbPage>Dashboard</BreadcrumbPage>
+                                    </BreadcrumbItem>
+                                </BreadcrumbList>
+                            </Breadcrumb>
+                            <h2 className="text-lg font-semibold">Dashboard</h2>
+                            <p className="text-sm text-muted-foreground">Welcome back, John. Here's an overview of your projects and activity.</p>
+                            <div className="mt-4 grid grid-cols-3 gap-3">
+                                <div className="rounded-lg border border-border/60 p-3">
+                                    <p className="text-[10px] text-muted-foreground uppercase tracking-wider">Total Projects</p>
+                                    <p className="text-xl font-bold mt-1">12</p>
+                                </div>
+                                <div className="rounded-lg border border-border/60 p-3">
+                                    <p className="text-[10px] text-muted-foreground uppercase tracking-wider">Active Tasks</p>
+                                    <p className="text-xl font-bold mt-1">48</p>
+                                </div>
+                                <div className="rounded-lg border border-border/60 p-3">
+                                    <p className="text-[10px] text-muted-foreground uppercase tracking-wider">Team Members</p>
+                                    <p className="text-xl font-bold mt-1">8</p>
+                                </div>
+                            </div>
+                        </div>
+                    </SidebarInset>
                 </SidebarProvider>
             </ShowcaseSection>
         </div>;

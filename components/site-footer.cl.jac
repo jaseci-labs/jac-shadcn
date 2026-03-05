@@ -20,14 +20,6 @@ cl {
                 </div>
                 <div className="flex items-center gap-4 text-sm text-muted-foreground">
                     <a
-                        href="https://docs.jaseci.org"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="hover:text-foreground transition-colors no-underline text-muted-foreground"
-                    >
-                        Docs
-                    </a>
-                    <a
                         href="https://github.com/Jaseci-Labs/jaseci"
                         target="_blank"
                         rel="noopener noreferrer"

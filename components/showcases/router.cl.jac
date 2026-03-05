@@ -6,10 +6,30 @@ cl import from ".display" { CardShowcase, BadgeShowcase, AvatarShowcase, TableSh
 cl import from ".feedback" { AlertShowcase, ProgressShowcase, SkeletonShowcase, SpinnerShowcase, EmptyShowcase }
 cl import from ".utility" { SeparatorShowcase, ToggleShowcase, ToggleGroupShowcase, ButtonGroupShowcase, KbdShowcase, ItemShowcase }
 cl import from ".chart" { ChartShowcase }
+cl import from "..project-preview" { ProjectPreview }
 
 cl {
     def:pub ComponentShowcase(props: Any) -> JsxElement {
         name = props.name;
+        if name == "home" {
+            return <div className="rounded-xl border border-border/60 overflow-hidden bg-background shadow-sm">
+                <div className="flex items-center gap-1.5 border-b border-border/50 bg-muted/30 px-4 py-2.5">
+                    <div className="flex items-center gap-1.5">
+                        <span className="size-3 rounded-full bg-red-400/60" />
+                        <span className="size-3 rounded-full bg-yellow-400/60" />
+                        <span className="size-3 rounded-full bg-green-400/60" />
+                    </div>
+                    <div className="ml-3 flex-1">
+                        <div className="mx-auto max-w-xs rounded-md bg-background/60 border border-border/40 px-3 py-1 text-xs text-muted-foreground text-center font-mono">
+                            localhost:8000
+                        </div>
+                    </div>
+                </div>
+                <div className="p-0">
+                    <ProjectPreview />
+                </div>
+            </div>;
+        }
         if name == "button" { return <ButtonShowcase />; }
         if name == "badge" { return <BadgeShowcase />; }
         if name == "card" { return <CardShowcase />; }

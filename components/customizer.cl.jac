@@ -330,7 +330,7 @@ cl {
         };
     }
 
-    def:pub CreateProjectModal() -> JsxElement {
+    def:pub CreateProjectModal(props: Any) -> JsxElement {
         ds = useDesignSystem();
         has copied: bool = False;
         has isDownloading: bool = False;
@@ -405,9 +405,11 @@ cl {
         };
 
         return <AlertDialog>
-            <AlertDialogTrigger className={buttonVariants().call(None, {"size": "sm", "className": "w-full"})}>
-                Create Project
-            </AlertDialogTrigger>
+            {props and props.trigger
+                and <AlertDialogTrigger asChild={True}>{props.trigger}</AlertDialogTrigger>
+                or <AlertDialogTrigger className={buttonVariants().call(None, {"size": "sm", "className": "w-full"})}>
+                    Create Project
+                </AlertDialogTrigger>}
             <AlertDialogContent>
                 <AlertDialogHeader>
                     <AlertDialogTitle>Create Project</AlertDialogTitle>
@@ -479,12 +481,10 @@ cl {
         >
             <div className="flex flex-1 flex-col overflow-y-auto no-scrollbar gap-y-6">
                 <div className="p-3 pb-1">
-                    {props and props.title
-                        and <div className="rounded-lg border border-border/50 bg-muted/30 p-2.5">
-                            <div className="text-muted-foreground text-[10px] uppercase tracking-wider font-medium">Customize</div>
-                            <div className="text-foreground text-sm font-semibold mt-0.5 truncate">{props.title}</div>
-                        </div>
-                        or <CreateProjectModal />}
+                    <div className="rounded-lg border border-border/50 bg-muted/30 p-2.5">
+                        <div className="text-muted-foreground text-[10px] uppercase tracking-wider font-medium">Customize</div>
+                        {props and props.title and <div className="text-foreground text-sm font-semibold mt-0.5 truncate">{props.title}</div>}
+                    </div>
                 </div>
                 <div className="flex flex-1 flex-col gap-y-2">
                     <StylePicker />
