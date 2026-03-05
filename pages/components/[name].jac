@@ -25,7 +25,7 @@ cl {
             mobileNavOpen = False;
         };
 
-        return <div className="flex flex-1 h-[calc(100vh-3.5rem)]">
+        return <div className="flex flex-1 h-[calc(100vh-4.5rem)]">
             <ItemExplorer
                 selectedItem={componentName}
                 onSelectItem={handleSelectItem}

@@ -83,7 +83,7 @@ cl {
 
         wrapperClass = isMobile
             and "flex flex-col h-full"
-            or "sticky top-0 z-30 hidden h-[calc(100vh-3.5rem)] w-48 shrink-0 flex-col border-r border-border/50 xl:flex";
+            or "sticky top-0 z-30 hidden h-[calc(100vh-4.5rem)] w-48 shrink-0 flex-col border-r border-border/50 xl:flex";
 
         return <aside
             data-slot="app-sidebar"
