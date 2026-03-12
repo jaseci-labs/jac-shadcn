@@ -330,22 +330,27 @@ cl {
         };
     }
 
+    def:pub _buildThemeParams(config: Any) -> Any {
+        params = Reflect.construct(URLSearchParams, [{}]);
+        params.set("style", config["style"] or "nova");
+        params.set("baseColor", config["baseColor"] or "neutral");
+        params.set("theme", config["theme"] or "neutral");
+        params.set("font", config["font"] or "figtree");
+        params.set("radius", config["radius"] or "default");
+        params.set("menuAccent", config["menuAccent"] or "subtle");
+        params.set("menuColor", config["menuColor"] or "default");
+        return params;
+    }
+
     def:pub CreateProjectModal(props: Any) -> JsxElement {
         ds = useDesignSystem();
         has copied: bool = False;
+        has copiedInit: bool = False;
         has isDownloading: bool = False;
 
         handleCopy = lambda -> None {
             config = ds["config"];
-            params = Reflect.construct(URLSearchParams, [{}]);
-            params.set("style", config["style"] or "nova");
-            params.set("baseColor", config["baseColor"] or "neutral");
-            params.set("theme", config["theme"] or "neutral");
-            params.set("font", config["font"] or "figtree");
-            params.set("radius", config["radius"] or "default");
-            params.set("menuAccent", config["menuAccent"] or "subtle");
-            params.set("menuColor", config["menuColor"] or "default");
-
+            params = _buildThemeParams(config);
             origin = window.location.origin;
             url = origin + "/jacpack?" + params.toString();
             cmd = "jac create --use '" + url + "' myapp";
@@ -353,6 +358,19 @@ cl {
             navigator.clipboard.writeText(cmd).then(lambda -> None {
                 copied = True;
                 setTimeout(lambda -> None { copied = False; }, 2000);
+            });
+        };
+
+        handleCopyInit = lambda -> None {
+            config = ds["config"];
+            params = _buildThemeParams(config);
+            origin = window.location.origin;
+            url = origin + "/theme?" + params.toString();
+            cmd = "jac add --shadcn --init '" + url + "'";
+
+            navigator.clipboard.writeText(cmd).then(lambda -> None {
+                copiedInit = True;
+                setTimeout(lambda -> None { copiedInit = False; }, 2000);
             });
         };
 
@@ -441,8 +459,22 @@ cl {
                                 or <HugeiconsIcon icon={Copy01Icon} strokeWidth={2} className="size-4" />}
                         </div>
                         <div className="flex-1">
-                            <div className="text-sm font-medium">{copied and "Copied!" or "Copy CLI Command"}</div>
+                            <div className="text-sm font-medium">{copied and "Copied!" or "Copy Create Command"}</div>
                             <div className="text-xs text-muted-foreground">jac create --use ... myapp</div>
+                        </div>
+                    </button>
+                    <button
+                        onClick={handleCopyInit}
+                        className="flex items-center gap-3 rounded-lg border border-border p-3 text-left transition-colors hover:bg-muted cursor-pointer"
+                    >
+                        <div className="flex size-9 items-center justify-center rounded-md bg-muted">
+                            {copiedInit
+                                and <HugeiconsIcon icon={Tick01Icon} strokeWidth={2} className="size-4 text-green-500" />
+                                or <HugeiconsIcon icon={Copy01Icon} strokeWidth={2} className="size-4" />}
+                        </div>
+                        <div className="flex-1">
+                            <div className="text-sm font-medium">{copiedInit and "Copied!" or "Copy Init Command"}</div>
+                            <div className="text-xs text-muted-foreground">Add theme to existing project</div>
                         </div>
                     </button>
                 </div>
