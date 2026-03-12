@@ -9,7 +9,7 @@ repository = "https://github.com/Jaseci-Labs/jaseci"
 homepage = "https://jac-shadcn.jaseci.org"
 
 [dependencies.npm]
-jac-client-node = "latest"
+jac-client-node = "1.0.7"
 class-variance-authority = "^0.7.1"
 clsx = "^2.1.1"
 tailwind-merge = "^3.5.0"
@@ -35,13 +35,13 @@ vaul = "*"
 sonner = "^2.0.0"
 react-resizable-panels = "^2.1.7"
 cmdk = "^1.1.1"
-"input-otp" = "^1.4.2"
-"embla-carousel-react" = "^8.6.0"
-"react-day-picker" = "^9.7.0"
+input-otp = "^1.4.2"
+embla-carousel-react = "^8.6.0"
+react-day-picker = "^9.7.0"
 recharts = "^2.15.3"
 
 [dependencies.npm.dev]
-"@jac-client/dev-deps" = "1.0.0"
+"@jac-client/dev-deps" = "2.0.0"
 "@tailwindcss/vite" = "latest"
 tailwindcss = "latest"
 

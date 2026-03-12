@@ -20,7 +20,6 @@ cl {
     }
 
     def buildChartStyle(config: Any) -> Any {
-        """Build inline style object with --color-* vars for chart colors."""
         styleObj = {};
         entries = Object.entries(config).filter(lambda(e: Any) -> Any { return e[1].theme or e[1].color; });
         for entry in entries {
