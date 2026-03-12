@@ -84,6 +84,7 @@ def resolve_css_vars(shadcn_config: dict) -> dict {
         radius_value = RADII_MAP.get(radius_name);
         if radius_value {
             light_vars["radius"] = radius_value;
+            dark_vars["radius"] = radius_value;
         }
     }
 

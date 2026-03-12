@@ -106,6 +106,10 @@ def:pub get_theme(
     global_css = generate_global_css(font, css_vars);
     font_info = FONT_DATA.get(font, FONT_DATA["figtree"]);
 
+    # Include all component names so --init can install them
+    registry = load_registry();
+    default_components: list = sorted(list(registry.get("components", {}).keys()));
+
     return {
         "global_css": global_css,
         "jac_shadcn_config": {
@@ -122,8 +126,22 @@ def:pub get_theme(
             "clsx": "^2.1.1",
             "tailwind-merge": "^3.5.0",
             "tw-animate-css": "^1.4.0",
+            "class-variance-authority": "^0.7.1",
+            "radix-ui": "^1.4.3",
+            "@base-ui/react": "^1.2.0",
+            "shadcn": "^3.8.5",
             font_info["npm"]: "*"
-        }
+        },
+        "npm_dev_deps": {
+            "@jac-client/dev-deps": "1.0.0",
+            "@tailwindcss/vite": "latest",
+            "tailwindcss": "latest"
+        },
+        "vite_config": {
+            "plugins": ["tailwindcss()"],
+            "lib_imports": ["import tailwindcss from '@tailwindcss/vite'"]
+        },
+        "default_components": default_components
     };
 }
 
