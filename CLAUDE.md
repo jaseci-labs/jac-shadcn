@@ -2,6 +2,20 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## Component Rules & Skills
+
+**Always follow the jac-shadcn skills** at `.claude/skills/jac-shadcn/` when writing or modifying components:
+
+| Rule | File |
+|------|------|
+| Styling (semantic colors, cn(), size-*, no dark: overrides) | `.claude/skills/jac-shadcn/rules/styling.md` |
+| Composition (Groups, Titles, Card, ButtonGroup nesting) | `.claude/skills/jac-shadcn/rules/composition.md` |
+| Icons (HugeIcons only, HugeiconsIcon wrapper) | `.claude/skills/jac-shadcn/rules/icons.md` |
+| Forms (Field + Label, InputGroup, ToggleGroup) | `.claude/skills/jac-shadcn/rules/forms.md` |
+| Jac Patterns (has, glob, no destructuring, True/False) | `.claude/skills/jac-shadcn/rules/jac-patterns.md` |
+| CLI Reference | `.claude/skills/jac-shadcn/cli.md` |
+| Theming & Customization | `.claude/skills/jac-shadcn/customization.md` |
+
 ## Project Overview
 
 **jac-shadcn** is a shadcn-style UI component library and theme customizer for the Jac language. It provides UI components ported from TypeScript/React to Jac (`.cl.jac`), a visual theme customizer with 5 styles, 21 color themes, and 12 fonts, and a registry server that serves resolved components for `jac add --shadcn`.
@@ -121,7 +135,7 @@ Exported projects have **no cn-* tokens** — all classes are resolved to concre
 
 ## Plugin Package
 
-The CLI plugin lives at `/home/ahzan/Documents/jaseci/jaseci/jac-ui/plugins/jac-shadcn/`:
+The CLI plugin lives at `/home/ahzan/Documents/jaseci/jaseci/jac-plugins/jac-shadcn/`:
 - `jac add --shadcn button card` — adds components from this registry
 - `jac remove --shadcn button` — removes components
 - `jac create --use jac-shadcn` — scaffolds themed project
@@ -190,10 +204,10 @@ Jac compiles components as plain functions. For Radix triggers, apply `buttonVar
 </DropdownMenuTrigger>
 ```
 
-### `has` = `useState`
+### `has` = Mutable State (like `let`)
 ```jac
 has theme: str = "light";
-# Generates: const [theme, setTheme] = useState("light")
+# Mutable — read/write directly, no setter function, no stale closure issues
 ```
 
 ## Jac Compiler Gotchas
