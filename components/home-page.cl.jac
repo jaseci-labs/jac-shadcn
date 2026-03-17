@@ -339,25 +339,29 @@ cl {
         return <div className="w-full space-y-3">
             <div className="flex items-center gap-1">
                 <ButtonGroup>
-                    <Button variant="outline" size="icon" className="size-8">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m15 18-6-6 6-6"/></svg>
-                    </Button>
-                    <ButtonGroupSeparator />
-                    <Button variant="outline" size="sm" className="text-xs">Archive</Button>
-                    <Button variant="outline" size="sm" className="text-xs">Report</Button>
-                    <Button variant="outline" size="sm" className="text-xs">Snooze</Button>
-                    <ButtonGroupSeparator />
-                    <DropdownMenu>
-                        <DropdownMenuTrigger className={buttonVariants().call(None, {"variant": "outline", "size": "icon", "className": "size-8"})}>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg>
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent align="end">
-                            <DropdownMenuItem>Mark as Read</DropdownMenuItem>
-                            <DropdownMenuItem>Add to Calendar</DropdownMenuItem>
-                            <DropdownMenuSeparator />
-                            <DropdownMenuItem>Label As...</DropdownMenuItem>
-                        </DropdownMenuContent>
-                    </DropdownMenu>
+                    <ButtonGroup>
+                        <Button variant="outline" size="icon" className="size-8">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+                        </Button>
+                    </ButtonGroup>
+                    <ButtonGroup>
+                        <Button variant="outline" size="sm" className="text-xs">Archive</Button>
+                        <Button variant="outline" size="sm" className="text-xs">Report</Button>
+                        <Button variant="outline" size="sm" className="text-xs">Snooze</Button>
+                    </ButtonGroup>
+                    <ButtonGroup>
+                        <DropdownMenu>
+                            <DropdownMenuTrigger className={buttonVariants().call(None, {"variant": "outline", "size": "icon", "className": "size-8"})}>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent align="end">
+                                <DropdownMenuItem>Mark as Read</DropdownMenuItem>
+                                <DropdownMenuItem>Add to Calendar</DropdownMenuItem>
+                                <DropdownMenuSeparator />
+                                <DropdownMenuItem>Label As...</DropdownMenuItem>
+                            </DropdownMenuContent>
+                        </DropdownMenu>
+                    </ButtonGroup>
                 </ButtonGroup>
             </div>
         </div>;
@@ -391,19 +395,19 @@ cl {
 
         return <div className="flex items-center gap-3">
             <ButtonGroup>
-                <Button variant={currentPage == 1 and "default" or "outline"} size="icon" className="size-8 text-xs" onClick={lambda -> None { currentPage = 1; }}>1</Button>
-                <ButtonGroupSeparator />
-                <Button variant={currentPage == 2 and "default" or "outline"} size="icon" className="size-8 text-xs" onClick={lambda -> None { currentPage = 2; }}>2</Button>
-                <ButtonGroupSeparator />
-                <Button variant={currentPage == 3 and "default" or "outline"} size="icon" className="size-8 text-xs" onClick={lambda -> None { currentPage = 3; }}>3</Button>
-                <ButtonGroupSeparator />
-                <Button variant="outline" size="icon" className="size-8">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m15 18-6-6 6-6"/></svg>
-                </Button>
-                <ButtonGroupSeparator />
-                <Button variant="outline" size="icon" className="size-8">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m9 18 6-6-6-6"/></svg>
-                </Button>
+                <ButtonGroup>
+                    <Button variant={currentPage == 1 and "default" or "outline"} size="icon" className="size-8 text-xs" onClick={lambda -> None { currentPage = 1; }}>1</Button>
+                    <Button variant={currentPage == 2 and "default" or "outline"} size="icon" className="size-8 text-xs" onClick={lambda -> None { currentPage = 2; }}>2</Button>
+                    <Button variant={currentPage == 3 and "default" or "outline"} size="icon" className="size-8 text-xs" onClick={lambda -> None { currentPage = 3; }}>3</Button>
+                </ButtonGroup>
+                <ButtonGroup>
+                    <Button variant="outline" size="icon" className="size-8">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+                    </Button>
+                    <Button variant="outline" size="icon" className="size-8">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+                    </Button>
+                </ButtonGroup>
             </ButtonGroup>
         </div>;
     }
