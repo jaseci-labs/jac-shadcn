@@ -95,7 +95,7 @@ cl {
             <ShowcaseHeader title="Skeleton" description="Use to show a placeholder while content is loading." name="skeleton" />
             <ShowcaseSection title="Card Skeleton" className="flex-col gap-4" code={_codeExamples["skeleton"]}>
                 <div className="flex items-center space-x-4">
-                    <Skeleton className="h-12 w-12 rounded-full" />
+                    <Skeleton className="size-12 rounded-full" />
                     <div className="space-y-2">
                         <Skeleton className="h-4 w-48" />
                         <Skeleton className="h-4 w-36" />
