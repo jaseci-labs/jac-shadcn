@@ -11,7 +11,7 @@ glob _codeExamples: dict = {
     "chart-area": "cl import from .ui.chart {\n    ChartContainer, ChartTooltip,\n    ChartTooltipContent\n}\ncl import from recharts { Area, AreaChart, XAxis }\n\n<ChartContainer config={multiConfig}>\n    <AreaChart data={data}>\n        <XAxis dataKey='month' />\n        <ChartTooltip\n            content={<ChartTooltipContent />} />\n        <Area dataKey='desktop' type='natural'\n            fill='url(#fillDesktop)'\n            stroke='var(--color-desktop)' />\n    </AreaChart>\n</ChartContainer>",
     "chart-line": "cl import from .ui.chart {\n    ChartContainer, ChartTooltip,\n    ChartTooltipContent, ChartLegend,\n    ChartLegendContent\n}\ncl import from recharts { Line, LineChart, XAxis }\n\n<ChartContainer config={multiConfig}>\n    <LineChart data={data}>\n        <XAxis dataKey='month' />\n        <ChartTooltip\n            content={<ChartTooltipContent />} />\n        <Line dataKey='desktop' type='monotone'\n            stroke='var(--color-desktop)' />\n        <Line dataKey='mobile' type='monotone'\n            stroke='var(--color-mobile)' />\n    </LineChart>\n</ChartContainer>",
     "chart-pie": "cl import from .ui.chart {\n    ChartContainer, ChartTooltip,\n    ChartTooltipContent\n}\ncl import from recharts { Pie, PieChart }\n\n<ChartContainer config={browserConfig}>\n    <PieChart>\n        <ChartTooltip\n            content={<ChartTooltipContent />} />\n        <Pie data={browserData}\n            dataKey='visitors'\n            nameKey='browser'\n            innerRadius={60} />\n    </PieChart>\n</ChartContainer>",
-    "chart-radial": "cl import from .ui.chart {\n    ChartContainer, ChartTooltip,\n    ChartTooltipContent\n}\ncl import from recharts { RadialBar, RadialBarChart }\n\n<ChartContainer config={browserConfig}>\n    <RadialBarChart data={browserData}\n        innerRadius={30} outerRadius={110}>\n        <ChartTooltip\n            content={<ChartTooltipContent />} />\n        <RadialBar dataKey='visitors'\n            background={true} />\n    </RadialBarChart>\n</ChartContainer>",
+    "chart-radial": "cl import from .ui.chart {\n    ChartContainer, ChartTooltip,\n    ChartTooltipContent\n}\ncl import from recharts { RadialBar, RadialBarChart }\n\n<ChartContainer config={browserConfig}>\n    <RadialBarChart data={browserData}\n        innerRadius={30} outerRadius={110}>\n        <ChartTooltip\n            content={<ChartTooltipContent />} />\n        <RadialBar dataKey='visitors'\n            background={True} />\n    </RadialBarChart>\n</ChartContainer>",
     "chart-stacked": "cl import from .ui.chart {\n    ChartContainer, ChartTooltip,\n    ChartTooltipContent, ChartLegend,\n    ChartLegendContent\n}\ncl import from recharts { Bar, BarChart, XAxis }\n\n<ChartContainer config={multiConfig}>\n    <BarChart data={data}>\n        <XAxis dataKey='month' />\n        <ChartTooltip\n            content={<ChartTooltipContent />} />\n        <ChartLegend\n            content={<ChartLegendContent />} />\n        <Bar dataKey='desktop' stackId='a'\n            fill='var(--color-desktop)' />\n        <Bar dataKey='mobile' stackId='a'\n            fill='var(--color-mobile)' />\n    </BarChart>\n</ChartContainer>",
 };
 
@@ -57,10 +57,10 @@ cl {
                     </CardHeader>
                     <CardContent>
                         <ChartContainer config={multiConfig} className="min-h-[200px] w-full">
-                            <BarChart accessibilityLayer={true} data={monthData} margin={{left: 12, right: 12}}>
-                                <CartesianGrid vertical={false} />
-                                <XAxis dataKey="month" tickLine={false} axisLine={false} tickMargin={8} tickFormatter={shortMonth} />
-                                <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
+                            <BarChart accessibilityLayer={True} data={monthData} margin={{left: 12, right: 12}}>
+                                <CartesianGrid vertical={False} />
+                                <XAxis dataKey="month" tickLine={False} axisLine={False} tickMargin={8} tickFormatter={shortMonth} />
+                                <ChartTooltip cursor={False} content={<ChartTooltipContent />} />
                                 <ChartLegend content={<ChartLegendContent />} />
                                 <Bar dataKey="desktop" fill="var(--color-desktop)" radius={4} />
                                 <Bar dataKey="mobile" fill="var(--color-mobile)" radius={4} />
@@ -80,10 +80,10 @@ cl {
                     </CardHeader>
                     <CardContent>
                         <ChartContainer config={multiConfig} className="min-h-[200px] w-full">
-                            <BarChart accessibilityLayer={true} data={monthData}>
-                                <CartesianGrid vertical={false} />
-                                <XAxis dataKey="month" tickLine={false} tickMargin={10} axisLine={false} tickFormatter={shortMonth} />
-                                <ChartTooltip content={<ChartTooltipContent hideLabel={true} />} />
+                            <BarChart accessibilityLayer={True} data={monthData}>
+                                <CartesianGrid vertical={False} />
+                                <XAxis dataKey="month" tickLine={False} tickMargin={10} axisLine={False} tickFormatter={shortMonth} />
+                                <ChartTooltip content={<ChartTooltipContent hideLabel={True} />} />
                                 <ChartLegend content={<ChartLegendContent />} />
                                 <Bar dataKey="desktop" stackId="a" fill="var(--color-desktop)" radius={[0, 0, 4, 4]} />
                                 <Bar dataKey="mobile" stackId="a" fill="var(--color-mobile)" radius={[4, 4, 0, 0]} />
@@ -103,10 +103,10 @@ cl {
                     </CardHeader>
                     <CardContent>
                         <ChartContainer config={multiConfig} className="min-h-[200px] w-full">
-                            <LineChart accessibilityLayer={true} data={monthData} margin={{left: 12, right: 12}}>
-                                <CartesianGrid vertical={false} />
-                                <XAxis dataKey="month" tickLine={false} axisLine={false} tickMargin={8} tickFormatter={shortMonth} />
-                                <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
+                            <LineChart accessibilityLayer={True} data={monthData} margin={{left: 12, right: 12}}>
+                                <CartesianGrid vertical={False} />
+                                <XAxis dataKey="month" tickLine={False} axisLine={False} tickMargin={8} tickFormatter={shortMonth} />
+                                <ChartTooltip cursor={False} content={<ChartTooltipContent />} />
                                 <ChartLegend content={<ChartLegendContent />} />
                                 <Line dataKey="desktop" type={"monotone"} stroke="var(--color-desktop)" strokeWidth={2} dot={{r: 4}} activeDot={{r: 6}} />
                                 <Line dataKey="mobile" type={"monotone"} stroke="var(--color-mobile)" strokeWidth={2} dot={{r: 4}} activeDot={{r: 6}} />
@@ -126,10 +126,10 @@ cl {
                     </CardHeader>
                     <CardContent>
                         <ChartContainer config={multiConfig} className="min-h-[200px] w-full">
-                            <AreaChart accessibilityLayer={true} data={monthData} margin={{left: 12, right: 12}}>
-                                <CartesianGrid vertical={false} />
-                                <XAxis dataKey="month" tickLine={false} axisLine={false} tickMargin={8} tickFormatter={shortMonth} />
-                                <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
+                            <AreaChart accessibilityLayer={True} data={monthData} margin={{left: 12, right: 12}}>
+                                <CartesianGrid vertical={False} />
+                                <XAxis dataKey="month" tickLine={False} axisLine={False} tickMargin={8} tickFormatter={shortMonth} />
+                                <ChartTooltip cursor={False} content={<ChartTooltipContent />} />
                                 <defs>
                                     <linearGradient id="fillDesktop" x1="0" y1="0" x2="0" y2="1">
                                         <stop offset="5%" stopColor="var(--color-desktop)" stopOpacity={0.8} />
@@ -159,7 +159,7 @@ cl {
                     <CardContent className="flex-1 pb-0">
                         <ChartContainer config={browserConfig} className="mx-auto aspect-square max-h-[250px]">
                             <PieChart>
-                                <ChartTooltip cursor={false} content={<ChartTooltipContent hideLabel={true} />} />
+                                <ChartTooltip cursor={False} content={<ChartTooltipContent hideLabel={True} />} />
                                 <Pie data={browserData} dataKey="visitors" nameKey="browser" innerRadius={60} strokeWidth={5} />
                             </PieChart>
                         </ChartContainer>
@@ -178,8 +178,8 @@ cl {
                     <CardContent className="flex-1 pb-0">
                         <ChartContainer config={browserConfig} className="mx-auto aspect-square max-h-[250px]">
                             <RadialBarChart data={browserData} innerRadius={30} outerRadius={110}>
-                                <ChartTooltip cursor={false} content={<ChartTooltipContent hideLabel={true} nameKey="browser" />} />
-                                <RadialBar dataKey="visitors" background={true} />
+                                <ChartTooltip cursor={False} content={<ChartTooltipContent hideLabel={True} nameKey="browser" />} />
+                                <RadialBar dataKey="visitors" background={True} />
                             </RadialBarChart>
                         </ChartContainer>
                     </CardContent>

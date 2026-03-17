@@ -212,7 +212,7 @@ cl {
         return <div className="space-y-8">
             <ShowcaseHeader title="Navigation Menu" description="A collection of links for navigating websites." name="navigation-menu" />
             <ShowcaseSection title="Default" className="relative items-start pb-48" code={_codeExamples["navigation-menu"]}>
-                <NavigationMenu viewport={false}>
+                <NavigationMenu viewport={False}>
                     <NavigationMenuList>
                         <NavigationMenuItem>
                             <NavigationMenuTrigger>Getting started</NavigationMenuTrigger>
