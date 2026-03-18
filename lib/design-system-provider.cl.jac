@@ -158,7 +158,7 @@ cl {
             # Preview: current customized theme
             previewVars = extractLines(registryTheme, themeStyle["--font-sans"]);
 
-            css = "body { " + bodyVars["light"].join(" ") + " } .dark body, body.dark { " + bodyVars["dark"].join(" ") + " } .ds-preview { " + previewVars["light"].join(" ") + " } .dark .ds-preview { " + previewVars["dark"].join(" ") + " }";
+            css = "body { " + bodyVars["light"].join(" ") + " } .dark body, body.dark { " + bodyVars["dark"].join(" ") + " } .ds-preview { font-family: var(--font-sans); " + previewVars["light"].join(" ") + " } .dark .ds-preview { font-family: var(--font-sans); " + previewVars["dark"].join(" ") + " }";
             styleEl.textContent = css;
             return lambda -> None {
                 existing = document.getElementById("ds-theme-vars");
