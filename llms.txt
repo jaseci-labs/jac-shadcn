@@ -1,0 +1,131 @@
+# jac-shadcn
+
+> jac-shadcn is a shadcn-style UI component library and theme customizer for the Jac language. It provides 53 UI components ported from TypeScript/React to Jac (.cl.jac), a visual theme customizer with 5 styles, 21 color themes, and 12 fonts, and a registry server that serves resolved components via `jac add --shadcn`. Built with Jac, Radix UI, Tailwind CSS v4, and HugeIcons. Open Source.
+
+## Overview
+
+- [Introduction](https://jac-shadcn.jaseci.org): Core principles — cn-* token system, style-agnostic components, 5 visual styles, theme customizer.
+- [CLI](https://jac-shadcn.jaseci.org): `jac add --shadcn` to install components, `jac remove --shadcn` to remove, `jac create --use jac-shadcn` to scaffold.
+- [Theming](https://jac-shadcn.jaseci.org): 21 color themes (oklch), 12 fonts, 5 styles (nova, vega, maia, lyra, mira), customizable radius and menu accent.
+- [Registry API](https://jac-shadcn.jaseci.org/registry): Component manifest with names, npmDeps, and peerComponents.
+
+## Installation
+
+- [Existing Project]: Add `[jac-shadcn]` section to `jac.toml`, then `jac add --shadcn button card dialog`.
+- [New Project]: `jac create --use jac-shadcn` scaffolds a full themed project with global.css, utils, and jac.toml pre-configured.
+- [Dev Server]: `source /home/ahzan/.jacvenv/bin/activate && jac start main.jac` serves on http://localhost:8000.
+
+## Components
+
+### Form & Input
+
+- [Button](https://jac-shadcn.jaseci.org/components/button): Button component with multiple variants (default, outline, ghost, destructive) and sizes.
+- [Button Group](https://jac-shadcn.jaseci.org/components/button-group): Group multiple buttons together with nested groups for visible gaps.
+- [Input](https://jac-shadcn.jaseci.org/components/input): Text input component.
+- [Input Group](https://jac-shadcn.jaseci.org/components/input-group): Input component with prefix and suffix addons.
+- [Input OTP](https://jac-shadcn.jaseci.org/components/otp-input): One-time password input component.
+- [Textarea](https://jac-shadcn.jaseci.org/components/textarea): Multi-line text input component.
+- [Checkbox](https://jac-shadcn.jaseci.org/components/checkbox): Checkbox input component.
+- [Radio Group](https://jac-shadcn.jaseci.org/components/radio-group): Radio button group component.
+- [Select](https://jac-shadcn.jaseci.org/components/select): Select dropdown component.
+- [Native Select](https://jac-shadcn.jaseci.org/components/native-select): Native HTML select component (no JS).
+- [Switch](https://jac-shadcn.jaseci.org/components/switch): Toggle switch component.
+- [Slider](https://jac-shadcn.jaseci.org/components/slider): Slider input component.
+- [Calendar](https://jac-shadcn.jaseci.org/components/calendar): Calendar component for date selection.
+- [Combobox](https://jac-shadcn.jaseci.org/components/combobox): Searchable select component with autocomplete.
+- [Label](https://jac-shadcn.jaseci.org/components/label): Form label component.
+- [Field](https://jac-shadcn.jaseci.org/components/field): Field component for form inputs with labels.
+
+### Layout & Navigation
+
+- [Accordion](https://jac-shadcn.jaseci.org/components/accordion): Collapsible accordion component.
+- [Breadcrumb](https://jac-shadcn.jaseci.org/components/breadcrumb): Breadcrumb navigation component.
+- [Navigation Menu](https://jac-shadcn.jaseci.org/components/navigation-menu): Accessible navigation menu with dropdowns.
+- [Sidebar](https://jac-shadcn.jaseci.org/components/sidebar): Collapsible sidebar component for app layouts.
+- [Tabs](https://jac-shadcn.jaseci.org/components/tabs): Tabbed interface component.
+- [Separator](https://jac-shadcn.jaseci.org/components/separator): Visual divider between content sections.
+- [Scroll Area](https://jac-shadcn.jaseci.org/components/scroll-area): Custom scrollable area with styled scrollbars.
+- [Resizable](https://jac-shadcn.jaseci.org/components/resizable): Resizable panel layout component.
+- [Pagination](https://jac-shadcn.jaseci.org/components/pagination): Pagination component for lists and tables.
+- [Collapsible](https://jac-shadcn.jaseci.org/components/collapsible): Collapsible container component.
+
+### Overlays & Dialogs
+
+- [Dialog](https://jac-shadcn.jaseci.org/components/dialog): Modal dialog component.
+- [Alert Dialog](https://jac-shadcn.jaseci.org/components/alert-dialog): Alert dialog for confirmation prompts.
+- [Sheet](https://jac-shadcn.jaseci.org/components/sheet): Slide-out panel component (drawer).
+- [Drawer](https://jac-shadcn.jaseci.org/components/drawer): Mobile-friendly drawer component.
+- [Popover](https://jac-shadcn.jaseci.org/components/popover): Floating popover component.
+- [Tooltip](https://jac-shadcn.jaseci.org/components/tooltip): Tooltip component for additional context.
+- [Hover Card](https://jac-shadcn.jaseci.org/components/hover-card): Card that appears on hover.
+- [Context Menu](https://jac-shadcn.jaseci.org/components/context-menu): Right-click context menu.
+- [Dropdown Menu](https://jac-shadcn.jaseci.org/components/dropdown-menu): Dropdown menu component.
+- [Menubar](https://jac-shadcn.jaseci.org/components/menubar): Horizontal menubar component.
+- [Command](https://jac-shadcn.jaseci.org/components/command): Command palette component.
+
+### Feedback & Status
+
+- [Alert](https://jac-shadcn.jaseci.org/components/alert): Alert component for messages and notifications.
+- [Progress](https://jac-shadcn.jaseci.org/components/progress): Progress bar component.
+- [Spinner](https://jac-shadcn.jaseci.org/components/spinner): Loading spinner component.
+- [Skeleton](https://jac-shadcn.jaseci.org/components/skeleton): Skeleton loading placeholder.
+- [Badge](https://jac-shadcn.jaseci.org/components/badge): Badge component for labels and status indicators.
+- [Empty](https://jac-shadcn.jaseci.org/components/empty): Empty state component for no data scenarios.
+
+### Display & Media
+
+- [Avatar](https://jac-shadcn.jaseci.org/components/avatar): Avatar component for user profiles.
+- [Card](https://jac-shadcn.jaseci.org/components/card): Card container component with header, content, footer.
+- [Table](https://jac-shadcn.jaseci.org/components/table): Table component for displaying data.
+- [Chart](https://jac-shadcn.jaseci.org/components/chart): Chart components using Recharts.
+- [Carousel](https://jac-shadcn.jaseci.org/components/carousel): Carousel component.
+- [Aspect Ratio](https://jac-shadcn.jaseci.org/components/aspect-ratio): Container that maintains aspect ratio.
+- [Item](https://jac-shadcn.jaseci.org/components/item): Generic item component for lists and menus.
+- [Kbd](https://jac-shadcn.jaseci.org/components/kbd): Keyboard shortcut display component.
+
+### Utility
+
+- [Toggle](https://jac-shadcn.jaseci.org/components/toggle): Toggle button component.
+- [Toggle Group](https://jac-shadcn.jaseci.org/components/toggle-group): Group of toggle buttons for option selection.
+
+## Styles
+
+- [Nova](https://jac-shadcn.jaseci.org): Default — rounded, clean, modern. Border-radius: lg.
+- [Vega](https://jac-shadcn.jaseci.org): Subtle shadows, medium rounding. Border-radius: md.
+- [Maia](https://jac-shadcn.jaseci.org): Extra rounded (4xl), pill-shaped buttons.
+- [Lyra](https://jac-shadcn.jaseci.org): Sharp corners, no border-radius. Minimal.
+- [Mira](https://jac-shadcn.jaseci.org): Compact, relaxed line-height. Border-radius: md.
+
+## Jac Language Patterns
+
+- [Component Pattern]: Components are `def:pub Name(props: Any) -> JsxElement` inside `cl { }` blocks.
+- [State]: `has count: int = 0` — mutable state like `let`, not React useState.
+- [Constants]: `glob _variants: Any = cva(...)` — module-level constants.
+- [Props]: No destructuring — use `props.variant or "default"`.
+- [Booleans]: `True`/`False`/`None` capitalized (Python-style).
+- [Icons]: HugeIcons only — `<HugeiconsIcon icon={SearchIcon} strokeWidth={2} className="size-4" />`.
+- [Radix Triggers]: No forwardRef — apply `buttonVariants().call(None, {...})` directly.
+- [New Objects]: `Reflect.construct(Date, [])` instead of `new Date()`.
+
+## Technology Stack
+
+- [Language]: Jac (.cl.jac for client-side JSX components).
+- [UI Primitives]: Radix UI (radix-ui ^1.4.3), Base UI (@base-ui/react ^1.2.0).
+- [Styling]: Tailwind CSS v4 + class-variance-authority (CVA).
+- [Icons]: HugeIcons (@hugeicons/react + @hugeicons/core-free-icons).
+- [CSS Utilities]: clsx + tailwind-merge via cn().
+- [Build]: Vite (auto-configured by Jac compiler).
+- [React]: v18.3.1 (pinned) — no ref-as-prop (React 19 feature).
+
+## Registry API
+
+- [Component Manifest](https://jac-shadcn.jaseci.org/registry): GET /registry — returns all component names, npmDeps, and peerComponents.
+- [Single Component](https://jac-shadcn.jaseci.org/component/{name}?style=nova): GET /component/{name}?style={style} — returns resolved .cl.jac file content.
+- [Full Project Pack](https://jac-shadcn.jaseci.org/jacpack?style=nova&theme=rose&font=inter): GET /jacpack — complete .jacpack for `jac create --use URL`.
+
+## CLI Plugin
+
+- [Plugin Source]: Located at jaseci/jac-plugins/jac-shadcn/.
+- [Add Components]: `jac add --shadcn button card dialog` — fetches resolved components, auto-resolves peer deps, patches jac.toml.
+- [Remove Components]: `jac remove --shadcn button` — removes component files.
+- [Create Project]: `jac create --use jac-shadcn` — scaffolds themed project from jacpack template.
