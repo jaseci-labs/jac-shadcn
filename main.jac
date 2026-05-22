@@ -1,6 +1,6 @@
 """Main entry point for jac-shadcn."""
 
-import from lib.export_service { build_jacpack, build_jacpack_from_config, load_registry, resolve_single_component, resolve_css_vars, generate_global_css, FONT_DATA }
+import from lib.export_service { build_jacpack, build_jacpack_from_config, load_registry, resolve_single_component, resolve_css_vars, generate_global_css, get_valid_options, FONT_DATA }
 import from http { HTTPMethod }
 
 cl import from ".lib.design-system-provider" { DesignSystemProvider }
@@ -90,8 +90,7 @@ def:pub get_theme(
     theme: str = "neutral",
     font: str = "figtree",
     radius: str = "default",
-    menuAccent: str = "subtle",
-    menuColor: str = "default"
+    menuAccent: str = "subtle"
 ) -> dict {
     shadcn_config: dict = {
         "style": style,
@@ -99,8 +98,7 @@ def:pub get_theme(
         "theme": theme,
         "font": font,
         "radius": radius,
-        "menuAccent": menuAccent,
-        "menuColor": menuColor
+        "menuAccent": menuAccent
     };
     css_vars = resolve_css_vars(shadcn_config);
     global_css = generate_global_css(font, css_vars);
@@ -119,7 +117,6 @@ def:pub get_theme(
             "font": font,
             "radius": radius,
             "menuAccent": menuAccent,
-            "menuColor": menuColor,
             "registry": "https://jac-shadcn.jaseci.org"
         },
         "npm_deps": {
@@ -146,8 +143,18 @@ def:pub get_theme(
 }
 
 """GET /component/{name} — returns a single resolved component.
-Used by: jac add --shadcn button"""
+Used by: jac shadcn add button"""
 @restspec(method=HTTPMethod.GET, path="/component/{name}")
 def:pub get_component(name: str, style: str = "nova") -> dict {
     return resolve_single_component(name, style);
+}
+
+"""GET /options — returns the universe of valid theme parameters.
+Consumed by the jac-shadcn plugin (>=0.2.0) as a try-fetch for
+client-side validation; the plugin falls back to its hardcoded list
+when this endpoint is absent. Self-hosted mirrors can override the
+returned lists by editing get_valid_options() in lib/export_service.jac."""
+@restspec(method=HTTPMethod.GET, path="/options")
+def:pub get_options() -> dict {
+    return get_valid_options();
 }

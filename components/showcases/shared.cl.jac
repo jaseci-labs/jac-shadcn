@@ -78,7 +78,7 @@ glob _highlightJac: Any = lambda(source: str) -> str {
 cl {
     def:pub CopyCommand(props: Any) -> JsxElement {
         has copied: bool = False;
-        cmd = "jac add --shadcn " + props.name;
+        cmd = "jac shadcn add " + props.name;
 
         return <div className="group flex items-center gap-2 rounded-lg border border-border/60 bg-muted/30 px-3 py-2.5 font-mono text-sm transition-colors hover:bg-muted/50">
             <span className="text-muted-foreground select-none text-xs">$</span>

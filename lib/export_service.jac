@@ -526,7 +526,6 @@ def build_jac_toml_config(font_npm: str, shadcn_config: dict) -> dict {
             "font": shadcn_config.get("font", "figtree"),
             "radius": shadcn_config.get("radius", "default"),
             "menuAccent": shadcn_config.get("menuAccent", "subtle"),
-            "menuColor": shadcn_config.get("menuColor", "default"),
             "registry": "https://jac-shadcn.jaseci.org"
         },
         "jacpack": {
@@ -660,5 +659,29 @@ def build_jacpack(shadcn_config: dict, css_vars: dict) -> dict {
             ".vscode/", "*.swp", "node_modules/", ".jac/",
             "*.session", "*.session.*"
         ]
+    };
+}
+
+"""Return the full universe of valid theme parameters. Consumed by the
+jac-shadcn plugin's GET /options try-fetch for client-side validation
+(falls back to the plugin's hardcoded list when this endpoint is absent).
+Lists self-hosted mirrors can extend by editing this function."""
+def get_valid_options() -> dict {
+    # Themes come from data/themes.json (already loaded at module init).
+    theme_names: list = [];
+    for theme in _THEMES_DATA {
+        theme_names.append(theme["name"]);
+    }
+    return {
+        "styles": ["nova", "vega", "maia", "lyra", "mira"],
+        "base_colors": ["neutral", "stone", "zinc", "gray"],
+        "themes": sorted(theme_names),
+        "fonts": [
+            "geist", "geist-mono", "inter", "noto-sans", "nunito-sans",
+            "figtree", "roboto", "raleway", "dm-sans", "public-sans",
+            "outfit", "jetbrains-mono"
+        ],
+        "radii": ["default", "none", "small", "medium", "large"],
+        "menu_accents": ["subtle", "bold"]
     };
 }

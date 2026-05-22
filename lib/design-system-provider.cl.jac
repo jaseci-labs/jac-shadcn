@@ -18,7 +18,6 @@ cl {
         themeName = config["theme"] or "neutral";
         fontValue = config["font"] or "figtree";
         menuAccent = config["menuAccent"] or "subtle";
-        menuColor = config["menuColor"] or "default";
         radiusName = config["radius"] or "default";
 
         registryTheme = useMemo(lambda -> Any {
@@ -49,33 +48,10 @@ cl {
             return "style-" + (dc["style"] or "nova") + " base-color-" + (dc["baseColor"] or "neutral");
         }, []);
 
-        useEffect(lambda -> Any {
-            if not menuColor {
-                return;
-            }
-            menuElements = document.querySelectorAll(".cn-menu-target");
-            menuElements.forEach(lambda(element: Any) -> None {
-                if menuColor == "inverted" {
-                    element.classList.add("dark");
-                } else {
-                    element.classList.remove("dark");
-                }
-            });
-            observer = Reflect.construct(MutationObserver, [lambda -> None {
-                newElements = document.querySelectorAll(".cn-menu-target");
-                newElements.forEach(lambda(el: Any) -> None {
-                    if menuColor == "inverted" {
-                        el.classList.add("dark");
-                    } else {
-                        el.classList.remove("dark");
-                    }
-                });
-            }]);
-            observer.observe(document.body, {"childList": True, "subtree": True});
-            return lambda -> None {
-                observer.disconnect();
-            };
-        }, [menuColor]);
+        # `menuColor` was removed in jac-shadcn 0.2.0 -- it was accepted
+        # historically but the plugin's new validator rejects it, and the
+        # `.cn-menu-target` MutationObserver that used to honor it lived
+        # here. Removed alongside the customizer's MenuColorPicker.
 
         themeStyle = useMemo(lambda -> Any {
             styleObj = {};

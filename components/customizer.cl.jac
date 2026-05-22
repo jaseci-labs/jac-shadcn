@@ -1,7 +1,7 @@
 """Customizer panel — right sidebar with theme pickers, create project modal."""
 cl import from ..lib.utils { cn }
 cl import from "..lib.design-system-provider" { useDesignSystem }
-cl import from "..lib.config" { getStylesData, getDefaultConfig, getFontsData, getRadiiData, getMenuAccentsData, getMenuColorsData, getBaseColors, getThemesForBaseColor, getTheme, buildRegistryTheme }
+cl import from "..lib.config" { getStylesData, getDefaultConfig, getFontsData, getRadiiData, getMenuAccentsData, getBaseColors, getThemesForBaseColor, getTheme, buildRegistryTheme }
 cl import from .ui.button { buttonVariants }
 cl import from ".ui.dropdown-menu" { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuRadioGroup, DropdownMenuRadioItem }
 cl import from ".ui.alert-dialog" { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger }
@@ -245,37 +245,10 @@ cl {
         </DropdownMenu>;
     }
 
-    def:pub MenuColorPicker() -> JsxElement {
-        ds = useDesignSystem();
-        config = ds["config"];
-        colors = getMenuColorsData();
-        currentLabel = "Default";
-        for c in colors {
-            if c["value"] == config["menuColor"] {
-                currentLabel = c["label"];
-            }
-        }
-
-        return <DropdownMenu>
-            <DropdownMenuTrigger className={_triggerClass}>
-                <div className="flex flex-col justify-start text-left">
-                    <div className="text-muted-foreground text-xs">Menu Color</div>
-                    <div className="text-foreground text-sm font-medium">{currentLabel}</div>
-                </div>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent side="left" align="start">
-                <DropdownMenuRadioGroup value={config["menuColor"]} onValueChange={lambda(v: Any) -> None {
-                    ds["setConfig"].call(None, Object.assign({}, config, {"menuColor": v}));
-                }}>
-                    {colors.map(lambda(c: Any) -> Any {
-                        return <DropdownMenuRadioItem key={c["value"]} value={c["value"]}>
-                            {c["label"]}
-                        </DropdownMenuRadioItem>;
-                    })}
-                </DropdownMenuRadioGroup>
-            </DropdownMenuContent>
-        </DropdownMenu>;
-    }
+    # MenuColorPicker was removed in jac-shadcn 0.2.0 -- `menuColor` was
+    # never honored by the design-system-provider and is rejected by the
+    # plugin's new client-side validator. The remaining theme controls
+    # cover every field the plugin actually persists.
 
     def:pub randomizeConfig() -> dict {
         styles = getStylesData();
@@ -283,7 +256,6 @@ cl {
         fonts = getFontsData();
         radii = getRadiiData();
         menuAccents = getMenuAccentsData();
-        menuColors = getMenuColorsData();
 
         styleName = styles[Math.floor(Math.random() * styles.length)]["name"];
         baseColorName = baseColors[Math.floor(Math.random() * baseColors.length)]["name"];
@@ -317,7 +289,6 @@ cl {
         fontValue = availableFonts[Math.floor(Math.random() * availableFonts.length)]["value"];
         radiusName = availableRadii[Math.floor(Math.random() * availableRadii.length)]["name"];
         menuAccent = menuAccents[Math.floor(Math.random() * menuAccents.length)]["value"];
-        menuColor = menuColors[Math.floor(Math.random() * menuColors.length)]["value"];
 
         return {
             "style": styleName,
@@ -325,12 +296,14 @@ cl {
             "theme": themeName,
             "font": fontValue,
             "radius": radiusName,
-            "menuAccent": menuAccent,
-            "menuColor": menuColor
+            "menuAccent": menuAccent
         };
     }
 
     def:pub _buildThemeParams(config: Any) -> Any {
+        # Used for the registry's own /jacpack and /theme endpoints,
+        # plus the in-browser preview state. The plugin no longer parses
+        # URLs at all -- see _buildCliFlags below for the copy buttons.
         params = Reflect.construct(URLSearchParams, [{}]);
         params.set("style", config["style"] or "nova");
         params.set("baseColor", config["baseColor"] or "neutral");
@@ -338,8 +311,21 @@ cl {
         params.set("font", config["font"] or "figtree");
         params.set("radius", config["radius"] or "default");
         params.set("menuAccent", config["menuAccent"] or "subtle");
-        params.set("menuColor", config["menuColor"] or "default");
         return params;
+    }
+
+    def:pub _buildCliFlags(config: Any) -> str {
+        # Produces "--style nova --base-color neutral --theme rose ..." for
+        # both `jac create --use shadcn ...` and `jac shadcn init ...` (the
+        # plugin's declarative-flag surface introduced in 0.2.0).
+        parts: list = [];
+        parts.push("--style " + (config["style"] or "nova"));
+        parts.push("--base-color " + (config["baseColor"] or "neutral"));
+        parts.push("--theme " + (config["theme"] or "neutral"));
+        parts.push("--font " + (config["font"] or "figtree"));
+        parts.push("--radius " + (config["radius"] or "default"));
+        parts.push("--menu-accent " + (config["menuAccent"] or "subtle"));
+        return parts.join(" ");
     }
 
     def:pub CreateProjectModal(props: Any) -> JsxElement {
@@ -350,10 +336,8 @@ cl {
 
         handleCopy = lambda -> None {
             config = ds["config"];
-            params = _buildThemeParams(config);
-            origin = window.location.origin;
-            url = origin + "/jacpack?" + params.toString();
-            cmd = "jac create --use '" + url + "' myapp";
+            flags = _buildCliFlags(config);
+            cmd = "jac create myapp --use shadcn " + flags;
 
             navigator.clipboard.writeText(cmd).then(lambda -> None {
                 copied = True;
@@ -363,10 +347,8 @@ cl {
 
         handleCopyInit = lambda -> None {
             config = ds["config"];
-            params = _buildThemeParams(config);
-            origin = window.location.origin;
-            url = origin + "/theme?" + params.toString();
-            cmd = "jac add --shadcn --init '" + url + "'";
+            flags = _buildCliFlags(config);
+            cmd = "jac shadcn init " + flags;
 
             navigator.clipboard.writeText(cmd).then(lambda -> None {
                 copiedInit = True;
@@ -391,7 +373,6 @@ cl {
                 "font": config["font"] or "figtree",
                 "radius": config["radius"] or "default",
                 "menuAccent": config["menuAccent"] or "subtle",
-                "menuColor": config["menuColor"] or "default",
                 "cssVars": registryTheme["cssVars"]
             });
             fetch("/walker/export_theme", {
@@ -460,7 +441,7 @@ cl {
                         </div>
                         <div className="flex-1">
                             <div className="text-sm font-medium">{copied and "Copied!" or "Copy Create Command"}</div>
-                            <div className="text-xs text-muted-foreground">jac create --use ... myapp</div>
+                            <div className="text-xs text-muted-foreground">jac create myapp --use shadcn --style ... --theme ...</div>
                         </div>
                     </button>
                     <button
@@ -525,7 +506,6 @@ cl {
                     <FontPicker />
                     <RadiusPicker />
                     <MenuAccentPicker />
-                    <MenuColorPicker />
                 </div>
                 <div className="mt-auto flex flex-col px-1 pb-2">
                     <button

@@ -2,31 +2,42 @@
 
 Shadcn-style UI component library and theme customizer for [Jac](https://jac-lang.org) — beautifully designed components built with Radix UI and Tailwind CSS, written entirely in Jac.
 
+This repo serves the public registry at [jac-shadcn.jaseci.org](https://jac-shadcn.jaseci.org) and ships the live customizer. The CLI plugin that consumes it lives separately at [jac-shadcn (pypi)](https://pypi.org/project/jac-shadcn/) / `jac-plugins/jac-shadcn/` in the [jaseci monorepo](https://github.com/jaseci-labs/jaseci).
+
 ## Features
 
-- **21 UI Components** — Button, Card, Dialog, Tabs, Checkbox, Switch, Tooltip, and more
-- **5 Visual Styles** — Nova, Vega, Maia, Lyra, Mira
-- **21 Color Themes** — Rose, Blue, Green, Orange, Purple, and more
-- **12 Fonts** — Geist, Inter, Figtree, JetBrains Mono, and more
-- **Visual Customizer** — Live theme editor with instant preview
-- **Component Registry** — `jac add --shadcn button card` to install components on demand
-- **Jacpack Export** — Download or URL-based project scaffolding
+- **53 UI components** across form, navigation, layout, status, and feedback (Button, Card, Dialog, Combobox, Calendar, Carousel, Chart, and 46 more)
+- **5 visual styles** — Nova, Vega, Maia, Lyra, Mira
+- **21 color themes** — Rose, Blue, Emerald, Orange, Purple, and 16 more
+- **12 fonts** — Geist, Inter, Figtree, Outfit, JetBrains Mono, and more
+- **Live customizer** with instant preview + "Copy CLI command" button
+- **Component registry** consumed by the `jac shadcn` plugin
 
-## Quick Start
+## Quick Start (for plugin users)
 
 ```bash
-# Install the CLI plugin
 pip install jac-shadcn
 
-# Create a new themed project
-jac create myapp --use "https://jac-shadcn.jaseci.org/jacpack?style=nova&theme=rose"
+# Scaffold a themed project + install 10 essential components in one shot
+jac create myapp --use shadcn --style nova --theme rose --font outfit
 
-# Or create a base project and add components individually
-jac create myapp --use jac-shadcn
-cd myapp
-jac add --shadcn button card dialog tabs
-jac start main.jac
+cd myapp && jac install && jac start main.jac
 ```
+
+Other common flows:
+
+```bash
+# Add a component to an existing project
+jac shadcn add button
+
+# Retrofit shadcn onto an existing Jac project
+jac shadcn init --style nova --theme rose
+
+# Switch theme; all installed components re-fetched in the new style
+jac shadcn upgrade --style vega --theme blue
+```
+
+See the [plugin reference](https://docs.jaseci.org/reference/plugins/jac-shadcn/) for the full command catalog.
 
 ## Running the Customizer
 
@@ -34,55 +45,33 @@ jac start main.jac
 jac start main.jac    # Serves on http://localhost:8000
 ```
 
+Pick a style, theme, font, etc. visually. The "Copy CLI command" button gives you the exact `jac create myapp --use shadcn --style ... --theme ...` invocation for your selection — no URLs to copy around.
+
 ## Project Structure
 
 ```
 jac-shadcn/
-├── main.jac                # Entry point
+├── main.jac                # Entry point + REST endpoints (/registry, /component, /theme, /options, /jacpack)
 ├── jac.toml                # Project config
 ├── global.css              # Theme CSS variables (oklch)
 ├── styles/                 # 5 style CSS files (cn-* token definitions)
 ├── lib/                    # Theme engine, config, fonts, export service
 ├── components/
-│   ├── customizer.cl.jac   # Theme customizer sidebar
+│   ├── customizer.cl.jac    # Theme customizer sidebar
 │   ├── preview-panel.cl.jac # Live component preview
-│   └── ui/                 # 21 UI components
-└── docs/                   # Conversion guide, architecture
+│   └── ui/                  # 53 UI components
+└── docs/                    # Conversion guide, architecture notes
 ```
-
-## Components
-
-| Component | Primitives |
-|-----------|-----------|
-| Alert Dialog | Radix UI |
-| Avatar | Radix UI |
-| Badge | CVA |
-| Button | CVA |
-| Card | — |
-| Checkbox | Radix UI |
-| Combobox | Base UI |
-| Dialog | Radix UI |
-| Dropdown Menu | Radix UI |
-| Field | CVA |
-| Input | — |
-| Input Group | CVA |
-| Label | Radix UI |
-| Progress | Radix UI |
-| Radio Group | Radix UI |
-| Select | Radix UI |
-| Separator | Radix UI |
-| Switch | Radix UI |
-| Tabs | Radix UI |
-| Textarea | — |
-| Tooltip | Radix UI |
 
 ## Registry API
 
-```
-GET /registry                           # Component manifest
-GET /component/{name}?style=nova        # Single resolved component
-GET /jacpack?style=nova&theme=rose&...  # Full .jacpack for jac create
-```
+| Endpoint | Returns |
+|---|---|
+| `GET /registry` | Component manifest + peer deps + shared npm deps |
+| `GET /component/{name}?style=…` | Resolved `.cl.jac` source + `npmDeps` + `version` |
+| `GET /theme?style=…&baseColor=…&theme=…&font=…&radius=…&menuAccent=…` | Themed `global.css` + `[jac-shadcn]` config + npm deps + default components |
+| `GET /jacpack?style=…&theme=…` | Complete `.jacpack` for project scaffold |
+| `GET /options` | The universe of valid theme params (consumed by plugin's client-side validator) |
 
 ## License
 
