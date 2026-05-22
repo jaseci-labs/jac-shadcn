@@ -74,6 +74,39 @@ cl {
 }
 ```
 
+### ⚠ State assignment in nested-async lambdas does not reliably trigger re-renders
+
+Direct event handlers work — `onClick={lambda { count = count + 1; }}` correctly compiles to `setCount(count + 1)`. But state assignment **inside `setTimeout` / `setInterval` / `Promise.then` callbacks scheduled from `useEffect`** does **not** reliably trigger a re-render. The compiler appears to lose the `setX` binding two layers deep.
+
+```jac
+# WRONG — loading never flips, page stays in initial state forever
+has loading: bool = True;
+useEffect(lambda {
+    timer = setTimeout(lambda { loading = False; }, 600);
+    return lambda { clearTimeout(timer); };
+}, []);
+```
+
+**Workarounds:**
+
+1. **Don't fake an async load** — if you have sample data, just initialize the state to the post-load value:
+   ```jac
+   has loading: bool = False;   # data is already there, no async needed
+   ```
+2. **For genuine async** (fetch from a backend), use the project's hook patterns (`hooks/useDashboard.cl.jac`, `hooks/useChatMode.cl.jac`) — they wrap `await` in async functions called directly, not via `setTimeout`. Pattern:
+   ```jac
+   useEffect(lambda {
+       async def load() -> None {
+           result = await ideListProjects();
+           # state mutation here works because it's a direct await, not nested setTimeout
+           projects = result.reports[0].projects or [];
+           isLoading = False;
+       }
+       load();
+   }, []);
+   ```
+3. **If you really need a delayed boolean flip for a demo** (skeleton → content), use a CSS-only `animation-delay` or just skip the loading state entirely.
+
 ---
 
 ## glob for module-level constants
